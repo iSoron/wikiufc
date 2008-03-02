@@ -1,0 +1,13 @@
+= javascript_include_tag 'wiki'
+
+%h4.title Usuários
+%h1.title Editar perfil
+
+%p
+  - form_tag user_path(@user.id), :method => 'put' do
+    = render :partial => 'form_profile'
+    = submit_tag 'Editar'
+    %button#show_preview{:type => "button"}
+      Visualizar
+      = image_tag "loading.gif", :class => "spinner_button", :id => "spinner_preview", :style => "display: none"
+  #wiki_preview{:style => "display: none"}

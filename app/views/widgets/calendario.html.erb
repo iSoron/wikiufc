@@ -1,0 +1,100 @@
+
+<% if not @ajax %>
+	<!-- Calendario -->
+	<div class="menu">
+		<%= image_tag "loading.gif", :id => "spinner_calendar",
+				:class => "spinner", :style => "display:none" %>
+        <div class="cmd">
+          <%= action_icon 'add', 'Adicionar evento', new_course_event_url(@course) %>
+        </div>
+		<h1>Calendário</h1>
+		<div id="calendar">
+<% end -%>
+		<%=
+			@year   ||= Time.now.year
+			@month  ||= Time.now.month
+      @events ||= @course.events
+
+			calendar({:year => @year, :month => @month, :table_class => 'calendario',
+					:abbrev => (0..1) }) do |d|
+
+			  cell_text = d.mday
+			  cell_attrs = {:class => 'day'}
+			  @events.each do |e|
+				if e.date == d
+					cell_attrs[:onclick] = "show_events('#{d.to_s}')"
+					cell_attrs[:class] = 'specialDay'
+					cell_text = link_to d.mday, "#"
+				end
+			  end
+			  [cell_text, cell_attrs]
+			end
+		%>
+<% if not @ajax -%>
+		</div>
+		<div class="widget_events">
+			<ul>
+				<% @events.each do |e| -%>
+				<li style="display: none" class="event_item events_<%=e.date.to_s%>">
+					<%= link_to e.date.strftime("%d de %B"), course_event_url(@course, e) %>.
+					<%= h(e.title) %>. <%= h(e.description) %>
+				</li>
+				<% end -%>
+			</ul>
+		</div>
+	</div>
+<% end -%>
+
+<% if not @ajax -%>
+	<script type="text/javascript">
+		calendar_year  = <%= @year %>;
+		calendar_month = <%= @month %>;
+
+		events['#calendar_next:click'] = function(element, e) {
+			if(++calendar_month > 12) {
+				calendar_month = 1;
+				calendar_year++;
+			}
+			
+			<% if @course %>
+			url = '/widgets/calendar/<%= @course.id %>/' + calendar_year + '/' + calendar_month;
+			<% end %>
+
+			spinner_start('calendar');
+			new Ajax.Updater('calendar', url, {
+				onComplete: function() {
+					spinner_stop('calendar');
+				}
+			});
+			Event.stop(e);
+		};
+
+		events['#calendar_prev:click'] = function(element, e) {
+			if(--calendar_month < 1) {
+				calendar_month = 12;
+				calendar_year--;
+			}
+
+			<% if @course %>
+			url = '/widgets/calendar/<%= @course.id %>/' + calendar_year + '/' + calendar_month;
+			<% end %>
+
+			spinner_start('calendar');
+			new Ajax.Updater('calendar', url, {
+				onComplete: function() {
+					spinner_stop('calendar');
+				}
+			});
+
+			Event.stop(e);
+		};
+
+		function show_events(e) {
+			$$('.event_item').each(function(x) {
+				if(x.match('.events_' + e)) x.show();
+				else x.hide();
+			});
+		}
+	</script>
+<% end -%>
+

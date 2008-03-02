@@ -1,0 +1,14 @@
+- @title = "#{App.title} - #{h(@course.full_name)}"
+- @location = capture do 
+  = link_to(App.title, "/") + "&rsaquo;"
+  = link_to("Disciplinas", courses_url) + "&rsaquo;"
+  = link_to(h(@course.full_name), course_url(@course)) + "&rsaquo;"
+  = link_to("Wiki", course_url(@course))
+  - if @wiki_page.title
+    = "&rsaquo;" + link_to(h(@wiki_page.title), course_wiki_url(@course, @wiki_page))
+    - @title = @title + " - #{h(@wiki_page.title)}"
+
+- @left_panel = render 'courses/_left_panel'
+- @content = yield
+
+= render 'layouts/base' 

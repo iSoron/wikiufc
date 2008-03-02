@@ -1,0 +1,46 @@
+# Engenharia de Software 2007.1
+# Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+bob:
+  id: 1000001
+  login: bob
+  salt: 1000
+  name: bob
+  email: bob@mcbob.com
+  hashed_password: 77a0d943cdbace52716a9ef9fae12e45e2788d39 # test
+  display_name: bob
+  last_seen: <%= Time.now %>
+  admin: true
+
+
+existingbob:
+  id: 1000002
+  salt: 1000
+  name: existingbob
+  login: existingbob
+  email: exbob@mcbob.com
+  hashed_password: 77a0d943cdbace52716a9ef9fae12e45e2788d39 # test
+  display_name: existingbob
+  last_seen: <%= Time.now %>
+  admin: false
+
+longbob:
+  id: 1000003
+  salt: 1000
+  name: longbob
+  login: longbob
+  email: lbob@mcbob.com
+  hashed_password: 00728d3362c26746ec25963f71be022b152237a9 # longtest
+  display_name: longbob
+  last_seen: <%= Time.now %>
+  admin: false

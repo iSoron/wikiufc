@@ -1,0 +1,6 @@
+= "Evento " + link_to(h(entry.event.title), course_event_url(@course, entry.event))
+
+= "criado "     if entry.kind_of?(EventCreateLogEntry)
+= "editado "    if entry.kind_of?(EventEditLogEntry)
+= "excluído "   if entry.kind_of?(EventDeleteLogEntry)
+= "restaurado " if entry.kind_of?(EventRestoreLogEntry)

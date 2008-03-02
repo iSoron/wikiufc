@@ -1,0 +1,22 @@
+= error_messages_for 'course'
+
+%dl
+  %dt
+    %label{:for => "course_full_name"} Nome completo
+  %dd= text_field 'course', 'full_name' 
+
+  %dt
+    %label{:for => "course_short_name"} Nome abreviado
+  %dd= text_field 'course', 'short_name'
+
+  %dt
+    %label{:for => "course_code"} Código
+  %dd= text_field 'course', 'code'
+
+  %dt
+    %label{:for => "course_period"} Semestre
+  %dd= text_field 'course', 'period'
+
+  %dt
+    %label{:for => "course_description"} Descrição
+  %dd= preserve(text_area('course', 'description', :cols => 60, :rows => 10))

@@ -1,0 +1,15 @@
+= error_messages_for 'wiki_page'
+
+%dl
+  %dt
+    %label{:for => 'wiki_page_title'} Título
+  %dd= text_field 'wiki_page', 'title'
+
+  %dt
+    %label{:for =>'wiki_page_content'} Conteúdo
+  %dd= preserve(text_area('wiki_page', 'content'))
+    
+  - unless @wiki_page.new_record?
+    %dt
+      %label{:for => 'wiki_page_description'} Descrição das alterações
+    %dd= text_field('wiki_page', 'description', { :size => '80' })

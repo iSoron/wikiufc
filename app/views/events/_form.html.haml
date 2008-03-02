@@ -1,0 +1,19 @@
+= error_messages_for 'event'
+
+%dl
+  %dt
+    %label{:for => "event_title"} Título
+  %dd= text_field 'event', 'title' 
+
+  %dt
+    %label{:for => "event_date"} Data
+  %dd= date_select 'event', 'date', :order => [:day, :month, :year]
+
+  %dt
+    %label{:for => "event_time"} Horário
+  %dd= time_select 'event', 'time' 
+
+  %dt
+    %label{:for => "event_description"} Descrição
+  %dd= preserve(text_area('event', 'description', :rows => 6))
+

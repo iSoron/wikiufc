@@ -1,0 +1,28 @@
+- cache do
+
+  .cmd
+    = action_icon 'add', 'Adicionar', new_course_news_url
+
+  %h4.title= h(@course.full_name)
+  %h1.title Notícias
+
+  = auto_discovery_link_tag :rss, formatted_course_news_index_url(@course, :rss)
+
+  .news
+    - @course.news.each do |n|
+      .line{:class => 'new', :id => "news_#{n.id}"}
+        .cmd{:style => (n.id == params[:id].to_i ? '' : 'display: none')}
+          = action_icon 'edit', 'Editar', edit_course_news_url(@course, n)
+          = action_icon 'trash', 'Excluir', course_news_url(@course, n), :confirm => 'Tem certeza que deseja excluir?', :method => :delete
+
+        .left= n.timestamp.strftime("%d de %B")
+        %h4
+          = link_to h(n.title), course_news_url(@course, n)
+
+        %p{:style => (n.id == params[:id].to_i ? '' : 'display: none')}
+          = h(n.body)
+
+    - if @course.news.empty?
+      .box
+        %ul
+          %li.grey Nenhuma notícia

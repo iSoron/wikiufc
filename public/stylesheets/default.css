@@ -1,0 +1,373 @@
+* { margin: 0px; padding: 0px; line-height: 18px; }
+
+a {
+	color: #069;
+	text-decoration: none;
+}
+
+a:hover {
+	border-bottom: 1px dotted #580;
+}
+
+a:focus {
+	-moz-outline: none;
+}
+
+h1 {
+	margin: 18px 0px;
+	line-height: 18px;
+}
+
+h2 {
+	margin: 18px 0px;
+	line-height: 18px;
+}
+
+h3, h4 {
+	font-size: 12px;
+}
+
+ol, dl, ul {
+	line-height: 18px;
+	margin: 18px 0px;
+	padding-left: 54px;
+}
+
+.content ul {
+	list-style: none;
+	padding-left: 36px;
+}
+
+.content ul li {
+	background-image: url(/images/bullet.gif);
+	background-position: 0px 7px;
+	background-repeat: no-repeat;
+	padding-left: 15px;
+}
+dt {
+	margin-top: 18px;
+	margin-left: -27px;
+}
+
+table tr td {
+	line-height: 18px;
+}
+
+table {
+	border-spacing: 0px;
+}
+
+h1, h2, h3, h4 {
+	font-weight: normal;
+	padding: 0px 18px;
+	margin: 18px 0px;
+}
+
+h1 {
+	font-size: 24px;
+}
+
+h2 {
+	font-size: 22px;
+}
+
+h3 {
+	font-weight: bold;
+	font-size: 12px;
+}
+
+p {
+	line-height: 18px;
+	margin-top: 18px;
+	margin-bottom: 0px;
+}
+
+p.middle:first-letter {
+	padding-left: 18px;
+}
+
+p.middle {
+	margin-top: 0px;
+}
+
+body {
+	color: #222;
+	margin: 0px;
+	padding: 0px;
+	font-size: 12px;
+	font-family: verdana, sans-serif;
+	font-weight: normal;
+	background-color: #fff;
+	border-bottom: 5px solid #000;
+	min-width: 780px;
+}
+
+#wrapper {
+	margin: 0em auto;
+}
+
+#header {
+	background-image: url(/images/header_bg.png);
+	background-position: top;
+	background-repeat: repeat-x;
+	background-color: #069;
+	border-top: 3px solid #069;
+	color: #eee;
+	height: 42px;
+}
+
+#header h1 {
+	font-size: 30px;
+	margin: 0px 30px;
+	display: inline;
+	line-height: 72px;
+	float: left;
+	font-weight: normal;
+}
+
+#header_menu {
+	font-size: 10px;
+	text-align: right;
+	height: 24px;
+	background-color: #069;
+	border-bottom: 3px solid #069;
+}
+
+#header_menu ul {
+	margin: 2px 0px;
+	float: right;
+	list-style: none;
+}
+
+#header_menu ul li {
+	float: left;
+	line-height: 18px;
+	border-right: 1px solid #333;
+}
+
+#header_menu a {
+	color: #ccc;
+	display: block;
+	padding: 0px 1.5em;
+	line-height: 18px;
+	border-bottom: 0px;
+}
+
+#header_menu a:hover {
+	color: #fff;
+	text-decoration: none;
+	background-color: #000;
+	border-bottom: 0px;	
+}
+
+#header_menu ul li.last {
+	border-right: 0px;
+}
+
+#strip {
+	height: 11px;
+	border-bottom: 7px solid #fff;
+	background-color: #eee;
+}
+
+#site {
+	padding: 0px;
+	margin-top: 18px;
+	border-bottom: 30px solid #eee;
+}
+
+#footer {
+	display: none;
+	background-image: url(/images/footer_bg.png);
+	background-position: top;
+	background-repeat: repeat-x;
+	background-color: #000;
+	border-top: 5px solid #000;
+	margin: 0em;
+	height: 10em;	
+}
+
+.float_panel_left {
+	float: left;
+	margin: 3px 0px 0px 0px;
+	padding: 0em;
+}
+
+.float_panel_right {
+	float: right;
+	margin: 3px 0px 0px 0px;
+	padding: 0em;
+}
+
+.menu {
+	border-top: 3px solid #000;
+	width: 180px;
+	margin: -3px 18px 18px 18px;
+}
+
+.menu ul {
+	margin: 0px 0px; padding: 0px;
+	list-style: none;
+}
+
+.menu li a, .mural li {
+	display: block;
+	border-top: 1px solid #ddd;
+	line-height: 36px;
+	padding: 0px 10px;
+	border-bottom: 0px;
+	margin-top: -1px;
+}
+
+.menu li a:hover {
+	background-color: #f5f5f5;
+	border-bottom: 0px;
+}
+
+.menu h1 {
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 36px;
+	margin: 0px 0em; padding: 0px 9px;
+}
+
+.content {
+	margin: -3px 0px 0px 0px;
+	padding: 0em;
+	border-top: 3px solid #000;
+}
+
+.content h1 {
+	margin: 18px 0px;
+	line-height: 36px;
+	font-size: 24px;
+}
+
+#innerwrapper_2column {
+	padding: 0em 18px 0em 216px;
+}
+
+#innerwrapper_3column {
+	padding: 0em 216px 0em 216px;
+}
+
+.calendario { width: 15em }
+.calendario tr td {
+	font-size: 11px;
+	text-align: center;
+}
+
+.mural li {
+	font-size: 11px;
+	line-height: 18px;
+	margin: 0px; margin-top: -1px;
+	padding: 9px 0px;
+}
+
+#location {
+	margin: 0em 18px;
+}
+
+#location a {
+	margin: 0em 9px;
+	line-height: 18px;
+}
+
+.latex {
+	text-align: center;
+	margin-bottom: -5px;
+}
+
+.wikicmd {
+	font-size: 10px;
+	float: right;
+}
+
+.wikicmd a {
+	padding: 0px 9px;
+}
+
+#toc {
+	display: table;
+	border: 2px solid #000;
+	margin: 16px 18px;
+	padding: 9px 0px 7px 0px;
+}
+
+#toc h1 {
+	text-align: center;
+	margin: 0px 18px 0px 18px;
+	font-size: 12px;
+	line-height: 18px;
+}
+
+#toc ol {
+	margin: 0px;
+	padding: 0px 36px;
+}
+
+h4.title {
+	margin-bottom: -18px;
+}
+
+.box {
+	margin: 18px 0px;
+}
+
+.box h3 {
+	border-top: 2px solid #000;
+	line-height: 34px;
+	margin: 0px;
+}
+
+.box ul {
+	margin-top: 0px;
+	margin-bottom: 36px;
+}
+
+.box li {
+	background-position: 0px 16px !important;
+	line-height: 18px;
+	padding: 9px 0px 8px 16px !important;
+	border-bottom: 1px solid #ccc;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                                     Repositorio                             *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
+
+.repositorio h1, .repositorio p {
+	padding: 0px;
+	margin: 0px;
+}
+
+.repositorio ul {
+	padding: 0px 36px !important;
+}
+
+.repositorio li h1 {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+.repositorio li {
+	background-repeat: no-repeat;
+	background-position: 0px !important;
+	list-style: none;
+	padding: 9px 0px 8px 27px !important;
+	border-bottom: 1px solid #ccc;
+	line-height: 18px;
+}
+
+.repositorio .mime_plain_text {
+	background-image: url(/images/tango/text-x-generic.png);
+}
+
+.repositorio .mime_presentation {
+	background-image: url(/images/tango/x-office-presentation.png);
+}
+
+body {
+	ackground-image: url(/prototype/line.png);
+}
+

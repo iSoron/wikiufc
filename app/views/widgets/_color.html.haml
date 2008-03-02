@@ -1,0 +1,4 @@
+.color_theme
+  = radio_button('user', 'pref_color', App.color_schemes.index(color), :class => 'color_radio')
+  - color.each do |c|
+    .color_box{:style => "background-color: #{c}"} &nbsp;

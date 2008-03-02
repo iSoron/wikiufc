@@ -1,0 +1,18 @@
+= error_messages_for 'user'
+
+%dl
+  %dt
+    %label{:for => 'user_display_name'} Nome de Exibição
+  %dd= text_field('user', 'display_name')
+
+  %dt
+    %label{:for => 'user_name'} Nome completo
+  %dd= text_field('user', 'name')
+
+  %dt
+    %label{:for => 'user_description'} Descrição
+  %dd= text_area('user', 'description', { :rows => 10 })
+
+  - if admin?
+    %dt= check_box_tag('user[admin]', 1, @user.admin?) + " Administrador"
+

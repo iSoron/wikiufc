@@ -1,0 +1,44 @@
+<% receiver = @user ? @user : @course %>
+	<!-- Shoutbox -->
+	<div class="menu">
+		<h1>Shoutbox</h1>
+		<div id="shoutbox">
+			<ul id="shoutbox_messages">
+				<li>Carregando...</li>
+			</ul>
+			<% if session[:user] %>
+			<% form_tag(
+				{:controller => 'message', :action => 'create'}, {:id => 'shoutbox_form' }) do %>
+				<div>
+					<%= text_area :message, :body %>
+					<%= hidden_field :message, :message_type, :value => (@user ? Message::USER_SHOUTBOX_MESSAGE : Message::SHOUTBOX_MESSAGE) %>
+					<%= hidden_field :message, :receiver_id, :value => receiver.id %>
+					<%= submit_tag 'Enviar', :id => 'shoutbox_send' %>
+				</div>
+			<% end %>
+			<% else %>
+				<i>Para enviar mensagens, é preciso fazer <%= link_to 'login', :controller => 'user', :action => 'login' %>.</i>
+			<% end %>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var updater = new Ajax.PeriodicalUpdater('shoutbox_messages',
+				'<%= url_for :controller => 'message', :action => 'show_shoutbox' + (@user?'_user':''), :id => receiver.id %>',
+				{ method: 'get', frequency: 10, decay: 1.5}
+		);
+
+		events['#shoutbox_send:click'] = function(button, e) {			
+			Event.stop(e);
+			button.disabled = true;
+			$('shoutbox_form').request({
+				method: 'post',
+				onSuccess: function(t) {
+					button.disabled = false;
+					updater.stop();
+					updater.start();
+					$('shoutbox_form').reset();
+				}
+			});
+		};
+	</script>

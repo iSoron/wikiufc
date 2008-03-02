@@ -1,0 +1,6 @@
+= "Anexo " + link_to(h(entry.attachment.file_name), course_attachment_url(@course, entry.attachment))
+
+= "criado "     if entry.kind_of?(AttachmentCreateLogEntry)
+= "editado "    if entry.kind_of?(AttachmentEditLogEntry)
+= "excluído "   if entry.kind_of?(AttachmentDeleteLogEntry)
+= "restaurado " if entry.kind_of?(AttachmentRestoreLogEntry)

@@ -1,0 +1,20 @@
+- @title = "#{App.title}"
+- @location = capture do
+  = link_to(App.title, "/") + "&rsaquo;";
+  = link_to("Disciplinas", courses_url)
+  - if @course and @course.id
+    = "&rsaquo; " + link_to(h(@course.full_name), course_url)
+    - @title = @title + " - #{h(@course.full_name)}"
+  - else
+    - @title = @title + " - Disciplinas"
+
+- if @course and @course.id
+-   @left_panel = render 'courses/_left_panel'
+-   @right_panel = render 'courses/_right_panel'
+- else
+-   @left_panel = render('widgets/menu_navigation') + render('widgets/menu_user')
+- end
+
+- @content = yield
+
+= render 'layouts/base'

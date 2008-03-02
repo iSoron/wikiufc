@@ -1,0 +1,10 @@
+= error_messages_for 'news'
+
+%dl
+  %dt
+    %label{:for => "news_title"} Título
+  %dd= text_field 'news', 'title'
+
+  %dt
+    %label{:for => "news_body"} Descrição
+  %dd= preserve(text_area('news', 'body'))

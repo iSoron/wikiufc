@@ -1,0 +1,14 @@
+- cache do
+  #users
+    .cmd
+      = action_icon('edit', 'Editar perfil', edit_user_url) if admin? or @current_user == @user
+      /= action_icon 'trash', 'Excluir usuário', user_url, :confirm => 'Tem certeza que deseja excluir?', :method => :delete
+
+    .card
+      %img.avatar{:src => gravatar_url_for(@user.email)}
+      %h1.title= h(@user.display_name)
+      %p= h(@user.name)
+      %p= "Membro desde {c}"[:member_since, @user.created_at.strftime("%d de %B de %Y")]
+      %p= "Última visita há {c}"[:last_seen, distance_of_time_in_words(Time.now, @user.last_seen)]
+
+    = wiki @user.description if !@user.description.blank?

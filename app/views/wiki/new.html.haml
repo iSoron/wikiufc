@@ -1,0 +1,13 @@
+= javascript_include_tag 'wiki'
+
+%h4.title= h(@course.full_name)
+%h1.title Adicionar página wiki
+
+%p
+  - form_tag course_wiki_url(@course, @wiki_page.id) do
+    = render :partial => 'form'
+    = submit_tag "Criar"
+    %button#show_preview{:type => "button"}
+      Visualizar
+      = image_tag "loading.gif", :class => "spinner_button", :id => "spinner_preview", :style => "display: none"
+  #wiki_preview{:style => "display: none"}

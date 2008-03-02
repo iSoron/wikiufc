@@ -1,0 +1,13 @@
+= "Página " + link_to(h(entry.wiki_page.versions.last.title), course_wiki_url(@course, entry.wiki_page.id, :version => entry.wiki_page.version))
+
+= "criada "     if entry.kind_of?(WikiCreateLogEntry)
+= "editada "    if entry.kind_of?(WikiEditLogEntry)
+= "excluída "   if entry.kind_of?(WikiDeleteLogEntry)
+= "restaurada " if entry.kind_of?(WikiRestoreLogEntry)
+
+- if entry.kind_of?(WikiEditLogEntry)
+  - if entry.wiki_page.description and !entry.wiki_page.description.empty?
+    = "(<i>#{h(entry.wiki_page.description)}</i>)"
+  = "(" + link_to("diff", diff_course_wiki_url(@course, entry.wiki_page.id, :from => entry.wiki_page.version - 1, :to => entry.wiki_page.version)) + ")" 
+  = "(" + link_to("edit", edit_course_wiki_url(@course, entry.wiki_page.id, :description => "Revertendo para versão #{entry.wiki_page.version}", :version => entry.wiki_page.version)) + ")"
+  = "(" + link_to("undo", edit_course_wiki_url(@course, entry.wiki_page.id, :description => "Revertendo para versão #{entry.wiki_page.version-1}", :version => entry.wiki_page.version - 1)) + ")"

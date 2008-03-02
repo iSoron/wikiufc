@@ -1,0 +1,18 @@
+%h4.title= h(@course.full_name)
+%h1.title Mudanças recentes
+
+%table.log
+  %tr
+    %th Data
+    %th Usuário
+    %th Descrição
+  - @log_entries.each do |entry|
+    %tr
+      %td= entry.created_at.strftime("%d/%m/%y&nbsp;%H:%M:%S")
+      %td= link_to truncate(h(entry.user.display_name), 20), user_path(entry.user)
+      %td
+        = render(:partial => 'log/attachment_log_entry', :locals => { :entry => entry }) if entry.kind_of?(AttachmentLogEntry)
+        = render(:partial => 'log/event_log_entry', :locals => { :entry => entry }) if entry.kind_of?(EventLogEntry)
+        = render(:partial => 'log/news_log_entry', :locals => { :entry => entry }) if entry.kind_of?(NewsLogEntry)
+        = render(:partial => 'log/wiki_log_entry', :locals => { :entry => entry }) if entry.kind_of?(WikiLogEntry)
+        = "(" + link_to("undo", undo_course_log_url(@course, entry)) + ")" if entry.reversible?

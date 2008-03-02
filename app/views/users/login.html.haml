@@ -1,0 +1,25 @@
+%h4.title= App.title
+%h1.title Login
+
+%p
+  = error_messages_for :user
+  
+  - form_tag login_path do
+    %dl
+      %dt
+        %label{:for => 'user_login'} Login
+      %dd= text_field "user", "login"
+
+      %dt
+        %label{:for => 'user_password'} Senha
+      %dd= password_field "user", "password"
+
+      %dt
+        = check_box_tag('remember_me', 1)
+        %label{:for => 'remember_me'} Lembrar de mim neste computador
+
+    = submit_tag 'Login'
+
+  %br
+  = link_to 'Criar nova conta', signup_path
+  =# link_ro 'Recuperar senha', recover_password_path

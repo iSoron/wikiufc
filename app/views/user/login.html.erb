@@ -1,0 +1,21 @@
+<h4 class="title"><%= App.title %></h4>
+<h1 class="title">Login</h1>
+
+<p>
+<%= error_messages_for 'user' %><br/>
+
+<% form_tag :action=> "login" do %>
+
+<label for="user_login">Login:</label><br/>
+<%= text_field "user", "login", :size => 20 %><br/>
+
+<label for="user_password">Senha:</label><br/>
+<%= password_field "user", "password", :size => 20 %><br/>
+
+<%= submit_tag "Login" %><br /><br />
+
+<%= link_to 'Criar conta', :action => 'signup' %> |
+<%= link_to 'Recuperar senha', :action => 'forgot_password' %>
+
+<% end %>
+</p>

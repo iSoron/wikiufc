@@ -1,0 +1,40 @@
+.cmd
+  - if admin?
+    = action_icon 'edit', 'Editar disciplina', edit_course_url
+    /= action_icon 'trash', 'Excluir disciplina', course_url, :confirm => 'Tem certeza que deseja excluir?', :method => :delete
+
+- cache do
+
+  %h4.title Disciplina
+  %h1.title= h(@course.full_name)
+
+  %p= wiki @course.description
+
+  .box
+    .cmd
+      = action_icon 'add', 'Adicionar página wiki', new_course_wiki_url(@course)
+
+    %h3 Páginas Wiki
+    %ul.wiki
+      - @course.wiki_pages.each do |wiki|
+        %li{highlight(wiki.id)}
+          .cmd{:style => 'margin-bottom: -27px; margin-top: -9px;'}
+            =action_icon 'arrow2_n', 'Mover para cima', move_up_course_wiki_url(@course, wiki) unless wiki.first?
+            =action_icon 'arrow2_s', 'Mover para baixo', move_down_course_wiki_url(@course, wiki) unless wiki.last?
+            - if wiki.last?
+              %span{:style => 'margin-right: 14px'} &nbsp;
+          =link_to h(wiki.title), course_wiki_url(@course, wiki)
+      - if @course.wiki_pages.empty?
+        %li.no_itens Nenhuma página wiki
+
+  .box
+    .cmd= action_icon 'add', 'Adicionar anexo', new_course_attachment_url(@course)
+
+    %h3 Repositório de Arquivos
+    .repositorio
+      %ul.wiki
+        - @course.attachments.each do |att|
+          %li{:class => mime_class(att.content_type)}
+            = link_to h(att.file_name), course_attachment_url(@course, att)
+        - if @course.attachments.empty?
+          %li.no_itens Nenhum arquivo

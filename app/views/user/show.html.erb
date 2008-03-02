@@ -1,0 +1,84 @@
+<% last_event = nil %>
+
+<div class="cmd">
+	<%= link_to 'preferências', :action => 'edit'%>
+</div>
+
+<h4 class="title">Página Pessoal</h4>
+<h1 class="title">Bem vindo, <%= h(@user.name) %></h1>
+
+<!-- Noticias -->
+<div class="box news">
+	<h3>Notícias</h3>
+<% @news_messages.each do |n| %>
+	<div class="line">
+		<h4 class="left"><%= n.timestamp.strftime("%d de %B") %></h4>
+		<h4><%= link_to h(n.course.full_name) , course_news_url(n.course, n) %> &rsaquo;
+		<a href="#" id="new_<%=n.id%>"><%= h(n.title) %></a></h4>
+
+		<p id="new_desc_<%= n.id %>" style="display:none">
+			<%= h(n.body) %>
+		</p>
+	</div>
+<% end %>
+</div>
+
+<script type="text/javascript">
+<% @news_messages.each do |n| %>
+	events['#new_<%= n.id %>:click'] = function(el, e) {
+		Effect.toggle($('new_desc_<%= n.id %>'), 'blind');
+		Event.stop(e);
+	};
+<% end %>
+</script>
+
+<!-- Calendario -->
+<div class="box div_calendario">
+	<div class="cmd">
+		<%= link_to 'rss', :action => 'rss', :login => h(@user.login)%>
+		<%= link_to 'icalendar', :controller => 'events', :action => 'icalendar'%>
+	</div>
+	<h3>Calendário</h3>
+
+	<% @events.each do |event| %>
+		<% if last_event != event.date %>
+		<% if last_event %></ul></div><% end %>
+		<div class="date"><%= event.date.strftime("%d de %B") %></div>
+		<div><ul>
+		<% end %>
+			<li>
+				<div class="time"><%= event.time.strftime("%H:%M") %></div>
+				<%= link_to h(event.course.full_name), course_event_url(event.course, event) %> &rsaquo;
+				<a href="#" id="event_<%= event.id %>"><%= h(event.title) %></a>
+
+				<div id="desc_<%= event.id %>" class="description" style="display:none">
+					<%= h(event.description) %>
+					<%= "Sem descrição" if event.description.length == 0 %>
+				</div>
+			</li>
+			<% last_event = event.date %>
+	<% end %>
+	<%= "</ul></div>" if !@events.empty? %>
+</div>
+
+<script type="text/javascript">
+<% @events.each do |event| %>
+	events['#event_<%= event.id %>:click'] = function(el, e) {
+		Effect.toggle($('desc_<%= event.id %>'), 'blind');
+		Event.stop(e);
+	};
+<% end %>
+</script>
+
+
+<!-- Disciplinas Matriculadas -->
+<div class="box">
+	<h3>Disciplinas Matriculadas</h3>
+	<ul class="wiki">
+	<% @user.courses.each do |course| %>
+		<li><%= link_to h(course.full_name), course_url(course) %></li>
+	<% end %>
+	</ul>
+</div>
+
+<h4><%#= link_to 'Descadastrar usuário', :action => 'destroy'%></h4>

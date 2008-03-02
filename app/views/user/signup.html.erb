@@ -1,0 +1,58 @@
+<h4 class="title"><%= App.title %></h4>
+<h1 class="title">Criar conta</h1>
+
+<p>
+<% form_tag :action=> "signup" do %>
+
+<%= error_messages_for 'user' %><br/>
+
+<label for="user_name">Nome</label><br/>
+<%= text_field "user", "name", :size => 20 %><br/>
+
+<label for="user_email">Email</label><br/>
+<%= text_field "user", "email", :size => 20 %><br/><br/>
+
+<label for="user_login">Login</label><br/>
+<%= text_field "user", "login", :size => 20 %><br/>
+
+<label for="user_password">Senha</label><br/>
+<%= password_field "user", "password", {:value => "", :size => 20, :id => 'password'} %><br/>
+
+<label for="user_password_confirmation">Confirmação de Senha</label><br/>
+<%= password_field "user", "password_confirmation", {:value => "", :size => 20} %><br/>
+
+<div id="passmeter">&nbsp;</div><br />
+
+<label for="user_pref_color">Cor de Preferência:</label>&nbsp;&nbsp;&nbsp;
+<%= select_tag("user[pref_color]", options_for_select( { 
+"Preto" => 0,
+"Verde (Claro)" => 1,
+"Azul (Claro)" => 2, 
+"Lilás" => 3,
+"Vermelho/Cinza" => 4,
+"Verde-limão" => 5,
+"Azul (Padrão)" => 6,
+"Vermelho" => 7,
+"Azul/Laranja" => 8,
+"Verde/Vermelho" => 9,
+"Pink" => 10,
+"Roxo" => 11,
+"Vinho" => 12,
+ }.sort)) %><br/><br/><br/>
+
+<label for="user_courses">Disciplinas matriculadas:</label><br/>
+<% @courses.each do |course| %>
+  <%= check_box_tag("user[course_ids][]", course.id, @user.courses.include?(course)) %>
+  <%= h(course.full_name) %><br/>
+<% end %>
+
+<% if @courses.empty? %>
+	Nenhuma disciplina cadastrada<br/>
+<% end %>
+
+<br/><br/>
+
+<%= submit_tag "Enviar" %>
+
+<% end %>
+</p>

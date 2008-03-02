@@ -1,0 +1,12 @@
+- @title = "#{App.title} - #{h(@course.full_name)} - Calendário"
+- @location = capture do 
+  = link_to(App.title, "/") + "&rsaquo;"
+  = link_to("Disciplinas", courses_url) + "&rsaquo;"
+  = link_to(h(@course.full_name), course_url(@course)) + "&rsaquo;"
+  = link_to("Calendário", course_events_url)
+
+- @left_panel = render 'courses/_left_panel'
+- @right_panel = render 'courses/_right_panel'
+- @content = yield
+
+= render 'layouts/base' 

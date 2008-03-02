@@ -1,0 +1,6 @@
+= "Notícia " + link_to(h(entry.news.title), course_news_url(@course, entry.news))
+
+= "criada "     if entry.kind_of?(NewsCreateLogEntry)
+= "editada "    if entry.kind_of?(NewsEditLogEntry)
+= "excluída "   if entry.kind_of?(NewsDeleteLogEntry)
+= "restaurada " if entry.kind_of?(NewsRestoreLogEntry)

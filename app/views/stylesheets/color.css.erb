@@ -1,0 +1,38 @@
+<% color = App.color_schemes[@color] || App.color_schemes[App.default_color] %>
+
+a {
+	color: <%= color[1] %>;
+}
+
+a:hover {
+	border-bottom: 1px dotted <%= color[1] %>;
+}
+
+h1, h2, h3, h4, h5, th {
+	color: <%= color[2] %>;
+}
+
+#header {
+	background-color: <%= color[0] %>;
+}
+
+#header_menu {
+	background-color: <%= color[0] %>;
+}
+
+#header_menu ul li {
+	border-right: 1px solid <%= color[0] %>;
+}
+
+#strip {
+	background-color: <%= color[0] %>;
+}
+
+#footer {
+	background-color: <%= color[3] %>;
+	border-top: 5px solid <%= color[3] %>;
+}
+
+.icon img:hover {
+  background-color: <%= color[1] %>;
+}

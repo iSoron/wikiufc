@@ -1,0 +1,7 @@
+%h4.title Usuários
+%h1.title Editar configurações
+
+%p
+  - form_tag settings_url do
+    = render :partial => 'form_settings'
+    = submit_tag 'Editar'

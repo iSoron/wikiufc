@@ -1,0 +1,29 @@
+.cmd
+  = action_icon('add', 'Cadastrar nova disciplina', new_course_url) if admin?
+
+- cache do
+  %h4.title= App.title
+  %h1.title Disciplinas
+
+  .box
+    %ul
+      - if logged_in?
+        - unless @current_user.courses.empty?
+          %h3 Disciplinas matriculadas
+          - for course in @current_user.courses
+            %li{highlight(course.id)}
+              .right
+                = action_icon('subtract', 'Desmatricular-se', unenroll_course_url(course))
+              = link_to h(course.full_name), course_url(course)
+
+      - old_period = 0
+      - for course in @courses
+        - if course.period != old_period
+          %h3= (course.period == 99 ? "Optativas" : "Semestre #{course.period}")
+          - old_period = course.period
+
+        %li{highlight(course.id)}
+          .right
+            = action_icon('add', 'Matricular-se', enroll_course_url(course))
+          = link_to h(course.full_name), course_url(course)
+

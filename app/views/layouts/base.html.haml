@@ -1,0 +1,47 @@
+﻿
+!!! XML
+!!!
+%html
+  %head
+    %title= @title || App.title
+    %meta{'name' => 'robots', :content => 'noindex,nofollow'}
+    %meta{'http-equiv' => 'Content-Type', 'content' => 'text/html; charset=UTF-8'}
+    %link{'href' => "/stylesheets/wiki.css", 'rel' => 'Stylesheet', 'type' => %'text/css'}
+    %link#css_color{'href' => "/stylesheets/themes/color.#@color.css", 'rel' => 'Stylesheet', 'type' => %'text/css'}
+    = javascript_include_merged :base
+
+  %body{'onload' => 'javascript: startup()'}
+    #wrapper
+      #header
+        %h1= "<strong>Wiki</strong> UFC"
+
+      #header_menu
+        %ul
+          - if logged_in?
+            %li.grey= "Logged in as {u}"[:logged_in_as, h(@current_user.display_name)]
+            %li.last= link_to 'Logout', logout_path
+          - else
+            %li= link_to 'Cadastrar', signup_path
+            %li.last= link_to 'Login', login_path
+
+      #strip
+
+      #location
+        = flash_div
+        = @location
+
+      #site
+        %div
+          - if @right_panel.nil?
+            .float_panel_left= @left_panel
+            #innerwrapper_2column
+              .content= @content
+          - else
+            .float_panel_left= @left_panel
+            .float_panel_right= @right_panel
+            #innerwrapper_3column
+              .content= @content
+        %br{'style' => 'clear:both'}
+      
+      #footer
+

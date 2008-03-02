@@ -1,0 +1,14 @@
+= javascript_include_tag 'wiki'
+
+%h4.title= h(@course.full_name)
+%h1.title= "Editar #{h(@wiki_page.title)}"
+
+%p
+  - form_tag course_wiki_url(@course, @wiki_page.id), :method => :put do
+    = render :partial => 'form'
+    = submit_tag 'Salvar'
+    %button#show_preview{:type => "button"}
+      Visualizar
+      = image_tag "loading.gif", :class => "spinner_button", :id => "spinner_preview", :style => "display: none"
+  #wiki_preview{:style => "display: none"}
+

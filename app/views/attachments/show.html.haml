@@ -1,0 +1,20 @@
+.cmd
+  = action_icon 'edit', 'Editar', edit_course_attachment_url
+  = action_icon 'trash', 'Excluir', course_attachment_url, :confirm => 'Tem certeza que deseja excluir o arquivo?', :method => :delete
+
+%h4.title= h(@attachment.course.full_name)
+%h1.title Repositório
+
+%p
+  %dl
+    %dt Arquivo
+    %dd= link_to h(@attachment.file_name), download_course_attachment_url
+
+    %dt Descrição
+    %dd= h(@attachment.description)
+
+    %dt Tipo de Arquivo
+    %dd= h(@attachment.content_type)
+
+    %dt Tamanho
+    %dd= number_to_human_size @attachment.size

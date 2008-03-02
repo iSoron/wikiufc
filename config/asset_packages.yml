@@ -1,0 +1,9 @@
+--- 
+javascripts: 
+- base: 
+  - lib/prototype
+  - lib/effects
+  - lib/controls
+  - lib/dragdrop
+  - lib/event-selectors
+  - application

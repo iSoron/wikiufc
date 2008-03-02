@@ -1,0 +1,7 @@
+%h4.title= h(@course.full_name)
+%h1.title Adicionar arquivo
+
+%p
+  - form_for :attachment, @attachment, :url => course_attachments_url, :html => { :method => 'post', :multipart => 'true' } do
+    = render :partial => 'form'
+    = submit_tag "Criar"

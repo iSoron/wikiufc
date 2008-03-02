@@ -1,0 +1,10 @@
+= error_messages_for 'attachment'
+
+%dl
+  %dt
+    %label{:for => 'attachment_file'} Arquivo
+  %dd= file_field 'attachment', 'file'
+
+  %dt
+    %label{:for => "attachment_description"} Descrição
+  %dd= preserve(text_area 'attachment', 'description')

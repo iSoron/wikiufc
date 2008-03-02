@@ -1,0 +1,6 @@
+%h4.title= @course.full_name
+%h1.title Adicionar evento
+
+- form_tag course_news_url(@course, @news), :method => :post do
+  = render :partial => 'form'
+  = submit_tag "Enviar"
