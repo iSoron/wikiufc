@@ -57,7 +57,7 @@
 			}
 			
 			<% if @course %>
-			url = '/widgets/calendar/<%= @course.id %>/' + calendar_year + '/' + calendar_month;
+			url = BASE_PATH + '/widgets/calendar/<%= @course.id %>/' + calendar_year + '/' + calendar_month;
 			<% end %>
 
 			spinner_start('calendar');
@@ -76,7 +76,7 @@
 			}
 
 			<% if @course %>
-			url = '/widgets/calendar/<%= @course.id %>/' + calendar_year + '/' + calendar_month;
+			url = BASE_PATH + '/widgets/calendar/<%= @course.id %>/' + calendar_year + '/' + calendar_month;
 			<% end %>
 
 			spinner_start('calendar');

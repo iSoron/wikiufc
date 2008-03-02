@@ -38,7 +38,7 @@ ul ul, ol ol {
 }
 
 .content ul li {
-  background-image: url(/images/bullet.gif);
+  background-image: url(<%= App.base_path %>/images/bullet.gif);
   background-position: 0px 7px;
   background-repeat: no-repeat;
   padding-left: 15px;
@@ -120,7 +120,7 @@ body {
   font-weight: normal;
   min-width: 780px;
 
-  background-image: url(/images/bg_body.png);
+  background-image: url(<%= App.base_path %>/images/bg_body.png);
   background-repeat: repeat-x;
   background-color: #f4f4f4;
 }
@@ -130,7 +130,7 @@ body {
 }
 
 #header {
-  background-image: url(/images/header_bg.png);
+  background-image: url(<%= App.base_path %>/images/header_bg.png);
   background-position: top;
   background-repeat: repeat-x;
   color: #eee;
@@ -199,7 +199,7 @@ body {
 
 #footer {
   display: none;
-  background-image: url(/images/footer_bg.png);
+  background-image: url(<%= App.base_path %>/images/footer_bg.png);
   background-position: top;
   background-repeat: repeat-x;
   margin: 0em;
@@ -465,11 +465,11 @@ h4.title, h1.title {
   line-height: 18px;
 }
 
-.repositorio .mime_plain_text { background-image: url(/images/tango/text-x-generic.png); }
-.repositorio .mime_presentation { background-image: url(/images/tango/x-office-presentation.png); }
-.repositorio .mime_document { background-image: url(/images/tango/x-office-document.png); }
-.repositorio .mime_binary { background-image: url(/images/tango/application-x-executable.png); }
-.repositorio .mime_zip { background-image: url(/images/tango/package-x-generic.png); }
+.repositorio .mime_plain_text { background-image: url(<%= App.base_path %>/images/tango/text-x-generic.png); }
+.repositorio .mime_presentation { background-image: url(<%= App.base_path %>/images/tango/x-office-presentation.png); }
+.repositorio .mime_document { background-image: url(<%= App.base_path %>/images/tango/x-office-document.png); }
+.repositorio .mime_binary { background-image: url(<%= App.base_path %>/images/tango/application-x-executable.png); }
+.repositorio .mime_zip { background-image: url(<%= App.base_path %>/images/tango/package-x-generic.png); }
 
 .spinner {
   float: right;
@@ -607,7 +607,7 @@ textarea {
 
 
 #wiki_preview {
-  background-image: url(/images/rascunho.png);
+  background-image: url(<%= App.base_path %>/images/rascunho.png);
   border: 2px solid #e4e4e4;
   padding: 10px;
   overflow: auto;
@@ -662,7 +662,7 @@ textarea {
   border-top: 1px solid #bbb;
 }
 
-xbody { background-image: url(/prototype/line.png); }
+xbody { background-image: url(<%= App.base_path %>/prototype/line.png); }
 xhtml * { background-color: transparent !important; }
 
 .menu, .content, #location {

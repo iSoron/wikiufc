@@ -82,7 +82,7 @@ class UsersController < ApplicationController
 			@user.save!
 			@color = @user.pref_color
 			flash[:message] = 'Settings updated'[]
-			redirect_to '/'
+			redirect_to index_path
 		end
 	end
 
@@ -103,7 +103,7 @@ class UsersController < ApplicationController
 	def logout
 		destroy_session
 		flash[:message] = 'You have logged out'[:logout_success]
-		redirect_to '/'
+		redirect_to index_path
 	end
 
 	def dashboard

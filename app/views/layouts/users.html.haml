@@ -1,6 +1,6 @@
 - @title = App.title
 - @location = capture do
-  = link_to(App.title, "/") + "&rsaquo;";
+  = link_to(App.title, index_url) + "&rsaquo;";
   = link_to("Usuários", users_path)
   - if @user and @user.id
     = "&rsaquo; " + link_to(h(@user.name), user_url(@user))

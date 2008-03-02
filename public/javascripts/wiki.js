@@ -2,7 +2,7 @@ events['#show_preview:click'] = function(element, e)
 {
 	spinner_start("preview");
 
-	new Ajax.Updater('wiki_preview', '/services/preview', {
+	new Ajax.Updater('wiki_preview', BASE_PATH + '/services/preview', {
 		parameters: {
 			text: $$('textarea')[0].value
 		},

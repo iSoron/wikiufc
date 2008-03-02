@@ -7,7 +7,6 @@ required_fields = %w(
 	language
 	max_upload_file_size
 	default_color
-	forum_uri
 )
 
 # Carrega as configuracoes personalizadas

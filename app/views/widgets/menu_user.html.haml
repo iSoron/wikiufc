@@ -3,5 +3,5 @@
     %h1= "User"[].titleize
     %ul
       /%li= link_to "Dashboard"[].titleize, dashboard_path
-      %li= link_to("User profile"[].titleize, user_url(session[:user_id]))
+      %li= link_to("User profile"[].titleize, user_url(@current_user))
       %li= link_to("Edit settings"[].titleize, settings_url)

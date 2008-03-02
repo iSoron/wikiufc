@@ -1,16 +1,17 @@
 # Geral
 App.language = "pt-br"
 App.title = "Wiki UFC"
+App.base_path = ""
 
 # Limites
 App.max_upload_file_size = 5.megabytes
 
 # Forum
-App.forum_uri = "http://127.0.0.1:3001/"
+#App.forum_uri = "http://127.0.0.1:3001/"
 
 # Tema
 App.default_color = 6
-App.default_avatar = "http://engsoft.isoron.org/images/avatar.png"
+App.default_avatar = "http://wikiufc.gelsol.org/images/avatar.png"
 App.color_schemes = [
     # Default
     [ "#000", "#069", "#455", "#455" ],

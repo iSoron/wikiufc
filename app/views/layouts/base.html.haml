@@ -6,8 +6,12 @@
     %title= @title || App.title
     %meta{'name' => 'robots', :content => 'noindex,nofollow'}
     %meta{'http-equiv' => 'Content-Type', 'content' => 'text/html; charset=UTF-8'}
-    %link{'href' => "/stylesheets/wiki.css", 'rel' => 'Stylesheet', 'type' => %'text/css'}
-    %link#css_color{'href' => "/stylesheets/themes/color.#@color.css", 'rel' => 'Stylesheet', 'type' => %'text/css'}
+
+    %link{'href' => "#{App.base_path}/stylesheets/wiki.css", 'rel' => 'Stylesheet', 'type' => %'text/css'}
+    %link#css_color{'href' => "#{App.base_path}/stylesheets/themes/color.#@color.css", 'rel' => 'Stylesheet', 'type' => %'text/css'}
+    
+    %script{:type => 'text/javascript'}
+      == BASE_PATH = "#{App.base_path}";
     = javascript_include_merged :base
 
   %body{'onload' => 'javascript: startup()'}
