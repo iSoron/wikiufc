@@ -6,12 +6,12 @@
   %dd= text_field 'event', 'title' 
 
   %dt
-    %label{:for => "event_date"} Data
-  %dd= date_select 'event', 'date', :order => [:day, :month, :year]
+    %label{:for => "event_time"} Data
+  %dd= date_select 'event', 'time', :order => [:day, :month, :year]
 
   %dt
     %label{:for => "event_time"} Horário
-  %dd= time_select 'event', 'time' 
+  %dd= time_select 'event', 'time', { :minute_step => 5 }
 
   %dt
     %label{:for => "event_description"} Descrição

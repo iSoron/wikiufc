@@ -57,7 +57,7 @@ module AuthenticationSystem
 			session[:return_to] = nil
 			redirect_to return_to
 		else
-			redirect_to index_url
+			redirect_to dashboard_url
 		end
 	end
 

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 28) do
+ActiveRecord::Schema.define(:version => 29) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file_name",     :null => false
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 28) do
 
   create_table "events", :force => true do |t|
     t.string   "title",                      :null => false
-    t.date     "date",                       :null => false
+    t.date     "date"
     t.datetime "time",                       :null => false
     t.integer  "created_by",                 :null => false
     t.integer  "course_id",   :default => 0, :null => false

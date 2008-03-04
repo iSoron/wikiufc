@@ -254,9 +254,6 @@ body {
   font-size: 24px;
 }
 
-.content p:first-child {
-  margin-top: 9px;
-}
 
 #innerwrapper_2column {
   padding: 0em 0px 0em 208px;
@@ -388,7 +385,7 @@ h4.title, h1.title {
   margin: 18px 0px;
 }
 
-.box h3, .box th {
+.box h3 {
   line-height: 34px;
   margin: 0px;
   border-bottom: 1px solid #eee;
@@ -408,37 +405,21 @@ h4.title, h1.title {
   border-bottom: 1px solid #f4f4f4;
 }
 
-.div_calendario .date {
-  line-height: 36px;
-  width: 105px;
-  text-align: right;
-  float: left;
+.div_calendario table, .div_news table {
+  width: 100%;
+}
+.div_calendario table tr td, .div_news table tr td {
+  padding-top: 9px;
+  padding-bottom: 9px;
 }
 
-.div_calendario ul {
-  padding-left: 115px;
-  margin-top: -1px;
-  margin-bottom: 0em;
-  border-top: 1px solid #eee;
-  list-style: none !important;
+.div_calendario table tr td:first-child, .div_news table tr td:first-child {
+  padding-left: 18px;
 }
 
-.div_calendario li {
-  border-bottom: 1px solid #eee;
-}
-
-.div_calendario .time {
-  padding-right: 1em;
-  width: 3em;
-  float: left;
-}
-
-.div_calendario .description {
-  padding-left: 4em;
-}
-
-.news {
-  margin-top: 18px;
+.div_calendario .cmd, .div_news .cmd {
+  margin-top: -9px;
+  line-weigth: 9px;
 }
 
 
@@ -532,30 +513,6 @@ select {
   margin-top: 9px;
 }
 
-.news .left {
-  float: left;
-  line-height: 18px;
-  margin: 0px;
-  width: 105px;
-  padding-top: 8px;
-  padding-right: 15px;
-  text-align: right;
-}
-
-.news h4 {
-  margin: 8px 0px;
-  padding: 0px;
-}
-
-.news p {
-  padding-left: 120px;
-  margin-top: 8px;
-}
-
-.news .line {
-  border-top: 1px solid #eee;
-  margin-bottom: 9px;
-}
 
 
 .history {
@@ -662,9 +619,6 @@ textarea {
   border-top: 1px solid #bbb;
 }
 
-xbody { background-image: url(<%= App.base_path %>/prototype/line.png); }
-xhtml * { background-color: transparent !important; }
-
 .menu, .content, #location {
   border-right: 2px solid #ddd;
   border-bottom: 2px solid #ddd;
@@ -741,37 +695,39 @@ text-align: center;
   margin-top: -1px;
 }
 
-ul.log li {
+/*.box ul li {
   border-top: 1px solid #eee;
-  padding: 4px 0px 4px 15px;
+  padding: 9px 0px 9px 15px;
   background-position: 0px 12px;
-}
+}*/
 
-table.log {
-    margin-top: 18px;
+.box table {
+    margin-bottom: 2px;
     border-collapse: collapse;
-    /*width: 100%;*/
 }
 
-table.log td {
+.box table td {
     border-top: 1px solid #eee;
     padding: 4px 12px;
 }
 
-table.log th {
+.box table th {
     padding: 4px 12px;
     border-top: 1px solid #eee;
     font-weight: normal;
     text-align: left;
 }
 
+.top { vertical-align: top; }
+.center { text-align: center !important; }
+.left { float: left !important; }
+.right { float: right !important; }
+.aright { text-align: right !important; }
+
 .pagination {
 	margin: 18px 0px;
 	text-align: right;
 }
-
-.left { float: left !important; }
-.right { float: right !important; }
 
 .fieldWithErrors input, .fieldWithErrors textarea {
   border: 2px solid #c00;
@@ -795,6 +751,13 @@ table.log th {
 #wiki_text h3 { font-size: 12px; }
 #wiki_text h4, #wiki_text h5, #wiki_text h6 { font-size: 11px; }
 
+.box h3. {
+  margin-bottom: -9px;
+  margin-top: 18px;
+  padding-top: 9px;
+  font-weight: normal;
+}
+
 .content ol li {
   background-image: none;
   padding: 0px;
@@ -803,3 +766,24 @@ table.log th {
 ul ul, ul ol, ol ul, ol ol {
   margin: 0px;
 }
+
+li p, td p {
+  margin-top: 0px;
+}
+
+.dashboard td:first-child {
+  padding-left: 27px;
+}
+
+.dashboard table tr td {
+  padding-right: 9px;
+}
+
+.dashboard .box ul {
+  margin-bottom: 0px;
+}
+
+
+xbody { background-image: url(<%= App.base_path %>/prototype/line.png); background-repeat: repeat; }
+xhtml * { background-color: transparent !important; }
+

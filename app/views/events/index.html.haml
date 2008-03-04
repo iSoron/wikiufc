@@ -1,6 +1,8 @@
+= javascript_include_tag 'events'
+
 - cache do
 
-  - last_event = nil
+  - last_date = nil
 
   .cmd
     = action_icon 'add', 'Adicionar evento', new_course_event_url
@@ -9,31 +11,27 @@
   %h1.title Calendário
 
   .box.div_calendario
+    - if !@events.empty?
+      %table
+        - @events.each do |event|
+          %tr[event]
+            %td.top.aright{:width => '1%'}
+              = event.time.strftime("%d&nbsp;de&nbsp;%B") #unless event.time == last_date
+            %td.top{:width => '1%'}
+              = event.time.strftime("%H:%M")
+            %td.top
+              .title=link_to h(event.title), course_event_url(@course, event)
+              .description{:style => (event.id == params[:id].to_i ? '' : 'display: none')}
+                %div.cmd
+                  = action_icon 'edit', 'Editar', edit_course_event_url(@course, event)
+                  = action_icon 'trash', 'Excluir', course_event_url(@course, event), :confirm => 'Tem certeza que deseja excluir?', :method => :delete
+                = h(event.description)
+                = "Sem descrição" if event.description.empty?
 
-    - @events.each do |event|
-      - if last_event != event.date
-        = "</ul></div>" if last_event
-        .date= event.date.strftime("%d de %B")
-        = "<div><ul>"
-
-      %li[event]
-        .time= event.time.strftime("%H:%M")
-        = link_to h(event.title), course_event_url(@course, event)
-
-        %div.description{:style => (event.id == params[:id].to_i ? '' : 'display: none')}
-          %div.cmd{:style => "height: 27px; margin-top: -27px;"}
-            = action_icon 'edit', 'Editar', edit_course_event_url(@course, event)
-            = action_icon 'trash', 'Excluir', course_event_url(@course, event), :confirm => 'Tem certeza que deseja excluir?', :method => :delete
-          = h(event.description)
-          = "Sem descrição" if event.description.empty?
-
-      - last_event = event.date
-
-    = "</ul></div>" if !@events.empty?
-
-  - if @events.empty?
-    .box
-      %ul
-        %li.grey Nenhum evento
+          - last_date = event.time
+    - else
+      .box
+        %ul
+          %li.no_itens Nenhum evento
 
   %br

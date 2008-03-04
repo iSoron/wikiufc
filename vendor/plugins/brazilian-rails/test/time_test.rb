@@ -16,7 +16,7 @@ class TimeTest < Test::Unit::TestCase
     assert_equal [nil,
       "Janeiro",
       "Fevereiro",
-      "Marco",
+      "Março",
       "Abril",
       "Maio",
       "Junho",

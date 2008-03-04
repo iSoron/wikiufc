@@ -8,13 +8,14 @@
   .box
     %ul
       - if logged_in?
-        - unless @current_user.courses.empty?
-          %h3 Disciplinas matriculadas
-          - for course in @current_user.courses
-            %li{highlight(course.id)}
-              .right
-                = action_icon('subtract', 'Desmatricular-se', unenroll_course_url(course))
-              = link_to h(course.full_name), course_url(course)
+        %h3 Disciplinas Matriculadas
+        - if @current_user.courses.empty?
+          %li.no_itens Nenhuma disciplina matriculada
+        - for course in @current_user.courses
+          %li{highlight(course.id)}
+            .right
+              = action_icon('subtract', 'Desmatricular-se', unenroll_course_url(course))
+            = link_to h(course.full_name), course_url(course)
 
       - old_period = 0
       - for course in @courses

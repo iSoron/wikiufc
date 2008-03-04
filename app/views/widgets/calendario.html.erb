@@ -21,7 +21,7 @@
 			  cell_text = d.mday
 			  cell_attrs = {:class => 'day'}
 			  @events.each do |e|
-				if e.date == d
+				if e.time == d
 					cell_attrs[:onclick] = "show_events('#{d.to_s}')"
 					cell_attrs[:class] = 'specialDay'
 					cell_text = link_to d.mday, "#"
@@ -35,8 +35,8 @@
 		<div class="widget_events">
 			<ul>
 				<% @events.each do |e| -%>
-				<li style="display: none" class="event_item events_<%=e.date.to_s%>">
-					<%= link_to e.date.strftime("%d de %B"), course_event_url(@course, e) %>.
+				<li style="display: none" class="event_item events_<%=e.time.to_s%>">
+					<%= link_to e.time.strftime("%d de %B"), course_event_url(@course, e) %>.
 					<%= h(e.title) %>. <%= h(e.description) %>
 				</li>
 				<% end -%>

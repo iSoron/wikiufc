@@ -21,8 +21,8 @@ class Event < ActiveRecord::Base
 		courses.each do |course|
 			course.events.each do |user_event|
 				event = Icalendar::Event.new
-				event.start = user_event.date
-				event.end = user_event.date
+				event.start = user_event.time
+				event.end = user_event.time
 				event.summary = "#{course.short_name}: #{user_event.title}"
 				event.description = user_event.description
 				cal.add(event)
