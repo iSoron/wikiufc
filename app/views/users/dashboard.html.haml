@@ -1,0 +1,51 @@
+%h4.title Dashboard
+%h1.title= "Bem vindo, #{h(@current_user.display_name)}"
+
+.dashboard
+  .box
+    - last_time = nil
+    %h3 Notícias Recentes
+
+    - if @events.empty?
+      %ul
+        %li.no_itens Nenhum notícia recente
+
+    %table
+      - @news.each do |n|
+        %tr
+          %td.top.aright
+            = n.timestamp.strftime("%d&nbsp;de&nbsp;%B")
+          %td
+            = link_to(h(n.course.full_name), course_url(n.course)) + " &rsaquo;"
+            = link_to(h(n.title), course_news_url(n.course, n))
+            - unless n.body.empty?
+              %p= h(n.body)
+
+  .box
+    - last_time = nil
+    %h3 Próximos Eventos
+
+    - if @events.empty?
+      %ul
+        %li.no_itens Nenhum evento próximo
+
+    %table
+      - @events.each do |n|
+        %tr
+          %td.aright.top
+            = n.time.strftime("%d&nbsp;de&nbsp;%B") #unless n.time == last_time
+            - last_time = n.time
+          %td.top
+            = n.time.strftime("%H:%M")
+          %td.top
+            = link_to(h(n.course.full_name), course_url(n.course)) + " &rsaquo;"
+            = link_to(h(n.title), course_event_url(n.course, n))
+
+  .box
+    %h3 Disciplinas Matriculadas
+    %ul
+      - if @current_user.courses.empty?
+        %li.no_itens Nenhuma disciplina matriculada
+
+      - @current_user.courses.each do |course|
+        %li= link_to(h(course.full_name), course_url(course))
