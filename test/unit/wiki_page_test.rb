@@ -16,7 +16,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class WikiPageTest < Test::Unit::TestCase
 
 	def test_should_create_new_version_when_editing
-		wp = WikiPage.create(:content => 'test', :title => 'test', :version => 1, :course_id => 1)
+		wp = WikiPage.create(:content => 'test', :title => 'test', :version => 1, :course_id => 1, :user_id => 1, :description => 'teste')
 		assert !wp.save_version?
 
 		wp.content = 'new content'
@@ -24,7 +24,7 @@ class WikiPageTest < Test::Unit::TestCase
 	end
 
 	def test_should_not_create_new_version_when_reordering
-		wp = WikiPage.create(:content => 'test', :title => 'test', :version => 1, :course_id => 1)
+		wp = WikiPage.create(:content => 'test', :title => 'test', :version => 1, :course_id => 1, :user_id => 1, :description => 'teste')
 		assert !wp.save_version?
 
 		wp.move_higher

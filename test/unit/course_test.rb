@@ -17,68 +17,6 @@ class CourseTest < Test::Unit::TestCase
 
 	fixtures :courses
 
-	def test_crud
-		# Create
-		old_count = Course.count
-
-		c = Course.new
-		c.short_name  = 'teste'
-		c.full_name   = 'teste'
-		c.description = 'teste'
-
-		assert c.save
-		assert_equal old_count + 1, Course.count
-
-		# Retrieve
-		c2 = Course.find(c.id)
-		assert_equal c2.description, c.description
-		assert_equal c2.full_name, c.full_name
-		assert_equal c2.short_name, c.short_name
-		
-		# Update
-		assert c.update_attributes(:short_name => 'teste29')
-		assert_equal c.short_name, 'teste2'
-		
-		# Delete
-		id = c.id
-		assert c.destroy
-		assert_raises(ActiveRecord::RecordNotFound) { Course.find(id) }
-		assert_equal old_count, Course.count
-	end
-
-	
-	def test_validates_presence
-		required_fields = [:short_name, :full_name, :description]
-		required_fields.each do |attr|
-			c = courses(:course_1).clone
-			c.short_name = 'new_test'
-			c.send("#{attr}=", "")
-
-			assert !c.valid?, attr
-			assert_equal 1, c.errors.count, attr
-			assert_not_nil c.errors[attr], attr
-		end
-	end
-
-	
-	def test_validates_uniqueness_of_short_name
-		c = courses(:course_1).clone
-		assert !c.save
-		assert_not_nil c.errors[:short_name]
-	end
-
-
-	def test_associations
-		associations = [:attachments, :wiki_pages, :shoutbox_messages, :news, :events]
-		c = courses(:course_1)
-		associations.each do |a|
-			assert_nothing_raised { 
-				c.send("#{a}").find(:all)
-			}
-		end
-	end
-
-
 	def test_orphaned_records
 		# Escolhe um curso qualquer
 		course = courses(:course_1)

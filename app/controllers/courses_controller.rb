@@ -13,9 +13,9 @@
 
 class CoursesController < ApplicationController
 
-	before_filter :find_course, :except => [ :index ]
 	before_filter :require_admin, :only => [ :new, :create, :edit, :update, :destroy ]
 	before_filter :require_login, :only => [ :enroll, :unenroll ]
+	before_filter :find_course, :except => [ :index ]
 	after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
 
 	def index

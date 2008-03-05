@@ -17,7 +17,7 @@ module AuthenticationSystem
 		if !logged_in?
 			flash[:warning] = 'You must be logged in to access this section of the site'[:login_required]
 			session[:return_to] = request.request_uri
-			redirect_to :controller => 'users', :action => 'login'
+			redirect_to login_url
 		end
 	end
 

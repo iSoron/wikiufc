@@ -15,7 +15,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 require 'courses_controller'
 
 # Re-raise errors caught by the controller.
-class CoursesController; def rescue_action(e) raise e end; end
+#class CoursesController; def rescue_action(e) raise e end; end
 
 class CoursesControllerTest < Test::Unit::TestCase
 

@@ -28,7 +28,13 @@ class ApplicationController < ActionController::Base
 		# Acesso negado
 		if exception.is_a?(AccessDenied)
 			respond_to do |format|
-				format.html { render :file => "#{RAILS_ROOT}/public/401.html", :status => 401 }
+				format.html { 
+					if logged_in?
+						render :file => "#{RAILS_ROOT}/public/401.html", :status => 401
+					else
+						login_by_html
+					end
+				}
 				format.xml { head 401 }
 			end
 
