@@ -1,15 +1,18 @@
 %h4.title Dashboard
 %h1.title= "Bem vindo, #{h(@current_user.display_name)}"
 
+= auto_discovery_link_tag :rss, formatted_dashboard_url(:secret => @current_user.secret, :format => 'rss')
+
 .dashboard
   .box
+    .cmd
+      =link_to "rss", formatted_dashboard_url(:secret => @current_user.secret, :format => 'rss')
     - last_time = nil
-    %h3 Notícias Recentes
 
+    %h3 Notícias Recentes
     - if @news.empty?
       %ul
         %li.no_itens Nenhum notícia recente
-
     %table
       - @news.each do |n|
         %tr
@@ -22,13 +25,14 @@
               %p= h(n.body)
 
   .box
+    .cmd
+      =link_to "ical", formatted_dashboard_url(:secret => @current_user.secret, :format => 'ics')
     - last_time = nil
-    %h3 Próximos Eventos
 
+    %h3 Próximos Eventos
     - if @events.empty?
       %ul
         %li.no_itens Nenhum evento próximo
-
     %table
       - @events.each do |n|
         %tr
@@ -49,3 +53,4 @@
 
       - @current_user.courses.each do |course|
         %li= link_to(h(course.full_name), course_url(course))
+

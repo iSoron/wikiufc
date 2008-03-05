@@ -16,6 +16,21 @@ class LogEntry < ActiveRecord::Base
 	belongs_to :course
 
 	def reversible?() false end
+
+	def to_xml(options = {})
+		options[:indent] ||= 2
+		xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+		xml.instruct! unless options[:skip_instruct]
+		xml.log_entry do
+			xml.id self.id
+			xml.course_id self.course_id
+			xml.created_at self.created_at
+			xml.target_id self.target_id
+			xml.user_id self.user_id
+			xml.type self.type
+			xml.version self.version unless self.version.nil?
+		end
+	end
 end
 
 require 'log_entry/attachment_log_entry.rb'

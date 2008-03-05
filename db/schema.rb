@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 29) do
+ActiveRecord::Schema.define(:version => 30) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file_name",     :null => false
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(:version => 29) do
     t.datetime "last_seen",                          :null => false
     t.string   "login_key"
     t.boolean  "admin",           :default => false, :null => false
+    t.string   "secret",                             :null => false
   end
 
   create_table "wiki_page_versions", :force => true do |t|

@@ -35,6 +35,9 @@ wiki_page_removed: Página wiki removida
 wiki_page_updated: Página wiki atualizada
 wiki_page_restored: Página wiki restaurada
 
+recent_changes: Mudanças recentes
+log_about: Mudanças recentes em {disciplina}
+
 undo: Desfazer
 login_required: É necessário fazer login para acessar esta área do site
 

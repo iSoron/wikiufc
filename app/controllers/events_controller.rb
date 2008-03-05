@@ -41,7 +41,7 @@ class EventsController < ApplicationController
 		@event.created_by = session[:user_id]
 		@event.save!
 		flash[:notice] = 'Event created'[]
-        
+
 		EventCreateLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @course)
 
 		respond_to do |format|

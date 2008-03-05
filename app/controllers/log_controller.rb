@@ -19,6 +19,8 @@ class LogController < ApplicationController
 		@log_entries = @course.log_entries.find(:all, :limit => 50) #.paginate(:page => params[:page], :per_page => 30)
 		respond_to do |format|
 			format.html
+			format.rss { response.content_type = Mime::RSS }
+			format.xml { render :xml => @log_entries }
 		end
 	end
 

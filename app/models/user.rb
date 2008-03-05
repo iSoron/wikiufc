@@ -48,6 +48,8 @@ class User < ActiveRecord::Base
 		xml.user do
 			xml.id self.id
 			xml.name self.name
+			xml.display_name self.display_name
+			xml.login self.login
 			xml.created_at self.created_at
 			xml.last_seen self.last_seen
 			xml.description self.description
@@ -91,6 +93,7 @@ class User < ActiveRecord::Base
 	
 	def before_save
 		self.salt = User.random_string(10) if !self.salt?
+		self.secret = User.random_string(32) if !self.secret?
 		self.hashed_password = User.encrypt(@password, self.salt) if !@password.blank?
 	end
 

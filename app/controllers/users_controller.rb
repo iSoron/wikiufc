@@ -68,7 +68,7 @@ class UsersController < ApplicationController
 				@user.save!
 				setup_session(@user)
 				flash[:message] = 'User account created'[]
-				redirect_to user_path(@user)
+				redirect_to dashboard_url
 			rescue ActiveRecord::RecordInvalid
 				flash[:warning] = 'Não foi possível cadastrar a conta.'
 			end
@@ -82,7 +82,7 @@ class UsersController < ApplicationController
 			@user.save!
 			@color = @user.pref_color
 			flash[:message] = 'Settings updated'[]
-			redirect_to index_path
+			redirect_to dashboard_url
 		end
 	end
 
@@ -109,12 +109,25 @@ class UsersController < ApplicationController
 	def dashboard
 		@news = []
 		@events = []
+		
+		if params[:format] == 'html'
+			return unless require_login
+			@user = @current_user
+		else
+			@user = User.find_by_secret(params[:secret])
+		end
 
-		unless @current_user.courses.empty?
-			@news = News.find(:all, :conditions => [ 'receiver_id in (?)', @current_user.courses ],
+		unless @user.courses.empty?
+			@news = News.find(:all, :conditions => [ 'receiver_id in (?)', @user.courses ],
 					:order => 'timestamp desc', :limit => 5)
 			@events = Event.find(:all, :conditions => [ 'course_id in (?) and (time > ?) and (time < ?)',
-			@current_user.courses, 1.day.ago, 21.days.from_now ], :order => 'time')
+					@user.courses, 1.day.ago, 21.days.from_now ], :order => 'time')
+		end
+
+		respond_to do |format|
+			format.html
+			format.rss { response.content_type = Mime::RSS }
+			format.ics { response.content_type = Mime::ICS; render :text => Event.to_ical(@user.courses) }
 		end
 	end
 

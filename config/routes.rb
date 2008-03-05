@@ -71,7 +71,8 @@ ActionController::Routing::Routes.draw do |map|
    end
 	
 	# Pagina pessoal
-	map.dashboard '/dashboard', :controller => 'users', :action => 'dashboard'
+	map.dashboard '/dashboard', :controller => 'users', :action => 'dashboard', :format => 'html'
+    map.formatted_dashboard '/dashboard/:secret.:format', :controller => 'users', :action => 'dashboard'
 
 	# Stylesheets
 	map.connect 'stylesheets/:action.:format', :controller => 'stylesheets'
