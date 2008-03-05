@@ -17,14 +17,16 @@ class Event < ActiveRecord::Base
 	generate_validations
 
 	def Event.to_ical(courses)
+		courses = [courses] unless courses.kind_of?(Array)
 		cal = Icalendar::Calendar.new
 		courses.each do |course|
-			course.events.each do |user_event|
+			course.events.each do |e|
+				date = DateTime.civil(e.time.year, e.time.month, e.time.day, e.time.hour, e.time.min)
 				event = Icalendar::Event.new
-				event.start = user_event.time
-				event.end = user_event.time
-				event.summary = "#{course.short_name}: #{user_event.title}"
-				event.description = user_event.description
+				event.start = date
+				event.end = date + 1.hour
+				event.summary = "#{course.short_name}: #{e.title}"
+				event.description = e.description
 				cal.add(event)
 			end
 		end
