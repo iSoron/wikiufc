@@ -26,7 +26,7 @@ class Course < ActiveRecord::Base
 	         :foreign_key => "receiver_id",
 			 :order => 'id desc'
 
-	has_many :events, :order => "date asc, time asc"
+	has_many :events, :order => "time asc"
 
 	has_many :log_entries, :order => "created_at desc"
 

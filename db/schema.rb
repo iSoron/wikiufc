@@ -37,13 +37,12 @@ ActiveRecord::Schema.define(:version => 29) do
   end
 
   create_table "events", :force => true do |t|
-    t.string   "title",                      :null => false
-    t.date     "date"
-    t.datetime "time",                       :null => false
-    t.integer  "created_by",                 :null => false
-    t.integer  "course_id",   :default => 0, :null => false
+    t.string   "title",                                          :null => false
+    t.integer  "created_by",                                     :null => false
+    t.integer  "course_id",   :default => 0,                     :null => false
     t.text     "description"
     t.datetime "deleted_at"
+    t.datetime "time",        :default => '2008-03-05 04:25:27', :null => false
   end
 
   create_table "log_entries", :force => true do |t|

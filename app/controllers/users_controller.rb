@@ -113,8 +113,8 @@ class UsersController < ApplicationController
 		unless @current_user.courses.empty?
 			@news = News.find(:all, :conditions => [ 'receiver_id in (?)', @current_user.courses ],
 					:order => 'timestamp desc', :limit => 5)
-			@events = Event.find(:all, :conditions => [ 'course_id in (?) and (date > ?) and (date < ?)',
-			@current_user.courses, 1.day.ago, 21.days.from_now ], :order => 'date')
+			@events = Event.find(:all, :conditions => [ 'course_id in (?) and (time > ?) and (time < ?)',
+			@current_user.courses, 1.day.ago, 21.days.from_now ], :order => 'time')
 		end
 	end
 

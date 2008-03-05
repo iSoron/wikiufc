@@ -32,8 +32,8 @@ class EventsControllerTest < Test::Unit::TestCase
 		setup { login_as :bob }
 		should_be_restful do |resource|
 			resource.parent = [ :course ]
-			resource.create.params = { :title => 'test', :date => Date.today, :time => Time.now, :description => 'test', :created_by => 1 }
-			resource.update.params = { :title => 'test', :date => Date.today, :time => Time.now, :description => 'test', :created_by => 1 }
+			resource.create.params = { :title => 'test', :time => Time.now, :description => 'test', :created_by => 1 }
+			resource.update.params = { :title => 'test', :time => Time.now, :description => 'test', :created_by => 1 }
 
 		end
 	end
@@ -43,8 +43,8 @@ class EventsControllerTest < Test::Unit::TestCase
 		setup { logout }
 		should_be_restful do |resource|
 			resource.parent = [ :course ]
-			resource.create.params = { :title => 'test', :date => Date.today, :time => Time.now, :description => 'test', :created_by => 1 }
-			resource.update.params = { :title => 'test', :date => Date.today, :time => Time.now, :description => 'test', :created_by => 1 }
+			resource.create.params = { :title => 'test', :time => Time.now, :description => 'test', :created_by => 1 }
+			resource.update.params = { :title => 'test', :time => Time.now, :description => 'test', :created_by => 1 }
 			resource.denied.actions = [ :new, :edit, :create, :update, :destroy ]
 			resource.denied.redirect = "'/login'"
 			resource.denied.flash = /must be logged in/i

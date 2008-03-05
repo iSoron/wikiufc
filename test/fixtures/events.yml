@@ -16,7 +16,6 @@ event1:
   course_id: 1
   created_by: 1
   title: Event 1
-  date: <%= Date.today %>
   time: <%= Time.now %>
   description: A random test event
 #two:

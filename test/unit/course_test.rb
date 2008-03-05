@@ -36,7 +36,7 @@ class CourseTest < Test::Unit::TestCase
 				:timestamp => Time.now, :type => "News",
 				:sender_id => 0, :receiver_id => course.id)
 		
-		event = Event.create(:title => 'test', :date => Time.now, :time => Time.now,
+		event = Event.create(:title => 'test', :time => Time.now,
 				:created_by => 0, :course_id => course.id, :description => 'test')
 
 		# Deleta o curso
