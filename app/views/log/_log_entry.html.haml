@@ -1,0 +1,5 @@
+= render(:partial => 'log/attachment_log_entry.html.haml', :locals => { :entry => entry }) if entry.kind_of?(AttachmentLogEntry)
+= render(:partial => 'log/event_log_entry.html.haml', :locals => { :entry => entry }) if entry.kind_of?(EventLogEntry)
+= render(:partial => 'log/news_log_entry.html.haml', :locals => { :entry => entry }) if entry.kind_of?(NewsLogEntry)
+= render(:partial => 'log/wiki_log_entry.html.haml', :locals => { :entry => entry }) if entry.kind_of?(WikiLogEntry)
+= "(" + link_to("undo", undo_course_log_url(@course, entry)) + ")" if entry.reversible?
