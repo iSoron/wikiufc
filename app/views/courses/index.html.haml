@@ -1,30 +1,30 @@
 .cmd
   = action_icon('add', 'Cadastrar nova disciplina', new_course_url) if admin?
 
-- cache do
-  %h4.title= App.title
-  %h1.title Disciplinas
+%h4.title= App.title
+%h1.title Disciplinas
 
-  .box
-    %ul
-      - if logged_in?
-        %h3 Disciplinas Matriculadas
-        - if @current_user.courses.empty?
-          %li.no_itens Nenhuma disciplina matriculada
-        - for course in @current_user.courses
-          %li{highlight(course.id)}
-            .right
-              = action_icon('subtract', 'Desmatricular-se', unenroll_course_url(course))
-            = link_to h(course.full_name), course_url(course)
-
-      - old_period = 0
-      - for course in @courses
-        - if course.period != old_period
-          %h3= (course.period == 99 ? "Optativas" : "Semestre #{course.period}")
-          - old_period = course.period
-
+.box
+  %ul
+    - if logged_in?
+      %h3 Disciplinas Matriculadas
+      - if @current_user.courses.empty?
+        %li.no_itens Nenhuma disciplina matriculada
+      - for course in @current_user.courses
         %li{highlight(course.id)}
           .right
-            = action_icon('add', 'Matricular-se', enroll_course_url(course))
+            = action_icon('subtract', 'Desmatricular-se', unenroll_course_url(course))
           = link_to h(course.full_name), course_url(course)
+
+    -# cache(courses_path) do 
+    - old_period = 0
+    - for course in @courses
+      - if course.period != old_period
+        %h3= (course.period == 99 ? "Optativas" : "Semestre #{course.period}")
+        - old_period = course.period
+
+      %li
+        .right
+          = action_icon('add', 'Matricular-se', enroll_course_url(course))
+        = link_to h(course.full_name), course_url(course)
 

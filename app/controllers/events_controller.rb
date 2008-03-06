@@ -14,7 +14,7 @@
 class EventsController < ApplicationController
 
 	before_filter :find_event, :except => [ :mini_calendar, :undelete ]
-	after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
+	#after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
 
 	def index
 		@events = @course.events
@@ -113,7 +113,7 @@ class EventsController < ApplicationController
 	end
 
 	def cache_sweep
-		expire_fragment(:controller => 'courses', :action => 'show', :part => 'right')
-		expire_fragment(:action => 'index')
+		expire_fragment(course_path(@course.id, :part => 'right'))
+		expire_fragment(course_events_path(@course.id))
 	end
 end

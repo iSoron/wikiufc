@@ -111,7 +111,7 @@ class UsersController < ApplicationController
 		@events = []
 		
 		if params[:format] == 'html'
-			return unless require_login
+			return require_login unless logged_in?
 			@user = @current_user
 		else
 			@user = User.find_by_secret(params[:secret])
@@ -119,7 +119,7 @@ class UsersController < ApplicationController
 
 		unless @user.courses.empty?
 			@news = News.find(:all, :conditions => [ 'receiver_id in (?)', @user.courses ],
-					:order => 'timestamp desc', :limit => 5)
+					:order => 'timestamp desc', :limit => 20)
 			@events = Event.find(:all, :conditions => [ 'course_id in (?) and (time > ?) and (time < ?)',
 					@user.courses, 1.day.ago, 21.days.from_now ], :order => 'time')
 		end

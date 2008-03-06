@@ -75,8 +75,8 @@ ActionController::Routing::Routes.draw do |map|
     map.formatted_dashboard '/dashboard/:secret.:format', :controller => 'users', :action => 'dashboard'
 
 	# Stylesheets
-	map.connect 'stylesheets/:action.:format', :controller => 'stylesheets'
-	map.connect 'stylesheets/themes/:action.:color.:format', :controller => 'stylesheets'
+	map.connect 'stylesheets/cache/:action.:format', :controller => 'stylesheets'
+	map.connect 'stylesheets/cache/:action.:color.:format', :controller => 'stylesheets'
 	
 	# Front page
 	map.index '', :controller => 'courses', :action => 'index'

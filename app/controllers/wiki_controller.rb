@@ -16,7 +16,9 @@ class WikiController < ApplicationController
 	verify :params => :text, :only => :preview, :redirect_to => { :action => :show }
 	verify :params => [:from, :to], :only => :diff, :redirect_to => { :action => :versions }
 
-	after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
+	#after_filter :cache_sweep, :only => [ :create, :update, :destroy, :move_up,
+	#		:move_down, :undelete ]
+
 	before_filter :find_wiki, :except => [ :preview, :undelete ]
 	before_filter :require_login, :only => [ :new, :create, :edit, :update, :destroy,
 			:move_up, :move_down, :undelete ]
@@ -158,7 +160,7 @@ class WikiController < ApplicationController
 	end
 
 	def cache_sweep
-		expire_fragment(:controller => 'courses', :action => 'show')
-		expire_fragment(:action => 'show')
+		expire_fragment course_path(@course.id)
+		expire_fragment course_wiki_path(@course.id, @wiki_page.id)
 	end
 end

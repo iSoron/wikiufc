@@ -16,12 +16,10 @@ class CoursesController < ApplicationController
 	before_filter :require_admin, :only => [ :new, :create, :edit, :update, :destroy ]
 	before_filter :require_login, :only => [ :enroll, :unenroll ]
 	before_filter :find_course, :except => [ :index ]
-	after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
+	#after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
 
 	def index
-		@courses = Course.find(:all,
-			:order => 'period asc, full_name asc',
-			:conditions => (logged_in? and !@current_user.courses.empty? ? [ 'id not in (?)', @current_user.courses] : ''))
+		@courses = Course.find(:all, :order => 'period asc, full_name asc')
 
 		respond_to do |format|
 			format.html
@@ -104,9 +102,8 @@ class CoursesController < ApplicationController
 	end
 
 	def cache_sweep
-		expire_fragment(:action => 'show', :part => 'right')
-		expire_fragment(:action => 'show', :part => 'left')
-		expire_fragment(:action => 'show')
-		expire_fragment(:action => 'index')
+		expire_fragment(course_path(@course.id, :part => 'right'))
+		expire_fragment(course_path(@course.id))
+		expire_fragment(courses_path)
 	end
 end

@@ -1,7 +1,7 @@
-- cache do
-  %h4.title= App.title
-  %h1.title Usuários
+-# cache(users_path) do
+%h4.title= App.title
+%h1.title Usuários
 
-  .box
-    %ul
-      = render :partial => @users
+.box
+  %ul
+    = render :partial => @users

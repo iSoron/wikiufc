@@ -17,7 +17,7 @@ class AttachmentsController < ApplicationController
 	#	:redirect_to => { :controller => 'courses', :action => :show }
 
 	before_filter :find_attachment, :except => [ :undelete ]
-	after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
+	#after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
 	
 	def show
 	end
@@ -100,6 +100,6 @@ class AttachmentsController < ApplicationController
 	end
 
 	def cache_sweep
-		expire_fragment(:controller => 'courses', :action => 'show')
+		expire_fragment(course_path(@course.id))
 	end
 end

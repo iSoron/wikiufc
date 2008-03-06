@@ -14,7 +14,7 @@
 class StylesheetsController < ApplicationController
 
 	layout nil
-	caches_page :wiki
+	caches_page :wiki, :color
 	before_filter :set_headers
 
 	private

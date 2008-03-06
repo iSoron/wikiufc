@@ -18,7 +18,7 @@ class NewsController < ApplicationController
 	#	:redirect_to => { :action => :list }
 
 	before_filter :find_new, :except => [ :undelete ]
-	after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
+	#after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
 
 	def index
 		@news = @course.news
@@ -105,7 +105,7 @@ class NewsController < ApplicationController
 	end
 
 	def cache_sweep
-		expire_fragment(:controller => 'courses', :action => 'show', :part => 'right')
-		expire_fragment(:action => 'index')
+		expire_fragment(course_path(@course.id, :part => :right))
+		expire_fragment(course_news_index_path(@course.id))
 	end
 end

@@ -1,3 +1,5 @@
+-# cache(course_wiki_path(@course.id, @wiki_page.id)) do
+
 = javascript_include_tag 'wiki'
 
 .cmd
@@ -5,12 +7,7 @@
   = action_icon 'undo', 'Historico', versions_course_wiki_url
   = action_icon 'trash', 'Excluir página wiki', course_wiki_url, :confirm => 'Tem certeza que deseja excluir?', :method => :delete
 
-- cache(:action => 'show', :short_name => h(@course.short_name), :title => h(@wiki_page.title) ) do
-
-  %h4.title= h(@course.full_name)
-  %h1.title= h(@wiki_page.title)
-  #wiki_text
-    = @wiki_page.to_html
-
-%script{:language => 'javascript'}
-  == enumerate_headers();
+%h4.title= h(@course.full_name)
+%h1.title= h(@wiki_page.title)
+#wiki_text
+  = @wiki_page.to_html
