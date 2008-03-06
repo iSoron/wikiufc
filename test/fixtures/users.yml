@@ -21,7 +21,7 @@ bob:
   display_name: bob
   last_seen: <%= Time.now %>
   admin: true
-
+  secret: bob
 
 existingbob:
   id: 1000002
@@ -33,6 +33,7 @@ existingbob:
   display_name: existingbob
   last_seen: <%= Time.now %>
   admin: false
+  secret: existingbob
 
 longbob:
   id: 1000003
@@ -44,3 +45,4 @@ longbob:
   display_name: longbob
   last_seen: <%= Time.now %>
   admin: false
+  secret: longbob

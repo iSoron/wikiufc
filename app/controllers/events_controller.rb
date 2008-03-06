@@ -34,6 +34,7 @@ class EventsController < ApplicationController
 	end
 
 	def new
+		@event.time = Time.now
 	end
 
 	def create

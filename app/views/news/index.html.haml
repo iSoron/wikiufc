@@ -15,7 +15,7 @@
       %table
         - @course.news.each do |n|
           %tr[n]
-            %td.top.aright
+            %td.top.aright{:width => '1%'}
               = n.timestamp.strftime("%d&nbsp;de&nbsp;%B")
             %td
               .title= link_to h(n.title), course_news_url(@course, n)

@@ -25,14 +25,12 @@ class Attachment < ActiveRecord::Base
 		self.size = new_file.size
 	end
 
-	# Limpa o nome do arquivo
 	protected
 	def sanitize(filename)
 		filename = File.basename(filename)
 		filename.gsub(/[^\w\.\-]/, '_')
 	end
 
-	# Verifica se o arquivo é válido
 	def validate
 		if @tmp_file
 			errors.add("file") if @tmp_file.size == 0

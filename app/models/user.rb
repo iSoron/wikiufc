@@ -31,10 +31,7 @@ class User < ActiveRecord::Base
 	attr_protected :id, :salt
 	attr_accessor :password, :password_confirmation
 
-	has_many :shoutbox_messages,
-			 :class_name => 'UserShoutboxMessage',
-			 :foreign_key => "receiver_id",
-			 :order => 'id desc'
+	acts_as_paranoid
 
 	def User.find_by_login_and_pass(login, pass)
 		user = find(:first, :conditions => [ "login = ?", login ])

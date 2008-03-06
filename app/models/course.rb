@@ -13,23 +13,32 @@
 
 class Course < ActiveRecord::Base
 
-	has_many :attachments, :order => "file_name"
-	has_many :wiki_pages, :order => "position"
-	
-	has_many :shoutbox_messages,
-	         :class_name => 'CourseShoutboxMessage',
-	         :foreign_key => "receiver_id",
-			 :order => 'id desc'
+	# Associacoes
+	has_many :attachments,
+	         :order => "file_name",
+	          :dependent => :destroy
+
+	has_many :events,
+	         :order => "time asc",
+	         :dependent => :destroy
 
 	has_many :news,
-			 :class_name => 'News',
 	         :foreign_key => "receiver_id",
-			 :order => 'id desc'
+	        :order => "id desc",
+	        :dependent => :destroy
 
-	has_many :events, :order => "time asc"
+	has_many :log_entries,
+	         :order => "created_at desc",
+	         :dependent => :destroy
 
-	has_many :log_entries, :order => "created_at desc"
+	has_many :wiki_pages,
+	         :order => "position",
+	         :dependent => :destroy
 
+	# Plugins
+	acts_as_paranoid
+
+	# Validacao
 	generate_validations
 	validates_uniqueness_of :short_name
 	validates_format_of :short_name, :with => /^[^0-9]/
@@ -38,15 +47,6 @@ class Course < ActiveRecord::Base
 		App.inital_wiki_pages.each do |page_title|
 			wiki_page = WikiPage.new(:title => page_title, :version => 1, :content => App.initial_wiki_page_content)
 			self.wiki_pages << wiki_page
-		end
-	end
-
-	def after_destroy
-		associations = [:attachments, :wiki_pages, :shoutbox_messages, :news, :events]
-		associations.each do |assoc|
-			send("#{assoc}").each do |record|
-				record.destroy
-			end
 		end
 	end
 

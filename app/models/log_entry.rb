@@ -15,6 +15,8 @@ class LogEntry < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :course
 
+	acts_as_paranoid
+
 	def reversible?() false end
 
 	def to_xml(options = {})

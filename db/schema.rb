@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 30) do
+ActiveRecord::Schema.define(:version => 32) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file_name",     :null => false
@@ -22,11 +22,12 @@ ActiveRecord::Schema.define(:version => 30) do
   end
 
   create_table "courses", :force => true do |t|
-    t.string  "short_name",                       :null => false
-    t.string  "full_name",                        :null => false
-    t.text    "description"
-    t.string  "code",        :default => "CK000", :null => false
-    t.integer "period",      :default => 1,       :null => false
+    t.string   "short_name",                       :null => false
+    t.string   "full_name",                        :null => false
+    t.text     "description"
+    t.string   "code",        :default => "CK000", :null => false
+    t.integer  "period",      :default => 1,       :null => false
+    t.datetime "deleted_at"
   end
 
   add_index "courses", ["short_name"], :name => "index_courses_on_short_name", :unique => true
@@ -52,6 +53,7 @@ ActiveRecord::Schema.define(:version => 30) do
     t.integer  "version"
     t.integer  "target_id"
     t.string   "type"
+    t.datetime "deleted_at"
   end
 
   create_table "messages", :force => true do |t|
@@ -71,8 +73,8 @@ ActiveRecord::Schema.define(:version => 30) do
     t.datetime "updated_at"
   end
 
-  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "users", :force => true do |t|
     t.string   "login",                              :null => false
@@ -88,6 +90,7 @@ ActiveRecord::Schema.define(:version => 30) do
     t.string   "login_key"
     t.boolean  "admin",           :default => false, :null => false
     t.string   "secret",                             :null => false
+    t.datetime "deleted_at"
   end
 
   create_table "wiki_page_versions", :force => true do |t|
