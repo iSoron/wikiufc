@@ -23,7 +23,7 @@
         %h3= (course.period == 99 ? "Optativas" : "Semestre #{course.period}")
         - old_period = course.period
 
-      %li
+      %li{highlight(course.id)}
         .right
           = action_icon('add', 'Matricular-se', enroll_course_url(course))
         = link_to h(course.full_name), course_url(course)

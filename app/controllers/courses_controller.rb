@@ -19,7 +19,9 @@ class CoursesController < ApplicationController
 	#after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
 
 	def index
-		@courses = Course.find(:all, :order => 'period asc, full_name asc')
+		@courses = Course.find(:all,
+			:order => 'period asc, full_name asc',
+			:conditions => (logged_in? and !@current_user.courses.empty? ? [ 'id not in (?)', @current_user.courses] : ''))
 
 		respond_to do |format|
 			format.html
