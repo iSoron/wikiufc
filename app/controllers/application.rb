@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
 		# Erro de validacao
 		elsif exception.is_a?(ActiveRecord::RecordInvalid)
 			respond_to do |format|
-				format.html { render :action => (exception.record.new_record? ? 'new' : 'edit') }
+				format.html { render :action => (params[:from].nil? ? (exception.record.new_record? ? 'new' : 'edit') : params[:from]) }
 				format.xml { render :xml => exception.record.errors, :status => :unprocessable_entity }
 			end
 

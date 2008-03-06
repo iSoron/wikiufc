@@ -54,6 +54,10 @@ module ApplicationHelper
 		return {:class => 'highlight'} if (flash[:highlight] == name) 
 	end
 
+	def spinner(name)
+		return image_tag "loading.gif", :id => "spinner_#{name}", :style => "display:none"
+	end
+
 	def gravatar_url_for(email, size=80)
 		"http://www.gravatar.com/avatar.php?gravatar_id=#{Digest::MD5.hexdigest(email)}&size=#{size}&default=#{App.default_avatar}"
 	end

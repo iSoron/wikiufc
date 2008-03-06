@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 32) do
+ActiveRecord::Schema.define(:version => 33) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file_name",     :null => false
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(:version => 32) do
     t.string   "salt",                               :null => false
     t.datetime "created_at"
     t.string   "name",            :default => "",    :null => false
-    t.integer  "pref_color",      :default => 6,     :null => false
+    t.integer  "pref_color",      :default => 0,     :null => false
     t.string   "display_name",                       :null => false
     t.text     "description"
     t.datetime "last_seen",                          :null => false

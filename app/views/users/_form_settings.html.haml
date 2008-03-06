@@ -1,37 +1,44 @@
 = javascript_include_tag 'color'
 = error_messages_for 'user'
 
-%dl
-  - if defined?(signup) and signup
+= hidden_field_tag 'from', 'settings'
+
+.box
+  %h3 Informações Pessoais
+  %dl
+    - if defined?(signup) and signup
+      %dt
+        %label{:for => 'user_login'} Login
+      %dd= text_field('user', 'login')
+
     %dt
-      %label{:for => 'user_login'} Login
-    %dd= text_field('user', 'login')
+      %label{:for => 'user_name'} Nome completo
+    %dd= text_field('user', 'name')
 
-  %dt
-    %label{:for => 'user_name'} Nome completo
-  %dd= text_field('user', 'name')
+    %dt
+      %label{:for => 'user_display_name'} Nome de exibição
+    %dd= text_field('user', 'display_name')
 
-  %dt
-    %label{:for => 'user_display_name'} Nome de exibição
-  %dd= text_field('user', 'display_name')
+    %dt
+      %laber{:for => 'user_email'} Email
+    %dd= text_field('user', 'email')
 
-  %dt
-    %laber{:for => 'user_email'} Email
-  %dd= text_field('user', 'email')
+    %dt
+      %label{:for => 'user_password'} Senha
+    %dd
+      = password_field('user', 'password', {:value => '', :id => 'password'}) 
+      %span#passmeter &nbsp;
 
+    %dt
+      %label{:for => 'user_password_confirmation'} Confirmação de Senha
+    %dd
+      =password_field('user', 'password_confirmation', {:value => ''})
 
-  %dt
-    %label{:for => 'user_password'} Senha
-  %dd= password_field('user', 'password', {:value => '', :id => 'password'})
-
-  %dt
-    %label{:for => 'user_password_confirmation'} Confirmação de Senha
-  %dd= password_field('user', 'password_confirmation', {:value => ''})
-
-  #passmeter &nbsp;
-
-  %dt
-    %label{:for => 'user_color_pref'} Esquema de cores
-    = render :partial => 'widgets/color', :collection => App.color_schemes
-  %br.clear
+.box
+  %h3 Preferências
+  %dl
+    %dt
+      %label{:for => 'user_color_pref'} Esquema de cores
+      = render :partial => 'widgets/color', :collection => App.color_schemes
+    %br.clear
 
