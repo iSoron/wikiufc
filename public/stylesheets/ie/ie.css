@@ -1,0 +1,29 @@
+#innerwrapper_2column, #innerwrapper_3column {
+  height: 500px;
+  padding: 0px 9px;
+}
+
+#innerwrapper_2column {
+  padding-right: 0px;
+}
+
+.diff table tr td {
+  margin: 20px;
+  padding: 20px;
+}
+
+.box ul h3 {
+  border-bottom: 0px;
+  padding: 0px;
+  margin-top: 9px;
+  margin-bottom: -9px;
+}
+
+.float_panel_right .menu {
+  padding-bottom: 9px;
+}
+
+
+.menu h1 {
+border-bottom: 1px solid #eee;
+}

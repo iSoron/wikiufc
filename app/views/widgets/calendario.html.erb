@@ -4,16 +4,16 @@
 	<div class="menu">
 		<%= image_tag "loading.gif", :id => "spinner_calendar",
 				:class => "spinner", :style => "display:none" %>
-        <div class="cmd">
-          <%= action_icon 'add', 'Adicionar evento', new_course_event_url(@course) %>
-        </div>
+		<div class="cmd">
+		  <%= action_icon 'add', 'Adicionar evento', new_course_event_url(@course) %>
+		</div>
 		<h1>Calendário</h1>
 		<div id="calendar">
 <% end -%>
 		<%=
 			@year   ||= Time.now.year
 			@month  ||= Time.now.month
-      @events ||= @course.events
+			@events ||= @course.events
 
 			calendar({:year => @year, :month => @month, :table_class => 'calendario',
 					:abbrev => (0..1) }) do |d|
@@ -21,10 +21,10 @@
 			  cell_text = d.mday
 			  cell_attrs = {:class => 'day'}
 			  @events.each do |e|
-				if e.time == d
-					cell_attrs[:onclick] = "show_events('#{d.to_s}')"
+				if (e.time.year == d.year and e.time.month == d.month and e.time.day == d.day)
+					cell_attrs[:onclick] = "show_events('#{d.strftime('%Y_%m-%d')}')"
 					cell_attrs[:class] = 'specialDay'
-					cell_text = link_to d.mday, "#"
+					cell_text = d.mday
 				end
 			  end
 			  [cell_text, cell_attrs]
@@ -35,9 +35,9 @@
 		<div class="widget_events">
 			<ul>
 				<% @events.each do |e| -%>
-				<li style="display: none" class="event_item events_<%=e.time.to_s%>">
+				<li style="display: none" class="event_item events_<%=e.time.strftime('%Y_%m-%d')%>">
 					<%= link_to e.time.strftime("%d de %B"), course_event_url(@course, e) %>.
-					<%= h(e.title) %>. <%= h(e.description) %>
+					<%= h(e.title) %>. <%= truncate(h(e.description), 50) %>
 				</li>
 				<% end -%>
 			</ul>

@@ -55,7 +55,7 @@ module ApplicationHelper
 	end
 
 	def spinner(name)
-		return image_tag "loading.gif", :id => "spinner_#{name}", :style => "display:none"
+		return image_tag("loading.gif", :id => "spinner_#{name}", :style => "display:none")
 	end
 
 	def gravatar_url_for(email, size=80)
@@ -64,6 +64,6 @@ module ApplicationHelper
 
 	def action_icon(action_name, description, options = {}, html_options = {})
 		html_options.merge!({:class => 'icon', :alt => description, :title => description})
-		link_to(image_tag("action/#{action_name}.gif"), options, html_options)
+		link_to(image_tag("action/#{action_name}.gif", :title => description), options, html_options)
 	end
 end

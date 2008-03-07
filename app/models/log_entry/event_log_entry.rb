@@ -26,7 +26,7 @@ class EventDeleteLogEntry < EventLogEntry
 		e = Event.find_with_deleted(target_id)
 		e.update_attribute(:deleted_at, nil)
 		EventRestoreLogEntry.create!(:target_id => e.id, :user_id => current_user.id,
-				:course => e.course)
+				:course_id => e.course_id)
 	end
 end
 

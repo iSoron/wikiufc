@@ -57,7 +57,7 @@ ul ul, ol ol {
 	padding: 9px 15px;
 }
 
-.content code {
+.content code, .content pre {
 	background-color: #f4f4f4;
 }
 
@@ -136,7 +136,7 @@ body {
   background-position: top;
   background-repeat: repeat-x;
   color: #eee;
-  height: 28px;
+  height: 50px;
   margin: 0px -9px;
 }
 
@@ -156,7 +156,9 @@ body {
   height: 22px;
   border-bottom: 3px solid #ddd;
   margin: 0px -9px;
+  margin-top: -22px;
   color: #eee;
+  background-color: transparent !important;
 }
 
 #header_menu ul {
@@ -264,7 +266,6 @@ body {
 }
 
 .calendario {
-  width: 170px;
   border-top: 1px solid #eee;
   margin-top: -1px;
   padding: 9px 0px;
@@ -273,6 +274,7 @@ body {
 .calendario tr td {
   font-size: 11px;
   text-align: center;
+  width: 25px;
 }
 
 .calendario th {
@@ -284,6 +286,14 @@ body {
   color: #ccc;
 }
 
+.specialDay {
+  background-image: url(<%= App.base_path %>/images/bg_day.gif);
+  cursor: pointer;
+}
+
+.specialDay a, .specialDay a:hover {
+	border-bottom: 0px solid #ccc;
+}
 
 .widget_news li, .widget_events li, #shoutbox li, #shoutbox {
   font-size: 11px;

@@ -9,6 +9,12 @@
 
     %link{'href' => "#{App.base_path}/stylesheets/cache/wiki.css", 'rel' => 'Stylesheet', 'type' => %'text/css'}
     %link#css_color{'href' => "#{App.base_path}/stylesheets/cache/color.#@color.css", 'rel' => 'Stylesheet', 'type' => %'text/css'}
+
+    /[if IE]
+      %link{:href => "#{App.base_path}/stylesheets/ie/ie.css", :rel => "stylesheet", :type => "text/css"}
+
+    /[if lte IE 6]
+      %link{:href => "#{App.base_path}/stylesheets/ie/ie6.css", :rel => "stylesheet", :type => "text/css"}
     
     %script{:type => 'text/javascript'}
       == BASE_PATH = "#{App.base_path}";

@@ -16,6 +16,8 @@ class Event < ActiveRecord::Base
 	acts_as_paranoid
 	generate_validations
 
+	belongs_to :course
+
 	def Event.to_ical(courses)
 		courses = [courses] unless courses.kind_of?(Array)
 		cal = Icalendar::Calendar.new

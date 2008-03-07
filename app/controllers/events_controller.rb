@@ -97,7 +97,7 @@ class EventsController < ApplicationController
 		@event.update_attribute(:deleted_at, nil)
 		flash[:notice] = "Event restored"[]
 
-		EventRestoreLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @course)
+		EventRestoreLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @event.course)
 		
 		respond_to do |format|
 			format.html { redirect_to course_event_url(@event.course, @event) }
