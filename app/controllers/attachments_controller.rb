@@ -91,7 +91,7 @@ class AttachmentsController < ApplicationController
 		@attachment = Attachment.find_with_deleted(params[:id])
 		@attachment.update_attribute(:deleted_at, nil)
 		flash[:notice] = 'Attachment restored'[]
-		AttachmentRestoreLogEntry.create!(:target_id => @attachment.id, :user => @current_user, :course => @course)
+		AttachmentRestoreLogEntry.create!(:target_id => @attachment.id, :user => @current_user, :course => @attachment.course)
 		redirect_to course_attachment_url(@attachment.course, @attachment)
 	end
 

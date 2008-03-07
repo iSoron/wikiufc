@@ -91,7 +91,7 @@ class NewsController < ApplicationController
 		@news.update_attribute(:deleted_at, nil)
 		flash[:notice] = "News restored"[]
 
-		NewsRestoreLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @course)
+		NewsRestoreLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @news.course)
 		
 		respond_to do |format|
 			format.html { redirect_to course_news_url(@news.course, @news) }
