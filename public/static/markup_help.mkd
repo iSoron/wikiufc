@@ -1,0 +1,69 @@
+## Markdown
+
+### Cabeçalhos
+- `# Este é um cabeçalho`
+- `## Este é um cabeçalho menor`
+- `#### Este é um cabeçalho ainda menor`
+
+### Ênfase
+- `Esta _palavra_ será destacada`
+- `Esta **palavra** será ainda mais destacada`
+
+### Listas
+<pre>1. Primeiro item
+2. Segundo item
+   - Subitem
+   - Subitem
+3. Terceiro item
+</pre>
+
+### Citações
+<pre>&gt;  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+&gt;  Etiam ornare nisi quis elit. Donec ac odio. Pellentesque
+&gt;  blandit accumsan ipsum.
+</pre>
+
+### Códigos fonte e textos não formatados
+- `O comando \`printf(x)\` escreve na tela`
+<pre>Este é um exemplo de código fonte com várias linhas:
+
+    tell application "Foo"
+        beep
+    end tell
+</pre>
+
+### Links
+- `Este é [um exemplo](http://example.com) de link`
+- `Este é um [link relativo](/dashboad/)`
+- `Este é um link automatico: <http://example.com>`
+
+### Links através de referências
+<pre>I get 10 times more traffic from [Google] [1] than from
+[Yahoo] [2] or [MSN] [3].
+
+  [1]: http://google.com/        "Google"
+  [2]: http://search.yahoo.com/  "Yahoo Search"
+  [3]: http://search.msn.com/    "MSN Search"</pre>
+
+### Imagens
+- `![Descricao da imagem](http://example.com/imagem.jpg)`
+
+### Mais informações
+- <http://en.wikipedia.org/wiki/Markdown>
+- <http://daringfireball.net/projects/markdown/syntax>
+
+
+## Latex
+
+### Fórmulas inline
+<pre>Seja {$ G=(V,E) $} um grafo simples com {$ n $} vértices.</pre>
+
+### Fórmulas em bloco
+<pre>{$$
+  \sum_{i=0}^{n} x_{i}
+$$}</pre>
+
+### Mais informações
+- [Guia de refência da Wikipédia sobre a sintaxe LaTeX](http://en.wikipedia.org/wiki/Help:Displaying_a_formula#Subscripts.2C_superscripts.2C_integrals)
+- [Lista de símbolos matemáticos](http://amath.colorado.edu/documentation/LaTeX/Symbols.pdf)
+

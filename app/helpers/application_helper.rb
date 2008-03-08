@@ -61,6 +61,17 @@ module ApplicationHelper
 		return image_tag("loading.gif", :id => "spinner_#{name}", :style => "display:none")
 	end
 
+    def markup_enabled_field
+        return "<p class='grey'>Este campo aceita as linguagens Markdown, Latex e HTML. " +
+                link_to('Saiba mais.', '#', :id => 'show_markup_help') + spinner('help') + "</p>"
+    end
+
+    def markup_help
+        return "<div id='markup_help' style='display: none'>" +
+                wiki(File.read("#{RAILS_ROOT}/public/static/markup_help.mkd")) +
+                "</div>"
+    end
+
 	def gravatar_url_for(email, size=80)
 		"http://www.gravatar.com/avatar.php?gravatar_id=#{Digest::MD5.hexdigest(email)}&size=#{size}&default=#{App.default_avatar}"
 	end

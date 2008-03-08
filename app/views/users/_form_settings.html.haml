@@ -13,10 +13,11 @@
 
     %dt
       %label{:for => 'user_name'} Nome completo
+      %p.grey= "Atenção: contas com nomes fictícios ou inválidos serão excluídas sem aviso prévio." if defined?(signup) and signup
     %dd= text_field('user', 'name')
 
     %dt
-      %label{:for => 'user_display_name'} Nome de exibição
+      %label{:for => 'user_display_name'} Nome de exibição (apelido)
     %dd= text_field('user', 'display_name')
 
     %dt

@@ -16,6 +16,14 @@ events['#show_preview:click'] = function(element, e)
 	Event.stop(e);
 };
 
+events['#show_markup_help:click'] = function(element, e)
+{
+	Element.show('markup_help');
+	new Effect.ScrollTo('markup_help');
+	Event.stop(e);
+}
+
+
 function enumerate_headers()
 {
 	elems = $('wiki_text').childElements();
