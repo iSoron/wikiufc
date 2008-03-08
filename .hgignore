@@ -1,6 +1,6 @@
 syntax: glob
 public/images/sanscons/*
 public/upload/*
-db/*db
-log/*
+*.db
+*.log
 config/database.yml
