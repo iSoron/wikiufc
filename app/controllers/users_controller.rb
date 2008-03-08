@@ -40,6 +40,7 @@ class UsersController < ApplicationController
 	end
 
 	def update
+		params[:user][:login].downcase!
 		raise AccessDenied.new unless (params[:user][:login] == @user.login)
 		raise AccessDenied.new unless (params[:user][:admin].nil? or @current_user.admin?)
 		@user.admin = !params[:user][:admin].nil?
@@ -67,6 +68,7 @@ class UsersController < ApplicationController
 	def signup
 		if request.post?
 			begin
+				@user.login.downcase!
 				@user.last_seen = Time.now.utc
 				@user.save!
 				setup_session(@user)
@@ -81,6 +83,7 @@ class UsersController < ApplicationController
 	def settings
 		@user = @current_user
 		if request.post?
+			params[:user][:login].downcase!
 			@user.attributes = params[:user]
 			@user.save!
 			@color = @user.pref_color
@@ -91,6 +94,7 @@ class UsersController < ApplicationController
 
 	def login
 		if request.post?
+			params[:user][:login].downcase!
 			@user = User.find_by_login_and_pass(params[:user][:login], params[:user][:password])
 			if !@user.nil?
 				setup_session(@user, (params[:remember_me] == "1"))

@@ -27,7 +27,9 @@ class User < ActiveRecord::Base
 	validates_presence_of     :login, :email, :display_name
 	validates_uniqueness_of   :login, :email, :display_name
 
+	validates_format_of :login, :with => /^[^0-9]/
 	validates_format_of :display_name, :with => /^[^0-9]/
+
 	validates_format_of :email,
 			:with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
 
