@@ -31,6 +31,14 @@ class WikiPage < ActiveRecord::Base
 	acts_as_versioned :if_changed => [ :content, :description, :title ]
 	self.non_versioned_fields << 'position'
 
+    def validate
+        begin
+            to_html
+        rescue
+            errors.add("content", "possui erro de sintaxe")
+        end
+    end
+
 	def to_html(text = self.content)
 		return BlueCloth.new(text).to_html
 	end
