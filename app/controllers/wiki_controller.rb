@@ -112,7 +112,11 @@ class WikiController < ApplicationController
 
 	def preview
 		@text = params[:text]
-		render :text => BlueCloth.new(@text).to_html
+		begin
+			render :text => BlueCloth.new(@text).to_html
+		rescue
+			render :text => $!.to_s.gsub(">", "&gt;").gsub("<", "&lt;")
+		end
 	end
 
 	def diff
