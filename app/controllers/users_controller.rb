@@ -83,7 +83,7 @@ class UsersController < ApplicationController
 	def settings
 		@user = @current_user
 		if request.post?
-			params[:user][:login].downcase!
+			raise AccessDenied.new unless params[:user][:login].nil?
 			@user.attributes = params[:user]
 			@user.save!
 			@color = @user.pref_color
