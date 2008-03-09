@@ -31,7 +31,7 @@ class Event < ActiveRecord::Base
 				event.start = date
 				event.end = date + 1.hour
 				event.summary = "#{course.short_name}: #{e.title}"
-				event.description = e.description
+				event.description = e.description.gsub("\n", "").gsub("\r", "")
 				cal.add(event)
 			end
 		end
