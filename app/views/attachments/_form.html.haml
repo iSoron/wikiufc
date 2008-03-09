@@ -3,6 +3,7 @@
 %dl
   %dt
     %label{:for => 'attachment_file'} Arquivo
+    %p.grey= "Tamanho máximo: #{number_to_human_size(App.max_upload_file_size)}"
   %dd= file_field 'attachment', 'file'
 
   %dt
