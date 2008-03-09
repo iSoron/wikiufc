@@ -40,8 +40,7 @@ class UsersController < ApplicationController
 	end
 
 	def update
-		params[:user][:login].downcase!
-		raise AccessDenied.new unless (params[:user][:login] == @user.login)
+		raise AccessDenied.new unless params[:user][:login].nil?
 		raise AccessDenied.new unless (params[:user][:admin].nil? or @current_user.admin?)
 		@user.admin = !params[:user][:admin].nil?
 
