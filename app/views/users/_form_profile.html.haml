@@ -11,7 +11,13 @@
 
   %dt
     %label{:for => 'user_description'} Descrição
-  %dd= text_area('user', 'description', { :rows => 10 })
+  %dd= preserve(text_area('user', 'description', { :rows => 10 }))
+
+  %dt
+    %label Dica:
+    %p
+      = "Para utilizar um avatar, cadastre-se no site <a href='http://gravatar.com'>Gravatar</a> com o mesmo email utilizado no #{App.title}."
+
 
   - if admin?
     %dt= check_box_tag('user[admin]', 1, @user.admin?) + " Administrador"
