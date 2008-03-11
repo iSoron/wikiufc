@@ -22,7 +22,7 @@ class LogController < ApplicationController
 		if @course
 			@log_entries = @course.log_entries.find(:all, :limit => 50) #.paginate(:page => params[:page], :per_page => 30)
 		else
-			@log_entries = LogEntry.find(:all, :limit => 50)
+			@log_entries = LogEntry.find(:all, :limit => 50, :order => 'created_at desc')
 		end
 
 		respond_to do |format|
