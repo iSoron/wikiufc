@@ -19,7 +19,12 @@ class LogController < ApplicationController
 	before_filter :find_course
 
 	def index
-		@log_entries = @course.log_entries.find(:all, :limit => 50) #.paginate(:page => params[:page], :per_page => 30)
+		if @course
+			@log_entries = @course.log_entries.find(:all, :limit => 50) #.paginate(:page => params[:page], :per_page => 30)
+		else
+			@log_entries = LogEntry.find(:all, :limit => 50)
+		end
+
 		respond_to do |format|
 			format.html
 			format.rss { response.content_type = Mime::RSS }
@@ -38,7 +43,9 @@ class LogController < ApplicationController
 
 	protected
 	def find_course
-		params[:course_id] = Course.find_by_short_name(params[:course_id]).id if !params[:course_id].is_numeric? and !Course.find_by_short_name(params[:course_id]).nil?
-		@course = Course.find(params[:course_id])
+		unless params[:course_id].nil?
+			params[:course_id] = Course.find_by_short_name(params[:course_id]).id if !params[:course_id].is_numeric? and !Course.find_by_short_name(params[:course_id]).nil?
+			@course = Course.find(params[:course_id])
+		end
 	end
 end

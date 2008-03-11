@@ -1,4 +1,4 @@
-= "Evento " + link_to(h(entry.event.title), course_event_url(@course, entry.event))
+= "Evento " + link_to(h(entry.event.title), course_event_url(entry.course, entry.event))
 
 = "criado "     if entry.kind_of?(EventCreateLogEntry)
 = "editado "    if entry.kind_of?(EventEditLogEntry)

@@ -1,16 +1,21 @@
-%h4.title= h(@course.full_name)
+%h4.title= @course ? h(@course.full_name) : App.title
 %h1.title Mudanças recentes
 
-= auto_discovery_link_tag :rss, formatted_course_log_url(@course, :rss)
+- if @course
+  = auto_discovery_link_tag :rss, formatted_course_log_url(@course, :rss)
 
 .box
   %table
     %tr
       %th Data
       %th Usuário
+      - unless @course
+        %th Disciplina
       %th Descrição
     - @log_entries.each do |entry|
       %tr
         %td= entry.created_at.strftime("%d/%m/%y&nbsp;%H:%M:%S")
         %td= link_to truncate(h(entry.user.display_name), 20), user_path(entry.user)
+        - unless @course
+          %td= link_to h(entry.course.short_name), course_url(entry.course)
         %td= render(:partial => 'log/log_entry', :locals => { :entry => entry })

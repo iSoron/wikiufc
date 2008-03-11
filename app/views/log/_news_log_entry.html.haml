@@ -1,4 +1,4 @@
-= "Notícia " + link_to(h(entry.news.title), course_news_url(@course, entry.news))
+= "Notícia " + link_to(h(entry.news.title), course_news_url(entry.course, entry.news))
 
 = "criada "     if entry.kind_of?(NewsCreateLogEntry)
 = "editada "    if entry.kind_of?(NewsEditLogEntry)

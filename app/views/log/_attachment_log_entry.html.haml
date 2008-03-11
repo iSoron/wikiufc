@@ -1,4 +1,4 @@
-= "Anexo " + link_to(h(entry.attachment.file_name), course_attachment_url(@course, entry.attachment))
+= "Anexo " + link_to(h(entry.attachment.file_name), course_attachment_url(entry.course, entry.attachment))
 
 = "criado "     if entry.kind_of?(AttachmentCreateLogEntry)
 = "editado "    if entry.kind_of?(AttachmentEditLogEntry)

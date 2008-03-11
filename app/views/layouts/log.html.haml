@@ -1,11 +1,21 @@
-- @title = "#{App.title} - #{h(@course.full_name)} - Mudanças recentes"
-- @location = capture do 
-  = link_to(App.title, index_url) + "&rsaquo;"
-  = link_to("Disciplinas", courses_url) + "&rsaquo;"
-  = link_to(h(@course.full_name), course_url(@course)) + "&rsaquo;"
-  = link_to("Log", course_log_url(@course))
+- if @course
+  - @title = "#{App.title} - #{h(@course.full_name)} - Mudanças recentes"
+  - @location = capture do 
+    = link_to(App.title, index_url) + "&rsaquo;"
+    = link_to("Disciplinas", courses_url) + "&rsaquo;"
+    = link_to(h(@course.full_name), course_url(@course)) + "&rsaquo;"
+    = link_to("Log", course_log_url(@course))
 
-- @left_panel = render 'courses/_left_panel'
-- @content = yield
+  - @left_panel = render 'courses/_left_panel'
+  - @content = yield
+
+- else
+  - @title = "#{App.title} - Mudanças recentes"
+  - @location = capture do 
+    = link_to(App.title, index_url) + "&rsaquo;"
+    = link_to("Mudanças recentes", log_url)
+
+  - @content = yield
+  - @left_panel = render('widgets/menu_navigation') + render('widgets/menu_user')
 
 = render 'layouts/base' 

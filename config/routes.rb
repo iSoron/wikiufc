@@ -77,6 +77,10 @@ ActionController::Routing::Routes.draw do |map|
 	# Stylesheets
 	map.connect 'stylesheets/cache/:action.:format', :controller => 'stylesheets'
 	map.connect 'stylesheets/cache/:action.:color.:format', :controller => 'stylesheets'
+
+	# Mudancas recentes global
+	map.log 'log', :controller => 'log', :action => 'index', :format => 'html'
+	map.formatted_log 'log.:format', :controller => 'log', :action => 'index'
 	
 	# Front page
 	map.index '', :controller => 'courses', :action => 'index'
