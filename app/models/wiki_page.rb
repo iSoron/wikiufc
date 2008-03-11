@@ -44,7 +44,7 @@ class WikiPage < ActiveRecord::Base
 	end
 
 	def to_param
-		self.title
+		self.title['/'].nil? ? self.title : self.id
 	end
 
 	def WikiPage.diff(from, to)
