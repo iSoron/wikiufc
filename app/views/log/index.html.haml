@@ -14,7 +14,7 @@
       %th Descrição
     - @log_entries.each do |entry|
       %tr
-        %td= entry.created_at.strftime("%d/%m/%y&nbsp;%H:%M:%S")
+        %td= tz(entry.created_at).strftime("%d/%m/%y&nbsp;%H:%M:%S")
         %td= link_to truncate(h(entry.user.display_name), 20), user_path(entry.user)
         - unless @course
           %td= link_to h(entry.course.short_name), course_url(entry.course)

@@ -10,7 +10,7 @@ xml.rss(:version=>"2.0") do
 				description = render(:partial => 'log/log_entry.html.haml', :locals => { :entry => entry })
 				xml.title("")
 				xml.description(description + " por #{link_to h(entry.user.display_name), user_url(entry.user)}")
-				xml.pubDate(entry.created_at.rfc2822)
+				xml.pubDate(tz(entry.created_at).rfc2822)
 				xml.link(course_log_url(@course, :id => entry))
 				xml.guid(course_log_url(@course, :id => entry))
 			end
