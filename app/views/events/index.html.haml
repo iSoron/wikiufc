@@ -25,7 +25,7 @@
               %div.cmd
                 = action_icon 'edit', 'Editar', edit_course_event_url(@course, event)
                 = action_icon 'trash', 'Excluir', course_event_url(@course, event), :confirm => 'Tem certeza que deseja excluir?', :method => :delete
-              = h(event.description)
+              = formatted(event.description)
               = "Sem descrição" if event.description.empty?
 
         - last_date = event.time

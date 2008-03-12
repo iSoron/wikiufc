@@ -23,7 +23,7 @@
               .cmd
                 = action_icon 'edit', 'Editar', edit_course_news_url(@course, n)
                 = action_icon 'trash', 'Excluir', course_news_url(@course, n), :confirm => 'Tem certeza que deseja excluir?', :method => :delete
-              = h(n.body)
+              = formatted(n.body)
               = "Sem descrição" if n.body.empty?
   - else
     .box

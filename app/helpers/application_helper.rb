@@ -53,6 +53,10 @@ module ApplicationHelper
 		BlueCloth.new(text).to_html
 	end
 
+	def formatted(text)
+		h(text).gsub("\n", "<br/>")
+	end
+
 	def highlight(name)
 		return {:class => 'highlight'} if (flash[:highlight] == name) 
 	end

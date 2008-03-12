@@ -37,7 +37,7 @@
 				<% @events.each do |e| -%>
 				<li style="display: none" class="event_item events_<%=e.time.strftime('%Y_%m-%d')%>">
 					<%= link_to e.time.strftime("%d de %B"), course_event_url(@course, e) %>.
-					<%= h(e.title) %>. <%= truncate(h(e.description), 50) %>
+					<%= h(e.title) %>
 				</li>
 				<% end -%>
 			</ul>
