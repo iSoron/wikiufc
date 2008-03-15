@@ -18,6 +18,8 @@ require 'digest/sha1'
 
 class User < ActiveRecord::Base
 
+	acts_as_paranoid
+
 	has_and_belongs_to_many :courses, :order => 'full_name'
 
 	validates_length_of       :login, :within => 3..40
@@ -35,8 +37,6 @@ class User < ActiveRecord::Base
 
 	attr_protected :id, :salt
 	attr_accessor :password, :password_confirmation
-
-	acts_as_paranoid
 
 	def User.find_by_login_and_pass(login, pass)
 		user = find(:first, :conditions => [ "login = ?", login ])
