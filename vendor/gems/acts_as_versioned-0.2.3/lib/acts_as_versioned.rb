@@ -279,6 +279,10 @@ module ActiveRecord #:nodoc:
           end          
         end
 
+        def previous_version(current_version = self.version)
+            self.versions.find(:first, :conditions => [ 'version < ?', current_version ], :order => 'version desc')
+        end
+
         protected
         # sets the new version before saving, unless you're using optimistic locking.  In that case, let it take care of the version.
         def set_new_version

@@ -15,21 +15,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class AttachmentLogEntry < LogEntry
-	def attachment
-		Attachment.find_with_deleted(target_id)
-	end
+	belongs_to :attachment,
+               :foreign_key => "target_id",
+               :with_deleted => true
 end
 
 class AttachmentDeleteLogEntry < AttachmentLogEntry
 	def reversible?()
-		a = Attachment.find_with_deleted(target_id)
-		a.deleted_at != nil
+        attachment.deleted?
 	end
 	def undo!(current_user)
-		a = Attachment.find_with_deleted(target_id)
-		a.update_attribute(:deleted_at, nil)
-		AttachmentRestoreLogEntry.create!(:target_id => a.id, :user_id => current_user.id,
-				:course => a.course)
+		attachment.update_attribute(:deleted_at, nil)
+		AttachmentRestoreLogEntry.create!(:target_id => attachment.id, :user_id => current_user.id, :course => attachment.course)
 	end
 end
 

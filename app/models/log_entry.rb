@@ -15,10 +15,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class LogEntry < ActiveRecord::Base
-	belongs_to :user
-	belongs_to :course
 
+	# Plugins
 	acts_as_paranoid
+
+	# Associacoes
+	belongs_to :course
+	belongs_to :user, :with_deleted => true
 
 	def reversible?() false end
 

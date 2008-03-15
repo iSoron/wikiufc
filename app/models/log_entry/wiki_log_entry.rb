@@ -15,11 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class WikiLogEntry < LogEntry
-	def wiki_page
-		w = WikiPage.find_with_deleted(target_id)
-		w.revert_to(version)
-		return w
-	end
+	belongs_to :wiki_page,
+	           :foreign_key => "target_id",
+	           :with_deleted => true
 end
 
 class WikiEditLogEntry < WikiLogEntry
@@ -28,16 +26,12 @@ end
 
 class WikiDeleteLogEntry < WikiLogEntry
 	def reversible?()
-		w = WikiPage.find_with_deleted(target_id)
-		w.deleted_at != nil
+		wiki_page.deleted?
 	end
 	def undo!(current_user)
-		w = WikiPage.find_with_deleted(target_id)
-		w.update_attribute(:deleted_at, nil)
-		w.position = w.course.wiki_pages.maximum(:position) + 1
-		w.save!
-		WikiRestoreLogEntry.create!(:target_id => w.id, :user_id => current_user.id,
-				:course => w.course)
+		wiki_page.update_attribute(:deleted_at, nil)
+		wiki_page.update_attribute(:position, wiki_page.course.wiki_pages.maximum(:position) + 1)
+		WikiRestoreLogEntry.create!(:target_id => wiki_page.id, :user_id => current_user.id, :course => wiki_page.course)
 	end
 end
 

@@ -16,10 +16,13 @@
 
 class Course < ActiveRecord::Base
 
+	# Plugins
+	acts_as_paranoid
+	
 	# Associacoes
 	has_many :attachments,
 	         :order => "file_name",
-	          :dependent => :destroy
+	         :dependent => :destroy
 
 	has_many :events,
 	         :order => "time asc",
@@ -27,8 +30,8 @@ class Course < ActiveRecord::Base
 
 	has_many :news,
 	         :foreign_key => "receiver_id",
-	        :order => "id desc",
-	        :dependent => :destroy
+	         :order => "id desc",
+	         :dependent => :destroy
 
 	has_many :log_entries,
 	         :order => "created_at desc",
@@ -37,10 +40,7 @@ class Course < ActiveRecord::Base
 	has_many :wiki_pages,
 	         :order => "position",
 	         :dependent => :destroy
-
-	# Plugins
-	acts_as_paranoid
-
+	
 	# Validacao
 	generate_validations
 	validates_uniqueness_of :short_name

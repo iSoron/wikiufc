@@ -19,25 +19,29 @@ require 'tempfile'
 
 class WikiPage < ActiveRecord::Base
 
-	belongs_to :course
-	belongs_to :user
-
-	generate_validations
-	validates_uniqueness_of :title, :scope => :course_id
-	validates_format_of :title, :with => /^[^0-9]/
-
+	# Plugins
 	acts_as_paranoid
 	acts_as_list :scope => 'course_id = #{course_id}'
 	acts_as_versioned :if_changed => [ :content, :description, :title ]
 	self.non_versioned_fields << 'position'
 
-    def validate
-        begin
-            to_html
-        rescue
-            errors.add("content", "possui erro de sintaxe")
-        end
-    end
+	# Associacoes
+	belongs_to :course
+	belongs_to :user, :with_deleted => true
+
+	# Valicacao
+	generate_validations
+	validates_uniqueness_of :title, :scope => :course_id
+	validates_format_of :title, :with => /^[^0-9]/
+
+
+	def validate
+		begin
+			to_html
+		rescue
+			errors.add("content", "possui erro de sintaxe")
+		end
+	end
 
 	def to_html(text = self.content)
 		return BlueCloth.new(text).to_html

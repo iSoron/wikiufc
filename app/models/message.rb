@@ -15,28 +15,19 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Message < ActiveRecord::Base
+
+	# Plugins
 	acts_as_paranoid
-	belongs_to :user,   :foreign_key => "sender_id"
+	
+	# Associacoes
+	belongs_to :user,
+	           :foreign_key => "sender_id",
+	           :with_deleted => true
+
 end
-
-
-class PrivateMessage < Message
-end
-
 
 class News < Message
 	validates_presence_of :title
-	belongs_to :course, :foreign_key => "receiver_id"
-end
-
-
-class ShoutboxMessage < Message
-end
-
-
-class CourseShoutboxMessage < ShoutboxMessage
-end
-
-
-class UserShoutboxMessage < ShoutboxMessage
+	belongs_to :course,
+	           :foreign_key => "receiver_id"
 end

@@ -100,8 +100,8 @@ class WikiController < ApplicationController
 	end
 
 	def versions
-		@history_to = params[:to] || @wiki_page.versions.count
-		@history_from = params[:from] || @wiki_page.versions.count - 1
+		@history_to = params[:to] || @wiki_page.versions[-1].version
+		@history_from = params[:from] || (@wiki_page.versions.count > 1 ? @wiki_page.versions[-2].version : @history_to)
 		@offset = params[:offset] || 0
 
 		respond_to do |format|

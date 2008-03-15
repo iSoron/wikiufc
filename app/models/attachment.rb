@@ -18,9 +18,14 @@ require 'fileutils.rb'
 
 class Attachment < ActiveRecord::Base
 
-	belongs_to :course
-	generate_validations
+	# Plugins
 	acts_as_paranoid
+
+	# Associacoes
+	belongs_to :course
+
+	# Validacao
+	generate_validations
 
 	# Atributo virtual file
 	def file=(new_file)

@@ -15,11 +15,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Event < ActiveRecord::Base
-
+	
+	# Plugins
 	acts_as_paranoid
-	generate_validations
 
+	# Associacoes
 	belongs_to :course
+
+	# Validacao
+	generate_validations
 
 	def Event.to_ical(courses)
 		courses = [courses] unless courses.kind_of?(Array)

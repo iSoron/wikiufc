@@ -15,21 +15,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class EventLogEntry < LogEntry
-	def event
-		Event.find_with_deleted(target_id)
-	end
+	belongs_to :event,
+               :foreign_key => "target_id",
+               :with_deleted => true
 end
 
 class EventDeleteLogEntry < EventLogEntry
 	def reversible?()
-		e = Event.find_with_deleted(target_id)
-		e.deleted_at != nil
+        event.deleted?
 	end
 	def undo!(current_user)
-		e = Event.find_with_deleted(target_id)
-		e.update_attribute(:deleted_at, nil)
-		EventRestoreLogEntry.create!(:target_id => e.id, :user_id => current_user.id,
-				:course_id => e.course_id)
+		event.update_attribute(:deleted_at, nil)
+		EventRestoreLogEntry.create!(:target_id => event.id, :user_id => current_user.id, :course => event.course)
 	end
 end
 

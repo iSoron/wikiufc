@@ -15,21 +15,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class NewsLogEntry < LogEntry
-	def news
-		News.find_with_deleted(target_id)
-	end
+	belongs_to :news,
+               :foreign_key => "target_id",
+               :with_deleted => true
 end
 
 class NewsDeleteLogEntry < NewsLogEntry
 	def reversible?()
-		n = News.find_with_deleted(target_id)
-		n.deleted_at != nil
+        news.deleted?
 	end
 	def undo!(current_user)
-		n = News.find_with_deleted(target_id)
-		n.update_attribute(:deleted_at, nil)
-		NewsRestoreLogEntry.create!(:target_id => n.id, :user_id => current_user.id,
-				:course => n.course)
+		news.update_attribute(:deleted_at, nil)
+		NewsRestoreLogEntry.create!(:target_id => news.id, :user_id => current_user.id, :course => news.course)
 	end
 end
 

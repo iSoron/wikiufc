@@ -18,10 +18,13 @@ require 'digest/sha1'
 
 class User < ActiveRecord::Base
 
+	# Plugins
 	acts_as_paranoid
 
+	# Associacoes
 	has_and_belongs_to_many :courses, :order => 'full_name'
 
+	# Validacao
 	validates_length_of       :login, :within => 3..40
 	validates_length_of       :name,  :within => 3..40
 	validates_length_of       :display_name, :within => 3..40
@@ -35,6 +38,7 @@ class User < ActiveRecord::Base
 	validates_format_of :email,
 			:with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
 
+	# Seguranca
 	attr_protected :id, :salt
 	attr_accessor :password, :password_confirmation
 

@@ -234,4 +234,14 @@ class UserTest < Test::Unit::TestCase
 		assert_not_equal "I-want-to-set-my-salt", u.salt
 		assert_equal "verybadbob", u.login
 	end
+
+	def test_paranoid
+		assert User.paranoid?
+
+		u = users(:bob)
+		u.destroy
+
+		assert_raises(ActiveRecord::RecordNotFound) { User.find(u.id) }
+		assert_nothing_raised { User.find_with_deleted(u.id) }
+	end
 end
