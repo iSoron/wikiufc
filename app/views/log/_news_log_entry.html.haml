@@ -1,4 +1,4 @@
-= "Notícia " + link_to(h(entry.news.title), course_news_url(entry.course, entry.news))
+= "Notícia " + link_to(h(entry.news.title), course_news_url(entry.course, entry.news, :version => entry.version))
 
 = "criada "     if entry.kind_of?(NewsCreateLogEntry)
 = "editada "    if entry.kind_of?(NewsEditLogEntry)

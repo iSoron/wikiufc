@@ -280,7 +280,7 @@ module ActiveRecord #:nodoc:
         end
 
         def previous_version(current_version = self.version)
-            self.versions.find(:first, :conditions => [ 'version < ?', current_version ], :order => 'version desc')
+          self.versions.find(:first, :conditions => [ 'version < ?', current_version ], :order => 'version desc')
         end
 
         protected

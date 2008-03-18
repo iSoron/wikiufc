@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 33) do
+ActiveRecord::Schema.define(:version => 34) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file_name",     :null => false
@@ -37,6 +37,18 @@ ActiveRecord::Schema.define(:version => 33) do
     t.integer "course_id"
   end
 
+  create_table "event_versions", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "version"
+    t.string   "title"
+    t.integer  "created_by"
+    t.integer  "course_id",   :default => 0
+    t.text     "description"
+    t.datetime "deleted_at"
+    t.datetime "time",        :default => '2008-03-05 04:25:27'
+    t.datetime "updated_at"
+  end
+
   create_table "events", :force => true do |t|
     t.string   "title",                                          :null => false
     t.integer  "created_by",                                     :null => false
@@ -44,6 +56,7 @@ ActiveRecord::Schema.define(:version => 33) do
     t.text     "description"
     t.datetime "deleted_at"
     t.datetime "time",        :default => '2008-03-05 04:25:27', :null => false
+    t.integer  "version",     :default => 1,                     :null => false
   end
 
   create_table "log_entries", :force => true do |t|
@@ -56,14 +69,28 @@ ActiveRecord::Schema.define(:version => 33) do
     t.datetime "deleted_at"
   end
 
+  create_table "message_versions", :force => true do |t|
+    t.integer  "message_id"
+    t.integer  "version"
+    t.string   "title"
+    t.text     "body"
+    t.datetime "timestamp"
+    t.integer  "receiver_id"
+    t.integer  "sender_id"
+    t.datetime "deleted_at"
+    t.string   "versioned_type"
+    t.datetime "updated_at"
+  end
+
   create_table "messages", :force => true do |t|
     t.string   "title"
-    t.text     "body",        :null => false
-    t.datetime "timestamp",   :null => false
+    t.text     "body",                       :null => false
+    t.datetime "timestamp",                  :null => false
     t.integer  "receiver_id"
-    t.integer  "sender_id",   :null => false
+    t.integer  "sender_id",                  :null => false
     t.string   "type"
     t.datetime "deleted_at"
+    t.integer  "version",     :default => 1, :null => false
   end
 
   create_table "sessions", :force => true do |t|

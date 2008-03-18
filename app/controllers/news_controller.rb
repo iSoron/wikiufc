@@ -33,6 +33,7 @@ class NewsController < ApplicationController
 	end
 
 	def show
+		@news.revert_to(params[:version]) if params[:version]
 		respond_to do |format|
 			format.html
 			format.xml { render :xml => @news }
@@ -49,7 +50,7 @@ class NewsController < ApplicationController
 		@news.save!
 		flash[:notice] = 'News created'[]
 
-		NewsCreateLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @course)
+		NewsCreateLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @course, :version => @news.version)
 
 		respond_to do |format|
 			format.html { redirect_to course_news_path(@course, @news) }
@@ -58,14 +59,17 @@ class NewsController < ApplicationController
 	end
 
 	def edit
+		@news.revert_to(params[:version]) if params[:version]
 	end
 
 	def update
 		@news.attributes = params[:news]
+		@news.timestamp = Time.now.utc
+		dirty = @news.dirty?
 		@news.save!
 		flash[:notice] = 'News updated'[]
 
-		NewsEditLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @course)
+		NewsEditLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @course, :version => @news.version) if dirty
 
 		respond_to do |format|
 			format.html { redirect_to course_news_path(@course, @news) }
@@ -78,7 +82,7 @@ class NewsController < ApplicationController
 		flash[:notice] = 'News removed'[]
 		flash[:undo] = undelete_course_news_url(@course, @news)
 
-		NewsDeleteLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @course)
+		NewsDeleteLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @course, :version => @news.version)
 
 		respond_to do |format|
 			format.html { redirect_to course_news_index_path(@course) }
@@ -88,10 +92,10 @@ class NewsController < ApplicationController
 
 	def undelete
 		@news = News.find_with_deleted(params[:id])
-		@news.update_attribute(:deleted_at, nil)
-		flash[:notice] = "News restored"[]
+		@news.restore!
 
-		NewsRestoreLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @news.course)
+		flash[:notice] = "News restored"[]
+		NewsRestoreLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @news.course, :version => @news.version)
 		
 		respond_to do |format|
 			format.html { redirect_to course_news_url(@news.course, @news) }

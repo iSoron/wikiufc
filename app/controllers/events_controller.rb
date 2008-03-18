@@ -30,6 +30,7 @@ class EventsController < ApplicationController
 	end
 
 	def show
+		@event.revert_to(params[:version]) if params[:version]
 		respond_to do |format|
 			format.html
 			format.xml { render :xml => @event }
@@ -46,7 +47,7 @@ class EventsController < ApplicationController
 		@event.save!
 		flash[:notice] = 'Event created'[]
 
-		EventCreateLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @course)
+		EventCreateLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @course, :version => @event.version)
 
 		respond_to do |format|
 			format.html { redirect_to course_event_path(@course, @event) }
@@ -55,14 +56,16 @@ class EventsController < ApplicationController
 	end
 
 	def edit
+		@event.revert_to(params[:version]) if params[:version]
 	end
 
 	def update
 		@event.attributes = params[:event]
+		dirty = @event.dirty?
 		@event.save!
 		flash[:notice] = 'Event updated'[]
 
-		EventEditLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @course)
+		EventEditLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @course, :version => @event.version) if dirty
 
 		respond_to do |format|
 			format.html { redirect_to course_event_path(@course, @event) }
@@ -75,7 +78,7 @@ class EventsController < ApplicationController
 		flash[:notice] = 'Event removed'[]
 		flash[:undo] = undelete_course_event_url(@course, @event)
 
-		EventDeleteLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @course)
+		EventDeleteLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @course, :version => @event.version)
 
 		respond_to do |format|
 			format.html { redirect_to course_events_path(@course) }
@@ -97,10 +100,10 @@ class EventsController < ApplicationController
 
 	def undelete
 		@event = Event.find_with_deleted(params[:id])
-		@event.update_attribute(:deleted_at, nil)
-		flash[:notice] = "Event restored"[]
+		@event.restore!
 
-		EventRestoreLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @event.course)
+		flash[:notice] = "Event restored"[]
+		EventRestoreLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @event.course, :version => @event.version)
 		
 		respond_to do |format|
 			format.html { redirect_to course_event_url(@event.course, @event) }

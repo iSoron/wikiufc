@@ -19,8 +19,12 @@ require File.dirname(__FILE__) + '/../test_helper'
 class MessageTest < Test::Unit::TestCase
 	fixtures :messages
 
-	# Replace this with your real tests.
-	def test_truth
-		assert true
-	end
+    def test_should_not_create_new_version
+       news = News.find(1)
+       news.destroy
+
+       news = News.find_with_deleted(1)
+       news.restore!
+       assert !news.dirty?
+    end
 end

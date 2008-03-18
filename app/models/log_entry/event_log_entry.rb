@@ -25,8 +25,8 @@ class EventDeleteLogEntry < EventLogEntry
         event.deleted?
 	end
 	def undo!(current_user)
-		event.update_attribute(:deleted_at, nil)
-		EventRestoreLogEntry.create!(:target_id => event.id, :user_id => current_user.id, :course => event.course)
+		event.restore!
+		EventRestoreLogEntry.create!(:target_id => event.id, :user_id => current_user.id, :course => event.course, :version => event.version)
 	end
 end
 
