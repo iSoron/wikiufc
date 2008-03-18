@@ -2,7 +2,6 @@ class MoreVersioned < ActiveRecord::Migration
 	def self.up
 		# Noticias
 		add_column :messages, :version, :int, :default => 1, :null => false
-		remove_column :messages, :updated_at
 		Message.create_versioned_table
 		Message.find(:all).each { |m| m.save_version_on_create }
 
@@ -20,7 +19,6 @@ class MoreVersioned < ActiveRecord::Migration
 	def self.down
 		# Noticias
 		remove_column :messages, :version
-		add_column :messages, :updated_at, :datetime
 		Message.drop_versioned_table
 
 		# Eventos
