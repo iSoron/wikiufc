@@ -1,4 +1,7 @@
-= "Página " + link_to(h(entry.wiki_page.title), course_wiki_url(entry.course, entry.wiki_page.id, :version => entry.version))
+- if entry.version
+  = "Página " + link_to(h(entry.wiki_page.title), course_wiki_url(entry.course, entry.wiki_page.id, :version => entry.version))
+- else
+  = "Página " + link_to(h(entry.wiki_page.title), course_wiki_url(entry.course, entry.wiki_page.id))
 
 = "criada "     if entry.kind_of?(WikiCreateLogEntry)
 = "editada "    if entry.kind_of?(WikiEditLogEntry)
