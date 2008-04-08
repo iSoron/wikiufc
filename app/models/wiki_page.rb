@@ -48,7 +48,7 @@ class WikiPage < ActiveRecord::Base
 	end
 
 	def to_param
-		self.title['/'].nil? ? self.title : self.id
+		self.title.match(/^[-_a-z0-9]*$/i).nil? ? self.id : self.title
 	end
 
 	def WikiPage.diff(from, to)

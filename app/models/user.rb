@@ -81,7 +81,7 @@ class User < ActiveRecord::Base
 	end
 
 	def to_param
-		self.login
+		self.login.match(/^[-_a-z0-9]*$/i).nil? ? self.id : self.login
 	end
 
 	protected
