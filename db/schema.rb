@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 34) do
+ActiveRecord::Schema.define(:version => 35) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file_name",     :null => false
@@ -104,20 +104,21 @@ ActiveRecord::Schema.define(:version => 34) do
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
 
   create_table "users", :force => true do |t|
-    t.string   "login",                              :null => false
-    t.string   "hashed_password",                    :null => false
-    t.string   "email",                              :null => false
-    t.string   "salt",                               :null => false
+    t.string   "login",                                 :null => false
+    t.string   "hashed_password",                       :null => false
+    t.string   "email",                                 :null => false
+    t.string   "salt",                                  :null => false
     t.datetime "created_at"
-    t.string   "name",            :default => "",    :null => false
-    t.integer  "pref_color",      :default => 0,     :null => false
-    t.string   "display_name",                       :null => false
+    t.string   "name",               :default => "",    :null => false
+    t.integer  "pref_color",         :default => 0,     :null => false
+    t.string   "display_name",                          :null => false
     t.text     "description"
-    t.datetime "last_seen",                          :null => false
+    t.datetime "last_seen",                             :null => false
     t.string   "login_key"
-    t.boolean  "admin",           :default => false, :null => false
-    t.string   "secret",                             :null => false
+    t.boolean  "admin",              :default => false, :null => false
+    t.string   "secret",                                :null => false
     t.datetime "deleted_at"
+    t.string   "password_reset_key"
   end
 
   create_table "wiki_page_versions", :force => true do |t|

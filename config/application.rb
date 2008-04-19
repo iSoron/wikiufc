@@ -1,6 +1,9 @@
 # Geral
 App.language = "pt-br"
 App.title = "Wiki UFC"
+App.webmaster_email = "webmaster@wikiufc.gelsol.org"
+
+App.default_host = "wikiufc.gelsol.org"
 App.base_path = ""
 
 # Limites

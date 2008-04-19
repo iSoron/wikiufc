@@ -63,11 +63,10 @@ class User < ActiveRecord::Base
 	end
 
 	# Gera uma nova senha, e a envia por email.
-	def send_new_password
-		new_pass = User.random_string(10)
-		@password = @password_confirmation = new_pass
-		save
-		Notifications.deliver_forgot_password(self.email, self.login, new_pass)
+	def generate_password_reset_key!
+		update_attribute(:password_reset_key, User.random_string(30))
+		save!
+		Notifications.deliver_forgot_password(self.email, self.password_reset_key)
 	end
 
 	def reset_login_key

@@ -16,12 +16,11 @@
 
 class Notifications < ActionMailer::Base
 
-	def forgot_password(to, login, pass, sent_at = Time.now)
-		@subject = "Your password is ..."
-		@body['login']=login
-		@body['pass']=pass
+	def forgot_password(to, key, sent_at = Time.now)
+		@subject = "#{App.title} - Recuperar senha"
+		@body['key'] = key
 		@recipients = to
-		@from = 'support@yourdomain.com'
+		@from = "#{App.title} <#{App.webmaster_email}>"
 		@sent_on = sent_at
 		@headers = {}
 	end

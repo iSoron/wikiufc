@@ -137,6 +137,32 @@ class UsersController < ApplicationController
 		end
 	end
 
+	def recover_password
+		if params[:key]
+			@user = User.find_by_password_reset_key(params[:key])
+			if @user.nil?
+				redirect_to login_path
+			elsif request.post?
+				@user.password = params[:user][:password]
+				@user.password_confirmation = params[:user][:password_confirmation]
+				if @user.save
+					@user.update_attribute(:password_reset_key, nil)
+					flash[:message] = "Senha modificada"
+					redirect_to login_path
+				end
+			end
+		else
+			if request.post?
+				@user = User.find_by_email(params[:user][:email])
+				if @user.nil?
+					flash[:warning] = "Email inválido"
+				else
+					@user.generate_password_reset_key!
+				end
+			end
+		end
+	end
+
 #	def forgot_password
 #		if request.post?
 #			u = User.find_by_email(params[:user][:email])

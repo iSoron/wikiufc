@@ -71,6 +71,8 @@ ActionController::Routing::Routes.draw do |map|
 		user.logout   'logout',   :action => 'logout'
 		user.signup   'signup',   :action => 'signup'
 		user.settings 'settings', :action => 'settings'
+		user.recover_password 'recover_password', :action => 'recover_password'
+		user.recover_password_with_key 'recover_password/:key', :action => 'recover_password'
    end
 	
 	# Pagina pessoal
