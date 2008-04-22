@@ -19,6 +19,7 @@ require 'yaml'
 class ApplicationController < ActionController::Base
 
 	include AuthenticationSystem
+	helper :all
 
 	before_filter :startup
 	around_filter :set_timezone

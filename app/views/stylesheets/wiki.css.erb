@@ -461,6 +461,7 @@ h4.title, h1.title {
 .repositorio .mime_document { background-image: url(<%= App.base_path %>/images/tango/x-office-document.png); }
 .repositorio .mime_binary { background-image: url(<%= App.base_path %>/images/tango/application-x-executable.png); }
 .repositorio .mime_zip { background-image: url(<%= App.base_path %>/images/tango/package-x-generic.png); }
+.repositorio .mime_folder { background-image: url(<%= App.base_path %>/images/tango/folder.png); }
 
 .spinner {
   float: right;
@@ -825,6 +826,15 @@ form dt p {
 
 #markup_help ul {
   margin: 9px 0px;
+}
+
+ul.nested {
+  padding-left: 36px;
+}
+
+ul.nested li {
+  padding-top: 5px !important;
+  padding-bottom: 4px !important;
 }
 
 

@@ -15,4 +15,55 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module AttachmentsHelper
+
+	def attachments_to_nested_hash(atts)
+		paths = atts.collect { |item| item.path.nil? ? [] : item.path.split("/") }
+		return nest_path(atts, paths, 0, paths.size-1, 0)
+	end
+		
+	def nest_path(items, paths, from, to, level)
+		result = {}
+
+		base = from - 1
+		base = base + 1 while base+1 <= to and paths[base+1][level].nil?
+		if base >= from then
+			result['/'] = items[from..base]
+		end
+
+		start = base+1
+
+		return result if start > to
+
+		folder = paths[start][level]
+		(base+1).upto(to) do |i|
+			if paths[i][level] != folder
+				result[folder] = nest_path(items, paths, start, i-1, level+1)
+				start = i
+				folder = paths[i][level]
+			end
+		end
+
+		if start <= to then
+			result[folder] = nest_path(items, paths, start, to, level+1)
+		end
+
+		return result
+	end
+
+	def nested_attachments_to_html(atts, level=0)
+		out = (level > 0 ? "<ul class='nested' style='display: none'>" : "<ul>")
+		keys = atts.keys.sort
+		
+		for att in atts['/'] do
+			out = out + "<li class='#{mime_class(att.content_type)}'>#{link_to h(att.file_name), course_attachment_url(@course, att)}</li>"
+		end if atts['/']
+
+		for key in keys - ['/'] do
+			out = out + "<li class='mime_folder' onclick='new Effect.toggle(this.next(), \"blind\"); return false;'>#{link_to h(key), '#'}&nbsp;</li>"
+			out = out + nested_attachments_to_html(atts[key], level+1)
+		end
+
+		out = out + "</ul>"
+	end
+
 end

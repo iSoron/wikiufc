@@ -32,10 +32,8 @@
 
     %h3 Repositório de Arquivos
     .repositorio
-      %ul.wiki
-        - @course.attachments.each do |att|
-          %li{:class => mime_class(att.content_type)}
-            = link_to h(att.file_name), course_attachment_url(@course, att)
-        - if @course.attachments.empty?
+      = nested_attachments_to_html(attachments_to_nested_hash(@course.attachments))
+      - if @course.attachments.empty?
+        %ul.wiki
           %li.no_itens Nenhum arquivo
 

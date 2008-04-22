@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 35) do
+ActiveRecord::Schema.define(:version => 36) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file_name",     :null => false
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 35) do
     t.integer  "size"
     t.integer  "course_id"
     t.datetime "deleted_at"
+    t.string   "path"
   end
 
   create_table "courses", :force => true do |t|

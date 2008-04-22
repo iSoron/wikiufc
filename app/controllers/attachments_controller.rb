@@ -30,6 +30,7 @@ class AttachmentsController < ApplicationController
 
 	def create
 		@attachment.course_id = @course.id
+		@attachment.path = params[:attachment][:path]
 		@attachment.description = params[:attachment][:description]
 		unless params[:attachment][:file].kind_of?(String)
 			@attachment.file = params[:attachment][:file]
@@ -54,6 +55,7 @@ class AttachmentsController < ApplicationController
 	end
 
 	def update
+		@attachment.path = params[:attachment][:path]
 		@attachment.description = params[:attachment][:description]
 		unless params[:attachment][:file].kind_of?(String)
 			@attachment.file = params[:attachment][:file]

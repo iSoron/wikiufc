@@ -49,6 +49,8 @@ class Attachment < ActiveRecord::Base
 			# modificar a descrição, ou algo assim..
 			errors.add("file", "is needed"[]) if not self.id
 		end
+
+		errors.add("path", "muito longo") if !@path.nil? and @path.split('/').size > 10
 	end
 
 	# Salva o arquivo fisicamente no HD
@@ -69,4 +71,5 @@ class Attachment < ActiveRecord::Base
 	#	@file_path = "#{RAILS_ROOT}/public/upload/#{course.id}/#{self.id}"
 	#	File.delete(@file_path) if File.exists?(@file_path)
 	#end
+
 end

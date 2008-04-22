@@ -10,6 +10,9 @@
     %dt Arquivo
     %dd= link_to h(@attachment.file_name), download_course_attachment_url
 
+    %dt Pasta
+    %dd= h(@attachment.path)
+
     %dt Descrição
     %dd= h(@attachment.description)
 
