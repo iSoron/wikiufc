@@ -43,8 +43,11 @@ class Course < ActiveRecord::Base
 	
 	# Validacao
 	generate_validations
-	validates_uniqueness_of :short_name
 	validates_format_of :short_name, :with => /^[^0-9]/
+
+	def related_courses
+		Course.find(:all, :conditions => [ 'short_name = ?', self.short_name], :limit => 4, :order => 'period desc')
+	end
 	
 	def after_create
 		App.inital_wiki_pages.each do |page_title|
@@ -54,6 +57,7 @@ class Course < ActiveRecord::Base
 	end
 
 	def to_param
-		self.short_name
+		return self.short_name if self.period == App.current_period
+		return self.id
 	end
 end

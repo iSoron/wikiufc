@@ -6,6 +6,8 @@ App.webmaster_email = "webmaster@wikiufc.gelsol.org"
 App.default_host = "wikiufc.gelsol.org"
 App.base_path = ""
 
+App.current_period = "2008.1"
+
 # Limites
 App.max_upload_file_size = 5.megabytes
 

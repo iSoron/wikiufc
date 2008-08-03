@@ -22,9 +22,14 @@ class CoursesController < ApplicationController
 	#after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
 
 	def index
-		@courses = Course.find(:all,
-			:order => 'period asc, full_name asc',
-			:conditions => (logged_in? and !@current_user.courses.empty? ? [ 'id not in (?)', @current_user.courses] : ''))
+		params[:period] = nil if params[:period] == App.current_period 
+		@period = params[:period] || App.current_period
+
+		conditions = []
+		conditions.add_condition!(['period = ?', @period])
+		conditions.add_condition!(['id not in (?)', @current_user.courses]) if logged_in? and !@current_user.courses.empty?
+		@courses = Course.find(:all, :order => 'grade asc, full_name asc', :conditions => conditions)
+
 
 		respond_to do |format|
 			format.html
@@ -98,7 +103,7 @@ class CoursesController < ApplicationController
 
 	protected
 	def find_course
-		params[:id] = Course.find_by_short_name(params[:id]).id if params[:id] and !params[:id].is_numeric? and !Course.find_by_short_name(params[:id]).nil?
+		params[:id] = Course.find(:first, :conditions => ['short_name = ?', params[:id]], :order => 'period desc').id if !params[:id].is_numeric? and !Course.find_by_short_name(params[:id]).nil?
 		@course = params[:id] ? Course.find(params[:id]) : Course.new(params[:course])
 	end
 

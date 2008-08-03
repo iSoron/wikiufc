@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 35) do
+ActiveRecord::Schema.define(:version => 36) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file_name",     :null => false
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 35) do
     t.integer  "size"
     t.integer  "course_id"
     t.datetime "deleted_at"
+    t.string   "path"
   end
 
   create_table "courses", :force => true do |t|
@@ -26,11 +27,12 @@ ActiveRecord::Schema.define(:version => 35) do
     t.string   "full_name",                        :null => false
     t.text     "description"
     t.string   "code",        :default => "CK000", :null => false
-    t.integer  "period",      :default => 1,       :null => false
     t.datetime "deleted_at"
+    t.integer  "grade",       :default => 1
+    t.string   "period"
   end
 
-  add_index "courses", ["short_name"], :name => "index_courses_on_short_name", :unique => true
+  add_index "courses", ["short_name"], :name => "index_courses_on_short_name"
 
   create_table "courses_users", :id => false, :force => true do |t|
     t.integer "user_id"

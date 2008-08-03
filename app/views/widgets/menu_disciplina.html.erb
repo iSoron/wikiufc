@@ -8,3 +8,14 @@
 			<li><%= link_to "Mudanças recentes", course_log_url(@course) %></li>
 		</ul>
 	</div>
+
+  <% if @course.related_courses.length > 1 %>
+	<div class="menu">
+		<h1>Semestres</h1>
+		<ul>
+      <% for c in @course.related_courses %>
+        <li><%= (c == @course) ? c.period : link_to(c.period, course_url(c)) %></li>
+      <% end %>
+		</ul>
+	</div>
+  <% end %>

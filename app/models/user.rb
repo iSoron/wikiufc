@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
 	acts_as_paranoid
 
 	# Associacoes
-	has_and_belongs_to_many :courses, :order => 'full_name'
+	has_and_belongs_to_many :courses, :order => 'full_name', :conditions => "period = #{App.current_period}"
 
 	# Validacao
 	validates_length_of       :login, :within => 3..40

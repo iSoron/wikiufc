@@ -105,7 +105,7 @@ class NewsController < ApplicationController
 
 	protected
 	def find_new
-		params[:course_id] = Course.find_by_short_name(params[:course_id]).id if !params[:course_id].is_numeric? and !Course.find_by_short_name(params[:course_id]).nil?
+		params[:course_id] = Course.find(:first, :conditions => ['short_name = ?', params[:course_id]], :order => 'period desc').id if !params[:course_id].is_numeric? and !Course.find_by_short_name(params[:course_id]).nil?
 		@course = Course.find(params[:course_id])
 
 		@news = params[:id] ? @course.news.find(params[:id]) : News.new(params[:news])
