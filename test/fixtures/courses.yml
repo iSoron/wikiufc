@@ -19,4 +19,5 @@ course_1:
   short_name: course1
   full_name: Firt Course
   description: Description goes here
+  period: <%= App.current_period %>
 

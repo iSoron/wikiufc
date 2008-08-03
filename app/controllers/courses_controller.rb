@@ -104,7 +104,9 @@ class CoursesController < ApplicationController
 
 	protected
 	def find_course
-		params[:id] = Course.find(:first, :conditions => ['short_name = ?', params[:id]], :order => 'period desc').id if !params[:id].is_numeric? and !Course.find_by_short_name(params[:id]).nil?
+		if params[:id]
+			params[:id] = Course.find(:first, :conditions => ['short_name = ?', params[:id]], :order => 'period desc').id if !params[:id].is_numeric? and !Course.find_by_short_name(params[:id]).nil?
+		end
 		@course = params[:id] ? Course.find(params[:id]) : Course.new(params[:course])
 	end
 
