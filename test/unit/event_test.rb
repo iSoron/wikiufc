@@ -16,7 +16,7 @@
 
 require File.dirname(__FILE__) + '/../test_helper'
 
-class EventTest < Test::Unit::TestCase
+class EventTest < ActiveSupport::TestCase
 	fixtures :events
 
 	# Replace this with your real tests.

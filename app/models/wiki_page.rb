@@ -23,7 +23,8 @@ class WikiPage < ActiveRecord::Base
 	acts_as_paranoid
 	acts_as_list :scope => 'course_id = #{course_id}'
 	acts_as_versioned :if_changed => [ :content, :description, :title ]
-	self.non_versioned_fields << 'position'
+	self.non_versioned_columns << 'position'
+	self.non_versioned_columns << 'deleted_at'
 
 	# Associacoes
 	belongs_to :course
@@ -33,7 +34,6 @@ class WikiPage < ActiveRecord::Base
 	generate_validations
 	validates_uniqueness_of :title, :scope => :course_id
 	validates_format_of :title, :with => /^[^0-9]/
-
 
 	def validate
 		begin
@@ -48,7 +48,7 @@ class WikiPage < ActiveRecord::Base
 	end
 
 	def to_param
-		self.title.match(/^[-_a-z0-9]*$/i).nil? ? self.id : self.title
+		self.title.match(/^[-_a-z0-9]*$/i).nil? ? self.id.to_id : self.title
 	end
 
 	def WikiPage.diff(from, to)

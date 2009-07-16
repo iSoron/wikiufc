@@ -20,7 +20,9 @@ module ApplicationHelper
 
 	# Converte para o timezone local
 	def tz(time_at)
-		TzTime.zone.utc_to_local(time_at.utc)
+		#FIXME
+		#TzTime.zone.utc_to_local(time_at.utc)
+		time_at
 	end
 
 	FLASH_NAMES = [:notice, :warning, :message]	
@@ -59,6 +61,7 @@ module ApplicationHelper
 
 	def highlight(name)
 		return {:class => 'highlight'} if (flash[:highlight] == name) 
+		return {}
 	end
 
 	def spinner(name)
@@ -83,5 +86,9 @@ module ApplicationHelper
 	def action_icon(action_name, description, options = {}, html_options = {})
 		html_options.merge!({:class => 'icon', :alt => description, :title => description})
 		link_to(image_tag("action/#{action_name}.gif", :title => description), options, html_options)
+	end
+
+	def format_period(period)
+		return "20#{period[0..1]}.#{period[2..2]}"
 	end
 end

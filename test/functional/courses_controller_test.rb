@@ -14,13 +14,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require File.dirname(__FILE__) + '/../test_helper'
+require File.dirname(__FILE__) + '/../test_helper.rb'
 require 'courses_controller'
 
 # Re-raise errors caught by the controller.
 #class CoursesController; def rescue_action(e) raise e end; end
 
-class CoursesControllerTest < Test::Unit::TestCase
+class CoursesControllerTest < ActionController::TestCase
 
 	def setup
 		@controller = CoursesController.new
@@ -31,7 +31,7 @@ class CoursesControllerTest < Test::Unit::TestCase
 
 	# REST - usuários autenticados
 	context "A user" do
-		setup { login_as :bob }
+		#setup { login_as :bob }
 		should_be_restful do |resource|
 			resource.create.params = { :short_name => 'test', :full_name => 'test', :description => 'test' }
 			resource.update.params = { :short_name => 'test', :full_name => 'test', :description => 'test' }

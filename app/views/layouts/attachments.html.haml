@@ -8,8 +8,8 @@
     = "&rsaquo;" + link_to(truncate(h(@attachment.file_name)), course_attachment_url)
     - @title = @title + " - #{truncate(h(@attachment.file_name))}"
 
-- @left_panel = render 'courses/_left_panel'
-- @right_panel = render 'courses/_right_panel'
+- @left_panel = render 'courses/left_panel'
+- @right_panel = render 'courses/right_panel'
 - @content = yield
 
 = render 'layouts/base' 

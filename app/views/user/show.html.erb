@@ -13,7 +13,7 @@
 <% @news_messages.each do |n| %>
 	<div class="line">
 		<h4 class="left"><%= n.timestamp.strftime("%d de %B") %></h4>
-		<h4><%= link_to h(n.course.full_name) , course_news_url(n.course, n) %> &rsaquo;
+		<h4><%= link_to h(n.course.full_name) , course_news_instance_url(n.course, n) %> &rsaquo;
 		<a href="#" id="new_<%=n.id%>"><%= h(n.title) %></a></h4>
 
 		<p id="new_desc_<%= n.id %>" style="display:none">

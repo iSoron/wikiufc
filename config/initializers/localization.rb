@@ -1,4 +1,4 @@
-TzTime.zone = TZInfo::Timezone.new("America/Fortaleza")
+#TzTime.zone = TZInfo::Timezone.new("America/Fortaleza")
 
 class Time
   alias :strftime_nolocale :strftime

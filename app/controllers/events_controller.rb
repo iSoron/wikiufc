@@ -51,7 +51,7 @@ class EventsController < ApplicationController
 
 		respond_to do |format|
 			format.html { redirect_to course_event_path(@course, @event) }
-			format.xml { head :created, :location => formatted_course_event_url(@course, @event, :xml) }
+			format.xml { head :created, :location => course_event_url(@course, @event, :format => :xml) }
 		end
 	end
 
@@ -61,7 +61,7 @@ class EventsController < ApplicationController
 
 	def update
 		@event.attributes = params[:event]
-		dirty = @event.dirty?
+		dirty = @event.changed?
 		@event.save!
 		flash[:notice] = 'Event updated'[]
 
@@ -69,7 +69,7 @@ class EventsController < ApplicationController
 
 		respond_to do |format|
 			format.html { redirect_to course_event_path(@course, @event) }
-			format.xml { head :created, :location => formatted_course_event_url(@course, @event, :xml) }
+			format.xml { head :created, :location => course_event_url(@course, @event, :format => :xml) }
 		end
 	end
 
@@ -100,7 +100,7 @@ class EventsController < ApplicationController
 
 	def undelete
 		@event = Event.find_with_deleted(params[:id])
-		@event.restore!
+		@event.recover!
 
 		flash[:notice] = "Event restored"[]
 		EventRestoreLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @event.course, :version => @event.version)

@@ -1,5 +1,5 @@
-= action_icon('undo', "Reverter", edit_course_wiki_url(@course, @wiki_page, :description => "Revertendo para versão #{page.version}", :version => page.version)) + "&nbsp;"
-= link_to tz(page.updated_at).strftime("%d/%m/%y&nbsp;%H:%M:%S"), course_wiki_url(@course, @wiki_page, :version => page.version)
+= action_icon('undo', "Reverter", edit_course_wiki_instance_url(@course, @wiki_page, :description => "Revertendo para versão #{page.version}", :version => page.version)) + "&nbsp;"
+= link_to tz(page.updated_at).strftime("%d/%m/%y&nbsp;%H:%M:%S"), course_wiki_instance_url(@course, @wiki_page, :version => page.version)
 = "por #{link_to h(page.user.display_name), user_path(page.user)}" if page.respond_to?(:user) and !page.user.nil?
 
 - if page.description and !page.description.empty?

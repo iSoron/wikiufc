@@ -7,5 +7,5 @@
     %li= render :partial => 'wiki/history', :locals => { :page => @to } 
     %li= render :partial => 'wiki/history', :locals => { :page => @from }
 
-  = link_to "Comparar outras versões", versions_course_wiki_url(@course, @wiki_page, :from => @from.version, :to => @to.version)
+  = link_to "Comparar outras versões", versions_course_wiki_instance_url(@course, @wiki_page, :from => @from.version, :to => @to.version)
   = format_diff h(@diff)

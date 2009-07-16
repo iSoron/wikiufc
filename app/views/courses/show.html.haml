@@ -12,18 +12,18 @@
 
 .box
   .cmd
-    = action_icon 'add', 'Adicionar página wiki', new_course_wiki_url(@course)
+    = action_icon 'add', 'Adicionar página wiki', new_course_wiki_instance_url(@course)
 
   %h3 Páginas Wiki
   %ul.wiki
     - @course.wiki_pages.each do |wiki|
       %li{highlight(wiki.id)}
         .cmd{:style => 'margin-bottom: -27px; margin-top: -9px;'}
-          =action_icon 'arrow2_n', 'Mover para cima', move_up_course_wiki_url(@course, wiki) unless wiki.first?
-          =action_icon 'arrow2_s', 'Mover para baixo', move_down_course_wiki_url(@course, wiki) unless wiki.last?
+          =action_icon 'arrow2_n', 'Mover para cima', move_up_course_wiki_instance_url(@course, wiki) unless wiki.first?
+          =action_icon 'arrow2_s', 'Mover para baixo', move_down_course_wiki_instance_url(@course, wiki) unless wiki.last?
           - if wiki.last?
             %span{:style => 'margin-right: 14px'} &nbsp;
-        =link_to h(wiki.title), course_wiki_url(@course, wiki)
+        =link_to h(wiki.title), course_wiki_instance_url(@course, wiki)
     - if @course.wiki_pages.empty?
       %li.no_itens Nenhuma página wiki
 

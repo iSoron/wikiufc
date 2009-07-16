@@ -53,8 +53,8 @@ class NewsController < ApplicationController
 		NewsCreateLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @course, :version => @news.version)
 
 		respond_to do |format|
-			format.html { redirect_to course_news_path(@course, @news) }
-			format.xml { head :created, :location => formatted_course_news_url(@course, @news, :xml) }
+			format.html { redirect_to course_news_instance_path(@course, @news) }
+			format.xml { head :created, :location => course_news_instance_url(@course, @news, :format => :xml) }
 		end
 	end
 
@@ -65,40 +65,40 @@ class NewsController < ApplicationController
 	def update
 		@news.attributes = params[:news]
 		@news.timestamp = Time.now.utc
-		dirty = @news.dirty?
+		dirty = @news.changed?
 		@news.save!
 		flash[:notice] = 'News updated'[]
 
 		NewsEditLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @course, :version => @news.version) if dirty
 
 		respond_to do |format|
-			format.html { redirect_to course_news_path(@course, @news) }
-			format.xml { head :created, :location => formatted_course_news_url(@course, @news, :xml) }
+			format.html { redirect_to course_news_instance_path(@course, @news) }
+			format.xml { head :created, :location => course_news_instance_url(@course, @news, :format => :xml) }
 		end
 	end
 
 	def destroy
 		@news.destroy
 		flash[:notice] = 'News removed'[]
-		flash[:undo] = undelete_course_news_url(@course, @news)
+		flash[:undo] = undelete_course_news_instance_url(@course, @news)
 
 		NewsDeleteLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @course, :version => @news.version)
 
 		respond_to do |format|
-			format.html { redirect_to course_news_index_path(@course) }
+			format.html { redirect_to course_news_path(@course) }
 			format.xml { head :ok }
 		end
 	end
 
 	def undelete
 		@news = News.find_with_deleted(params[:id])
-		@news.restore!
+		@news.recover!
 
 		flash[:notice] = "News restored"[]
 		NewsRestoreLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @news.course, :version => @news.version)
 		
 		respond_to do |format|
-			format.html { redirect_to course_news_url(@news.course, @news) }
+			format.html { redirect_to course_news_instance_url(@news.course, @news) }
 		end
 	end
 
@@ -113,6 +113,6 @@ class NewsController < ApplicationController
 
 	def cache_sweep
 		expire_fragment(course_path(@course.id, :part => :right))
-		expire_fragment(course_news_index_path(@course.id))
+		expire_fragment(course_news_path(@course.id))
 	end
 end

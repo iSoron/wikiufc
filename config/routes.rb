@@ -31,11 +31,13 @@ ActionController::Routing::Routes.draw do |map|
 			}
 
 		course.resources :news,
+            :singular => "news_instance",
 			:member => {
 				:undelete => :post
 			}
 		
 		course.resources :wiki,
+            :singular => "wiki_instance",
 			:member => {
 				:diff => :get,
 				:versions => :get,

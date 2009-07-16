@@ -5,10 +5,10 @@
   = link_to(h(@course.full_name), course_url(@course)) + "&rsaquo;"
   = link_to("Wiki", course_url(@course))
   - if @wiki_page.title
-    = "&rsaquo;" + link_to(h(@wiki_page.title), course_wiki_url(@course, @wiki_page))
+    = "&rsaquo;" + link_to(h(@wiki_page.title), course_wiki_instance_url(@course, @wiki_page))
     - @title = @title + " - #{h(@wiki_page.title)}"
 
-- @left_panel = render 'courses/_left_panel'
+- @left_panel = render 'courses/left_panel'
 - @content = yield
 
 = render 'layouts/base' 

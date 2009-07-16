@@ -25,6 +25,7 @@
 
 ### Códigos fonte e textos não formatados
 - `O comando \`printf(x)\` escreve na tela`
+
 <pre>Este é um exemplo de código fonte com várias linhas:
 
     tell application "Foo"

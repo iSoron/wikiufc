@@ -3,9 +3,9 @@
   = link_to(App.title, index_url) + "&rsaquo;"
   = link_to("Disciplinas", courses_url) + "&rsaquo;"
   = link_to(h(@course.full_name), course_url(@course)) + "&rsaquo;"
-  = link_to("Noticias", course_news_index_url(@course))
+  = link_to("Noticias", course_news_url(@course))
 
-- @left_panel = render 'courses/_left_panel'
+- @left_panel = render 'courses/left_panel'
 - @content = yield
 
 = render 'layouts/base' 

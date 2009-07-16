@@ -4,7 +4,7 @@ require 'test_help'
 require 'redgreen'
 require 'quietbacktrace'
 
-class Test::Unit::TestCase
+class ActiveSupport::TestCase
 
 	self.new_backtrace_silencer :shoulda do |line| 
 		line.include? 'vendor/plugins/shoulda'
@@ -69,3 +69,4 @@ class Test::Unit::TestCase
 		end
     end
 end
+

@@ -20,7 +20,7 @@ require 'news_controller'
 # Re-raise errors caught by the controller.
 class NewsController; def rescue_action(e) raise e end; end
 
-class NewsControllerTest < Test::Unit::TestCase
+class NewsControllerTest < ActionController::TestCase
 	def setup
 		@controller = NewsController.new
 		@request = ActionController::TestRequest.new
@@ -39,7 +39,7 @@ class NewsControllerTest < Test::Unit::TestCase
 			resource.parent = [ :course ]
 			resource.create.params = { :title => 'test', :body => 'test', :receiver_id => 1 }
 			resource.update.params = { :title => 'test', :body => 'test', :receiver_id => 1 }
-			resource.destroy.redirect = "course_news_index_url(@course)"
+			resource.destroy.redirect = "course_news_url(@course)"
 		end
 	end
 

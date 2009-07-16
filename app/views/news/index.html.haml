@@ -1,14 +1,14 @@
 = javascript_include_tag 'news'
 
--# cache(course_news_index_path(@course.id)) do
+-# cache(course_news_path(@course.id)) do
 
 .cmd
-  = action_icon 'add', 'Adicionar', new_course_news_url
+  = action_icon 'add', 'Adicionar', new_course_news_instance_url
 
 %h4.title= h(@course.full_name)
 %h1.title Notícias
 
-= auto_discovery_link_tag :rss, formatted_course_news_index_url(@course, :rss)
+= auto_discovery_link_tag :rss, course_news_url(@course, :format => :rss)
 
 .box.div_news
   - if !@course.news.empty?
@@ -21,11 +21,11 @@
           %td.top.aright{:width => '1%'}
             = n.timestamp.strftime("%d&nbsp;de&nbsp;%B")
           %td
-            .title= link_to h(n.title), course_news_url(@course, n)
+            .title= link_to h(n.title), course_news_instance_url(@course, n)
             .description{:style => (n.id == params[:id].to_i ? '' : 'display: none')}
               .cmd
-                = action_icon 'edit', 'Editar', edit_course_news_url(@course, n, :version => n.version)
-                = action_icon 'trash', 'Excluir', course_news_url(@course, n), :confirm => 'Tem certeza que deseja excluir?', :method => :delete
+                = action_icon 'edit', 'Editar', edit_course_news_instance_url(@course, n, :version => n.version)
+                = action_icon 'trash', 'Excluir', course_news_instance_url(@course, n), :confirm => 'Tem certeza que deseja excluir?', :method => :delete
               = formatted(n.body)
               = "Sem descrição" if n.body.empty?
   - else

@@ -3,4 +3,5 @@ public/images/sanscons/*
 public/upload/*
 *.db
 *.log
+*.orig
 config/database.yml

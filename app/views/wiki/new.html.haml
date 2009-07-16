@@ -4,7 +4,7 @@
 %h1.title Adicionar página wiki
 
 %p
-  - form_tag course_wiki_url(@course, @wiki_page.id) do
+  - form_tag course_wiki_url(@course) do
     = render :partial => 'form'
     = submit_tag "Criar"
     %button#show_preview{:type => "button"}

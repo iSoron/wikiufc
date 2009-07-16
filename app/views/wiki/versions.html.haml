@@ -8,7 +8,7 @@
   == radios_to = #{h(@history_to)};
   == radios_from = #{h(@history_from)};
 
-- form_tag diff_course_wiki_url(@course, @wiki_page), :method => :get do
+- form_tag diff_course_wiki_instance_url(@course, @wiki_page), :method => :get do
   %button{:type => "submit"}= "Comparar as versões selecionadas"
   .box
     %table
@@ -24,12 +24,12 @@
             %input{:type => "radio", :name => "from", :value => entry.version, :onclick => "history_from(#{entry.version})"}
           %td.narrow
             %input{:type => "radio", :name => "to", :value => entry.version, :onclick => %"history_to(#{entry.version})"}
-          %td= link_to(tz(entry.updated_at).strftime("%d/%m/%y&nbsp;%H:%M:%S"), course_wiki_url(@course, @wiki_page, :version => entry.version))
-          %td= link_to truncate(h(User.find_with_deleted(entry.user_id).display_name), 20), user_path(User.find_with_deleted(entry.user_id))
+          %td= link_to(tz(entry.updated_at).strftime("%d/%m/%y&nbsp;%H:%M:%S"), course_wiki_instance_url(@course, @wiki_page, :version => entry.version))
+          %td= link_to truncate(h(User.find_with_deleted(entry.user_id).display_name), :length => 20), user_path(User.find_with_deleted(entry.user_id))
           %td
             = entry.description
             - if (entry.version > @wiki_page.versions.minimum(:version))
-              = "(" + link_to("diff", diff_course_wiki_url(@course, @wiki_page, :from => entry.version - 1, :to => entry.version)) + ")"
-            = "(" + link_to("edit", edit_course_wiki_url(@course, @wiki_page, :description => "Revertendo para versão #{entry.version}", :version => entry.version)) + ")"
+              = "(" + link_to("diff", diff_course_wiki_instance_url(@course, @wiki_page, :from => entry.version - 1, :to => entry.version)) + ")"
+            = "(" + link_to("edit", edit_course_wiki_instance_url(@course, @wiki_page, :description => "Revertendo para versão #{entry.version}", :version => entry.version)) + ")"
 
 /= will_paginate @versions

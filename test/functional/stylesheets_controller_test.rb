@@ -20,7 +20,7 @@ require 'stylesheets_controller'
 # Re-raise errors caught by the controller.
 class StylesheetsController; def rescue_action(e) raise e end; end
 
-class StylesheetsControllerTest < Test::Unit::TestCase
+class StylesheetsControllerTest < ActionController::TestCase
 
 	def setup
 		@controller = StylesheetsController.new

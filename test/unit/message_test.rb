@@ -16,15 +16,21 @@
 
 require File.dirname(__FILE__) + '/../test_helper'
 
-class MessageTest < Test::Unit::TestCase
+class MessageTest < ActiveSupport::TestCase
 	fixtures :messages
+
+    def test_should_create_new_version
+       news = News.find(1)
+	   news.title = "another title"
+       assert news.save_version?
+    end
 
     def test_should_not_create_new_version
        news = News.find(1)
        news.destroy
 
        news = News.find_with_deleted(1)
-       news.restore!
-       assert !news.dirty?
+       news.recover!
+       assert !news.save_version?
     end
 end

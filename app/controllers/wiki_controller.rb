@@ -49,8 +49,8 @@ class WikiController < ApplicationController
 		WikiCreateLogEntry.create!(:target_id => @wiki_page.id, :user => @current_user, :course => @course)
 
 		respond_to do |format|
-			format.html { redirect_to course_wiki_path(@course, @wiki_page) }
-			format.xml { head :created, :location => formatted_course_wiki_url(@course, @wiki_page, :xml) }
+			format.html { redirect_to course_wiki_instance_url(@course, @wiki_page) }
+			format.xml { head :created, :location => course_wiki_instance_url(@course, @wiki_page, :format => :xml) }
 		end
 	end
 
@@ -73,7 +73,7 @@ class WikiController < ApplicationController
 		@wiki_page.attributes = params[:wiki_page]
 		@wiki_page.user_id = session[:user_id]
 		@wiki_page.course_id = @course.id
-		dirty = @wiki_page.dirty?
+		dirty = @wiki_page.changed?
 		@wiki_page.save!
 
 		WikiEditLogEntry.create!(:target_id => @wiki_page.id, :user => @current_user, :course => @course, :version => @wiki_page.version) if dirty
@@ -81,15 +81,15 @@ class WikiController < ApplicationController
 		flash[:notice] = "Wiki page updated"[]
 
 		respond_to do |format|
-			format.html { redirect_to course_wiki_path(@course, @wiki_page) }
-			format.xml { head :created, :location => formatted_course_wiki_url(@course, @wiki_page, :xml) }
+			format.html { redirect_to course_wiki_instance_url(@course, @wiki_page) }
+			format.xml { head :created, :location => course_wiki_instance_url(@course, @wiki_page, :format => :xml) }
 		end
 	end
 
 	def destroy
 		@wiki_page.destroy
 		flash[:notice] = "Wiki page removed"[]
-		flash[:undo] = url_for(:course_id => @course, :id => @wiki_page.id, :action => 'undelete')
+		flash[:undo] = undelete_course_wiki_instance_url(@course, @wiki_page.id)
 
 		WikiDeleteLogEntry.create!(:target_id => @wiki_page.id, :user => @current_user, :course => @course)
 
@@ -120,8 +120,9 @@ class WikiController < ApplicationController
 	end
 
 	def diff
-		@to = WikiPage.find_version(params[:id], params[:to])
-		@from = WikiPage.find_version(params[:id], params[:from])
+		@wiki_page = WikiPage.find(params[:id])
+        @to = @wiki_page.versions.find_by_version(params[:to])
+        @from = @wiki_page.versions.find_by_version(params[:from])
 		@diff = WikiPage.diff(@from, @to)
 	end
 
@@ -147,13 +148,13 @@ class WikiController < ApplicationController
 
 	def undelete
 		@wiki_page = WikiPage.find_with_deleted(params[:id])
-		@wiki_page.update_attribute(:deleted_at, nil)
+		@wiki_page.recover!
 		flash[:notice] = "Wiki page restored"[]
 
 		WikiRestoreLogEntry.create!(:target_id => @wiki_page.id, :user => @current_user, :course => @wiki_page.course)
 
 		respond_to do |format|
-			format.html { redirect_to course_wiki_url(@wiki_page.course, @wiki_page) }
+			format.html { redirect_to course_wiki_instance_url(@wiki_page.course, @wiki_page) }
 		end
 	end
 
@@ -167,7 +168,7 @@ class WikiController < ApplicationController
 	end
 
 	def cache_sweep
-		expire_fragment course_path(@course.id)
-		expire_fragment course_wiki_path(@course.id, @wiki_page.id)
+		expire_fragment course_url(@course.id)
+		expire_fragment course_wiki_instance_url(@course.id, @wiki_page.id)
 	end
 end

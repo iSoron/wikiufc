@@ -5,8 +5,8 @@
   = link_to(h(@course.full_name), course_url(@course)) + "&rsaquo;"
   = link_to("Calendário", course_events_url)
 
-- @left_panel = render 'courses/_left_panel'
-- @right_panel = render 'courses/_right_panel'
+- @left_panel = render 'courses/left_panel'
+- @right_panel = render 'courses/right_panel'
 - @content = yield
 
 = render 'layouts/base' 

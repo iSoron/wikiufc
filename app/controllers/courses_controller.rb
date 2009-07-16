@@ -31,7 +31,6 @@ class CoursesController < ApplicationController
 			@courses = Course.find(:all, :order => 'grade asc, full_name asc', :conditions => ['period = ?', @period])
 		end
 
-
 		respond_to do |format|
 			format.html
 			format.xml { render :xml => @courses }
@@ -54,7 +53,7 @@ class CoursesController < ApplicationController
 
 		respond_to do |format|
 			format.html { redirect_to course_path(@course) }
-			format.xml { head :created, :location => formatted_course_url(@course, :xml) }
+			format.xml { head :created, :location => course_url(@course, :format => :xml) }
 		end
 	end
 

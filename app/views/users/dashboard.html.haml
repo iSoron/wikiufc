@@ -1,12 +1,12 @@
 %h4.title Dashboard
 %h1.title= "Bem vindo, #{h(@current_user.display_name)}"
 
-= auto_discovery_link_tag :rss, formatted_dashboard_url(:secret => @current_user.secret, :format => 'rss')
+= auto_discovery_link_tag :rss, dashboard_url(:secret => @current_user.secret, :format => 'rss')
 
 .dashboard
   .box
     .cmd
-      =link_to "rss", formatted_dashboard_url(:secret => @current_user.secret, :format => 'rss')
+      =link_to "rss", dashboard_url(:secret => @current_user.secret, :format => 'rss')
     - last_time = nil
 
     %h3 Notícias Recentes
@@ -20,13 +20,13 @@
             = n.timestamp.strftime("%d&nbsp;de&nbsp;%B")
           %td
             = link_to(h(n.course.full_name), course_url(n.course)) + " &rsaquo;"
-            = link_to(h(n.title), course_news_url(n.course, n))
+            = link_to(h(n.title), course_news_instance_url(n.course, n))
             - unless n.body.empty?
-              %p= truncate(h(n.body), 300)
+              %p= truncate(h(n.body), :length => 300)
 
   .box
     .cmd
-      =link_to "ical", formatted_dashboard_url(:secret => @current_user.secret, :format => 'ics')
+      =link_to "ical", dashboard_url(:secret => @current_user.secret, :format => 'ics')
     - last_time = nil
 
     %h3 Próximos Eventos

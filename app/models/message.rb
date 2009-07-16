@@ -19,7 +19,7 @@ class Message < ActiveRecord::Base
 	# Plugins
 	acts_as_paranoid
 	acts_as_versioned :if_changed => [ :title, :body ]
-	self.non_versioned_fields << 'deleted_at'
+	self.non_versioned_columns << 'deleted_at'
 	
 	# Associacoes
 	belongs_to :user,

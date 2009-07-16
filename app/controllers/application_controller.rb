@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
 	include AuthenticationSystem
 
 	before_filter :startup
-	around_filter :set_timezone
+	before_filter :set_timezone
 	
 	# Força o login para algumas áreas do sistema
 	before_filter :require_login, :only => [ :edit, :new, :create, :update, :delete, :destroy, :download ]
@@ -62,10 +62,8 @@ class ApplicationController < ActionController::Base
 	end
 
 	def set_timezone
-		#TzTime.zone = session[:user].tz
-		TzTime.zone = TZInfo::Timezone.get("America/Fortaleza")
-		yield
-		TzTime.reset!
+		#Time.zone = session[:user].tz
+		Time.zone = "America/Fortaleza"
 	end	
 
 	def startup

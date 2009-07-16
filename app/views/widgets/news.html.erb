@@ -1,19 +1,19 @@
 	<!-- Mural -->
 	<div class="menu">
     <div class="cmd">
-      <%= action_icon 'add', 'Adicionar notícia', new_course_news_url(@course) %>
+      <%= action_icon 'add', 'Adicionar notícia', new_course_news_instance_url(@course) %>
     </div>
 		<h1>Noticias</h1>
 		<ul class="widget_news">
 		<% @course.news[0..3].each do |msg| %>
 			<li>
 				<h4><%= tz(msg.timestamp).strftime("%d/%m") %></h4>
-				<%= link_to msg.title, course_news_url(@course, msg) %>.
-				<%= truncate(msg.body, 80) %>
+				<%= link_to msg.title, course_news_instance_url(@course, msg) %>.
+				<%= truncate(msg.body, :length => 80) %>
 			</li>
 		<% end %>
     <% if @course.news.size > 4 %>
-    <li><%= link_to("Ver todas as notícias", course_news_index_url(@course)) %></li>
+    <li><%= link_to("Ver todas as notícias", course_news_url(@course)) %></li>
     <% end %>
 		<% if @course.news.empty? %>
 			<li class="no_itens">Nenhuma notícia</li>

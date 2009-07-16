@@ -1,8 +1,8 @@
 %h4.title= @course ? h(@course.full_name) : App.title
 %h1.title Mudanças recentes
 
-- if @course
-  = auto_discovery_link_tag :rss, formatted_course_log_url(@course, :rss)
+-# if @course
+  =# auto_discovery_link_tag :rss, course_log_url(@course.id, :format => :rss)
 
 .box
   %table
@@ -15,7 +15,7 @@
     - @log_entries.each do |entry|
       %tr
         %td= tz(entry.created_at).strftime("%d/%m/%y&nbsp;%H:%M:%S")
-        %td= link_to truncate(h(entry.user.display_name), 20), user_path(entry.user)
+        %td= link_to truncate(h(entry.user.display_name), :length => 20), user_url(entry.user.id)
         - unless @course
           %td= link_to h(entry.course.short_name), course_url(entry.course)
         %td= render(:partial => 'log/log_entry', :locals => { :entry => entry })

@@ -58,6 +58,6 @@ class Course < ActiveRecord::Base
 
 	def to_param
 		return self.short_name if self.period == App.current_period
-		return self.id
+		return self.id.to_s
 	end
 end
