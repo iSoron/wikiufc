@@ -11,4 +11,4 @@
     %p= "Última visita há {c}"[:last_seen, distance_of_time_in_words(Time.now, @user.last_seen)]
 
   -# cache(user_path(@user.id)) do
-  = wiki @user.description if !@user.description.blank?
+  = @user.description.format_wiki if !@user.description.blank?

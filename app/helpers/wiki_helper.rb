@@ -14,6 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+class String
+	def format_wiki
+		text = BlueCloth.new(self).to_html
+		text = Hpricot(text, :xhtml_strict => true).to_s
+		return text.sanitize
+	end
+end
+
 module WikiHelper
 
 	def format_diff(text)

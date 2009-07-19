@@ -260,36 +260,6 @@ class BlueCloth < String
 	#private
 	#######
 
-	def sanitize_html(html, whitelist, attrs, blacklist)
-		whitelist += attrs.keys  
-		page = Hpricot(html, :xhtml_strict => true)  
-
-		page.search("*").each do |e|  
-			if e.elem?  
-				tagname = e.name.downcase  
-				if blacklist.include?(tagname)  
-					e.swap("")  
-				elsif !whitelist.include?(tagname)  
-					e.parent.replace_child(e, e.children)   
-				elsif attrs.has_key?(tagname)  
-					e.attributes.each do |key, val|
-						e.remove_attribute(key) if !attrs[tagname].include?(key.downcase)
-
-						HTMLValueBlackList.each do |bad| 
-							e.remove_attribute(key) if val.downcase.gsub(/\s/, "").include?(bad.downcase)
-						end
-					end
-				else
-					e.attributes.each { |key, val| e.remove_attribute(key) }
-				end  
-			elsif e.comment?  
-				e.swap('')  
-			end  
-		end  
-
-		page.to_s  
-	end	
-
 	### Do block-level transforms on a copy of +str+ using the specified render
 	### state +rs+ and return the results.
 	def apply_block_transforms( str, rs )
@@ -320,10 +290,6 @@ class BlueCloth < String
 				match
 			end
 		}
-
-		# Sanitize result
-		@log.debug "Sanitizing HTML:\n %p" % text
-		text = sanitize_html(text, HTMLWhiteList, HTMLAttrs, HTMLBlackList)
 
 		@log.debug "Done with block transforms:\n  %p" % text
 		return text
@@ -454,7 +420,7 @@ class BlueCloth < String
 		# Block Latex
 		rval = rval.gsub(LatexBlockRegexp) {|block|
 			codeblock = $1.strip.gsub("\n", '%0A').gsub(/[ \t]+/, " ")
-			codeblock = %{<div class="tex_block"><img src="#{MimeTexURL}?%s"></img></div>} %
+			codeblock = %{<div class="tex_block"><img src="#{MimeTexURL}?%s"/></div>} %
 				[ encode_code( codeblock, rs ) ]
 			tokenize(codeblock, rs)
 		}
@@ -462,7 +428,7 @@ class BlueCloth < String
 		# Inline math
 		rval = rval.gsub( LatexInlineRegexp ) {|block|
 			codeblock = $1.strip
-			codeblock = %{<img class="tex_inline" src="#{MimeTexURL}?\\small %s"></img>} % [ encode_code( codeblock, rs ) ]
+			codeblock = %{<img class="tex_inline" src="#{MimeTexURL}?\\small %s"/>} % [ encode_code( codeblock, rs ) ]
 			tokenize(codeblock, rs)
 		}
 

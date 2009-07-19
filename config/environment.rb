@@ -57,6 +57,16 @@ Rails::Initializer.run do |config|
   # Make Active Record use UTC-base instead of local time
   config.active_record.default_timezone = :utc
 
+  config.action_view.sanitized_allowed_tags = %W(p h1 h2 h3 h4 h5 h6 dl dt ol
+  	ul li address blockquote del div hr ins pre a abbr acronym dfn em strong
+	code samp kbd var b i big small tt span br bdo  cite del ins q sub sup img
+	map table tr td th colgroup col caption thead tbody tfoot)
+
+  config.action_view.sanitized_allowed_attributes = %W(align alt border
+  	cellpadding cellspacing cols colspan coords height href longdesc name
+	noresize nowrap rel rows rowspan rules scope shape size span src style
+	summary title type usemap valign width)
+
   config.gem "dr_nic_magic_models"
   config.gem "bluecloth"
   config.gem "acts_as_versioned"

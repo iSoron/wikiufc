@@ -51,10 +51,6 @@ module ApplicationHelper
 		logged_in? and current_user.admin?
 	end
 
-	def wiki(text)
-		BlueCloth.new(text).to_html
-	end
-
 	def formatted(text)
 		h(text).gsub("\n", "<br/>")
 	end
@@ -75,7 +71,7 @@ module ApplicationHelper
 
     def markup_help
         return "<div id='markup_help' style='display: none'>" +
-                wiki(File.read("#{RAILS_ROOT}/public/static/markup_help.mkd")) +
+                File.read("#{RAILS_ROOT}/public/static/markup_help.mkd").format_wiki +
                 "</div>"
     end
 
@@ -91,4 +87,5 @@ module ApplicationHelper
 	def format_period(period)
 		return "20#{period[0..1]}.#{period[2..2]}"
 	end
+
 end

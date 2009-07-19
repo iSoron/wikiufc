@@ -8,7 +8,7 @@
 %h4.title Disciplina
 %h1.title= h(@course.full_name)
 
-%p= wiki @course.description
+%p= @course.description.format_wiki
 
 .box
   .cmd

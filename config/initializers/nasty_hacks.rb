@@ -1,8 +1,3 @@
-# Carrega as classes Message e LogEntry. O lazy loading do Rails gera
-# problemas se voce definir varias classes por arquivos.
-require "#{RAILS_ROOT}/app/models/message.rb"
-require "#{RAILS_ROOT}/app/models/log_entry.rb"
-
 class Fixnum
 	def is_numeric?
 		true
@@ -12,6 +7,14 @@ end
 class String
 	def is_numeric?
 		Float self rescue false
+	end
+
+	def html_escape
+		ERB::Util::html_escape(self)
+	end
+
+	%w[auto_link excerpt highlight sanitize simple_format strip_tags truncate word_wrap].each do |method|
+		eval "def #{method}(*args); ActionController::Base.helpers.#{method}(self, *args); end"
 	end
 end
 
@@ -36,9 +39,6 @@ module ActiveRecord
     module Versioned
       module ClassMethods
         def acts_as_paranoid_versioned
-          acts_as_paranoid
-          acts_as_versioned      
-
           # protect the versioned model
           self.versioned_class.class_eval do
             def self.delete_all(conditions = nil); return; end
@@ -48,3 +48,9 @@ module ActiveRecord
     end
   end
 end
+
+# Carrega as classes Message e LogEntry. O lazy loading do Rails gera
+# problemas se voce definir varias classes por arquivos.
+require "#{RAILS_ROOT}/app/models/message.rb"
+require "#{RAILS_ROOT}/app/models/log_entry.rb"
+

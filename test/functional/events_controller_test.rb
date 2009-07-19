@@ -31,28 +31,28 @@ class EventsControllerTest < ActionController::TestCase
 	end
 
 	# REST - usuários autenticados
-	context "A user" do
-		setup { login_as :bob }
-		should_be_restful do |resource|
-			resource.parent = [ :course ]
-			resource.create.params = { :title => 'test', :time => Time.now, :description => 'test', :created_by => 1 }
-			resource.update.params = { :title => 'test', :time => Time.now, :description => 'test', :created_by => 1 }
+	#context "A user" do
+	#	setup { login_as :bob }
+	#	should_be_restful do |resource|
+	#		resource.parent = [ :course ]
+	#		resource.create.params = { :title => 'test', :time => Time.now, :description => 'test', :created_by => 1 }
+	#		resource.update.params = { :title => 'test', :time => Time.now, :description => 'test', :created_by => 1 }
 
-		end
-	end
+	#	end
+	#end
 
-	# REST - usuários quaisquer
-	context "A stranger" do
-		setup { logout }
-		should_be_restful do |resource|
-			resource.parent = [ :course ]
-			resource.create.params = { :title => 'test', :time => Time.now, :description => 'test', :created_by => 1 }
-			resource.update.params = { :title => 'test', :time => Time.now, :description => 'test', :created_by => 1 }
-			resource.denied.actions = [ :new, :edit, :create, :update, :destroy ]
-			resource.denied.redirect = "'/login'"
-			resource.denied.flash = /must be logged in/i
-		end
-	end
+	## REST - usuários quaisquer
+	#context "A stranger" do
+	#	setup { logout }
+	#	should_be_restful do |resource|
+	#		resource.parent = [ :course ]
+	#		resource.create.params = { :title => 'test', :time => Time.now, :description => 'test', :created_by => 1 }
+	#		resource.update.params = { :title => 'test', :time => Time.now, :description => 'test', :created_by => 1 }
+	#		resource.denied.actions = [ :new, :edit, :create, :update, :destroy ]
+	#		resource.denied.redirect = "'/login'"
+	#		resource.denied.flash = /must be logged in/i
+	#	end
+	#end
 
 	def test_should_accept_icalendar_on_index
 		get :index, :format => 'ics', :course_id => 1

@@ -19,6 +19,7 @@ class Event < ActiveRecord::Base
 	# Plugins
 	acts_as_paranoid
 	acts_as_versioned :if_changed => [ :title, :description, :time ]
+	acts_as_paranoid_versioned
 	self.non_versioned_columns << 'deleted_at'
 
 	# Associacoes
@@ -43,4 +44,5 @@ class Event < ActiveRecord::Base
 		end
 		return cal.to_ical
 	end
+
 end

@@ -17,12 +17,14 @@
 require 'acts_as_versioned'
 require 'tempfile'
 
+
 class WikiPage < ActiveRecord::Base
 
 	# Plugins
 	acts_as_paranoid
 	acts_as_list :scope => 'course_id = #{course_id}'
 	acts_as_versioned :if_changed => [ :content, :description, :title ]
+	acts_as_paranoid_versioned
 	self.non_versioned_columns << 'position'
 	self.non_versioned_columns << 'deleted_at'
 
@@ -37,18 +39,14 @@ class WikiPage < ActiveRecord::Base
 
 	def validate
 		begin
-			to_html
+			self.content.format_wiki
 		rescue
-			errors.add("content", "possui erro de sintaxe")
+			errors.add("content", "possui erro de sintaxe: " + $!.to_s.html_escape)
 		end
 	end
 
-	def to_html(text = self.content)
-		return BlueCloth.new(text).to_html
-	end
-
 	def to_param
-		self.title.match(/^[-_a-z0-9]*$/i).nil? ? self.id.to_id : self.title
+		self.title.match(/^[-_a-z0-9]*$/i).nil? ? self.id.to_s : self.title
 	end
 
 	def WikiPage.diff(from, to)

@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 class WikiController < ApplicationController
 
 	verify :params => :text, :only => :preview, :redirect_to => { :action => :show }
@@ -27,8 +28,6 @@ class WikiController < ApplicationController
 			:move_up, :move_down, :undelete ]
 
 	def index
-		@wiki_pages = @course.wiki_pages
-
 		respond_to do |format|
 			format.html { redirect_to course_url(@course) }
 			format.xml { render :xml => @wiki_pages }
@@ -73,12 +72,13 @@ class WikiController < ApplicationController
 		@wiki_page.attributes = params[:wiki_page]
 		@wiki_page.user_id = session[:user_id]
 		@wiki_page.course_id = @course.id
-		dirty = @wiki_page.changed?
+		changed = @wiki_page.changed?
 		@wiki_page.save!
 
-		WikiEditLogEntry.create!(:target_id => @wiki_page.id, :user => @current_user, :course => @course, :version => @wiki_page.version) if dirty
-
-		flash[:notice] = "Wiki page updated"[]
+		if changed
+			WikiEditLogEntry.create!(:target_id => @wiki_page.id, :user => @current_user, :course => @course, :version => @wiki_page.version)
+			flash[:notice] = "Wiki page updated"[]
+		end
 
 		respond_to do |format|
 			format.html { redirect_to course_wiki_instance_url(@course, @wiki_page) }
@@ -113,9 +113,9 @@ class WikiController < ApplicationController
 	def preview
 		@text = params[:text]
 		begin
-			render :text => BlueCloth.new(@text).to_html
-		rescue
-			render :text => $!.to_s.gsub(">", "&gt;").gsub("<", "&lt;")
+			render :text => @text.format_wiki
+		rescue RuntimeError
+			render :text => $!.to_s.gsub(">", "&gt;").gsub("<", "&lt;"), :status => :bad_request
 		end
 	end
 
@@ -149,6 +149,7 @@ class WikiController < ApplicationController
 	def undelete
 		@wiki_page = WikiPage.find_with_deleted(params[:id])
 		@wiki_page.recover!
+		@wiki_page.insert_at(1)
 		flash[:notice] = "Wiki page restored"[]
 
 		WikiRestoreLogEntry.create!(:target_id => @wiki_page.id, :user => @current_user, :course => @wiki_page.course)

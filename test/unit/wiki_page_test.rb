@@ -18,6 +18,16 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class WikiPageTest < ActiveSupport::TestCase
 
+	should "not delete versions on destroy" do
+		wp = WikiPage.new(:course_id => 1, :user_id => 1, :title => "t", :content => "c", :description => "d", :version => 1)
+		wp.save!
+		wp.destroy
+
+		wp = WikiPage.find_with_deleted(wp.id)
+		wp.recover!
+		assert !wp.versions.empty?
+	end
+
 	def test_should_create_new_version_when_editing
 		wp = WikiPage.new
 		assert !wp.save_version?

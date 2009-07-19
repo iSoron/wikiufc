@@ -10,4 +10,4 @@
 %h4.title= h(@course.full_name)
 %h1.title= h(@wiki_page.title)
 #wiki_text
-  = @wiki_page.to_html
+  = @wiki_page.content.format_wiki

@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
 
 	include AuthenticationSystem
 
+	helper :all
 	before_filter :startup
 	before_filter :set_timezone
 	
