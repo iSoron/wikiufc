@@ -73,9 +73,9 @@ class WikiController < ApplicationController
 		@wiki_page.user_id = session[:user_id]
 		@wiki_page.course_id = @course.id
 		changed = @wiki_page.changed?
-		@wiki_page.save!
 
 		if changed
+			@wiki_page.save!
 			WikiEditLogEntry.create!(:target_id => @wiki_page.id, :user => @current_user, :course => @course, :version => @wiki_page.version)
 			flash[:notice] = "Wiki page updated"[]
 		end

@@ -23,6 +23,10 @@ class AttachmentsController < ApplicationController
 	#after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
 	
 	def show
+		respond_to do |format|
+			format.html
+			format.xml { render :xml => @attachment }
+		end
 	end
 
 	def new
@@ -31,22 +35,20 @@ class AttachmentsController < ApplicationController
 	def create
 		@attachment.course_id = @course.id
 		@attachment.description = params[:attachment][:description]
-		unless params[:attachment][:file].kind_of?(String)
+		@attachment.file_name = "blank"
+		unless params[:attachment][:file].nil?
 			@attachment.file = params[:attachment][:file]
 			@attachment.file_name = params[:attachment][:file].original_filename
 			@attachment.content_type = params[:attachment][:file].content_type
 		end
+		@attachment.save!
 
-		# Verifica se o arquivo ja esta associado a outro anexo
-		#file_path = "#{RAILS_ROOT}/public/upload/#{@course.id}/#{@attachment.file_name}"
-		#@attachment.errors.add("file", "already exists") if File.exists?(file_path)
+		AttachmentCreateLogEntry.create!(:target_id => @attachment.id, :user => @current_user, :course => @course)
+		flash[:notice] = 'Attachment created'[]
 
-		if @attachment.save
-			AttachmentCreateLogEntry.create!(:target_id => @attachment.id, :user => @current_user, :course => @course)
-			flash[:notice] = 'Attachment created'[]
-			redirect_to :action => 'show', :id => @attachment.id
-		else
-			render :action => 'new'
+		respond_to do |format|
+			format.html { redirect_to course_attachment_url(@course, @attachment) }
+			format.xml { head :created, :location => course_attachment_url(@course, @attachment, :format => :xml) }
 		end
 	end
 
@@ -55,19 +57,23 @@ class AttachmentsController < ApplicationController
 
 	def update
 		@attachment.description = params[:attachment][:description]
-		unless params[:attachment][:file].kind_of?(String)
+		unless params[:attachment][:file].nil?
 			@attachment.file = params[:attachment][:file]
 			@attachment.file_name = params[:attachment][:file].original_filename
 			@attachment.content_type = params[:attachment][:file].content_type
 		end
+		changed = @attachment.changed?
 
-		if @attachment.save
-			AttachmentEditLogEntry.create!(:target_id => @attachment.id, :user => @current_user, :course => @course)
+		if changed
 			@attachment.last_modified = Time.now.utc
+			@attachment.save!
+			AttachmentEditLogEntry.create!(:target_id => @attachment.id, :user => @current_user, :course => @course)
 			flash[:notice] = 'Attachment updated'[]
-			redirect_to :action => 'show', :id => @attachment.id
-		else
-			render :action => 'edit'
+		end
+
+		respond_to do |format|
+			format.html { redirect_to course_attachment_url(@course, @attachment) }
+			format.xml { head :created, :location => course_attachment_url(@course, @attachment, :format => :xml) }
 		end
 	end
 
@@ -75,8 +81,13 @@ class AttachmentsController < ApplicationController
 		@attachment.destroy
 		flash[:notice] = 'Attachment removed'[]
 		flash[:undo] = undelete_course_attachment_url(@course, @attachment)
+
 		AttachmentDeleteLogEntry.create!(:target_id => @attachment.id, :user => @current_user, :course => @course)
-		redirect_to :controller => 'courses', :action => 'show', :id => @course
+		
+		respond_to do |format|
+			format.html { redirect_to course_url(@course) }
+			format.xml { head :ok }
+		end
 	end
 
 	def download

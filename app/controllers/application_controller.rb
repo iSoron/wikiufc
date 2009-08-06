@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 	before_filter :set_timezone
 	
 	# Força o login para algumas áreas do sistema
-	before_filter :require_login, :only => [ :edit, :new, :create, :update, :delete, :destroy, :download ]
+	before_filter :require_login, :only => [ :edit, :new, :create, :update, :delete, :destroy, :download, :undelete ]
 
 	protected
 	def rescue_action(exception)

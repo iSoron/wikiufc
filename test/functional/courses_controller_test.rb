@@ -23,14 +23,22 @@ require 'courses_controller'
 class CoursesControllerTest < ActionController::TestCase
 
 	def setup
-		@controller = CoursesController.new
-		@request    = ActionController::TestRequest.new
-		@response   = ActionController::TestResponse.new
-		@course = Course.find(:first)
+		@course = courses(:course_1)
+		@old_course = courses(:old_course)
+		LogEntry.delete_all
 	end
 
-	def test_truth
-		assert true
+	context "An anonymous user" do
+		context "on get to :index" do
+			setup { get :index }
+
+			should_respond_with :success
+			should_render_template 'index'
+
+			should "display the course list" do
+				assert_select 'a[href=?]', course_url(@course)
+			end
+		end
 	end
 
 	# REST - usuários autenticados

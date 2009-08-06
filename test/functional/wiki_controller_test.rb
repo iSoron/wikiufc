@@ -251,6 +251,7 @@ class WikiControllerTest < ActionController::TestCase
 				post :undelete, :course_id => @course.id, :id => @wiki_page.id
 			end
 
+			should_set_the_flash_to(/restored/i)
 			should_redirect_to('the wiki page') { course_wiki_instance_url(@course, @wiki_page) }
 			should_create_log_entry {[ WikiRestoreLogEntry, @wiki_page.id, users(:bob).id ]}
 
@@ -260,7 +261,6 @@ class WikiControllerTest < ActionController::TestCase
 		end
 
 	end
-
 
 	#def test_should_accept_text_on_show
 	#	get :show, :format => 'txt', :course_id => 1, :id => @wiki_page.id

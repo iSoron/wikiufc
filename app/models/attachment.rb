@@ -31,6 +31,7 @@ class Attachment < ActiveRecord::Base
 	def file=(new_file)
 		@tmp_file = new_file
 		self.size = new_file.size
+		self.content_type ||= "application/octet-stream"
 	end
 
 	protected

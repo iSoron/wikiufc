@@ -21,3 +21,9 @@ course_1:
   description: Description goes here
   period: <%= App.current_period %>
 
+old_course:
+  id: 2
+  short_name: old_course
+  full_name: Old Course
+  description: Description goes here
+  period: 1970.1

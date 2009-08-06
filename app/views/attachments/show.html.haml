@@ -8,7 +8,7 @@
 %p
   %dl
     %dt Arquivo
-    %dd= link_to h(@attachment.file_name), download_course_attachment_url
+    %dd= link_to h(@attachment.file_name), download_course_attachment_url(@course, @attachment)
 
     %dt Descrição
     %dd= h(@attachment.description)
