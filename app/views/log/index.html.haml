@@ -4,18 +4,20 @@
 -# if @course
   =# auto_discovery_link_tag :rss, course_log_url(@course.id, :format => :rss)
 
+- @log_entries_by_day = @log_entries.group_by { |l| l.created_at.beginning_of_day }
 .box
-  %table
-    %tr
-      %th Data
-      %th Usuário
-      - unless @course
-        %th Disciplina
-      %th Descrição
-    - @log_entries.each do |entry|
-      %tr
-        %td= tz(entry.created_at).strftime("%d/%m/%y&nbsp;%H:%M:%S")
-        %td= link_to truncate(h(entry.user.display_name), :length => 20), user_url(entry.user.id)
-        - unless @course
-          %td= link_to h(entry.course.short_name), course_url(entry.course)
-        %td= render(:partial => 'log/log_entry', :locals => { :entry => entry })
+  %ul.log_entries
+    - @log_entries_by_day.each do |day, entries|
+      %h3
+        =tz(day).strftime("%d&nbsp;de&nbsp;%B&nbsp;de&nbsp;%Y")
+      - entries.each do |entry|
+        %li
+          .date
+            = tz(entry.created_at).strftime("%H:%M")
+          %img.avatar{:src => gravatar_url_for(entry.user.email, 27)}
+          = "Disciplina " + link_to(h(entry.course.full_name), course_url(entry.course))
+          %br
+          =link_to truncate(h(entry.user.display_name), :length => 20), user_url(entry.user.id)
+          = render(:partial => 'log/log_entry', :locals => { :entry => entry }) 
+
+= will_paginate @log_entries

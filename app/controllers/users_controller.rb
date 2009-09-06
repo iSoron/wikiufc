@@ -21,11 +21,11 @@ class UsersController < ApplicationController
 	before_filter :require_admin, :only => [ :edit, :update, :destroy ]
 
 	def index
-		@users = User.find(:all, :order => 'name')
+		@users = User.paginate(:page => params[:page], :per_page => 20, :order => 'last_seen')
 
 		respond_to do |format|
 			format.html
-			format.xml { render :xml => @users }
+			format.xml { render :xml => User.find(:all) }
 		end
 	end
 
@@ -101,7 +101,7 @@ class UsersController < ApplicationController
 				flash[:message] = 'Welcome back, {u}'[:login_success, @user.login]
 				redirect_to_stored
 			else
-				flash[:warning] = 'Login failed'
+				flash[:warning] = 'Login failed'[]
 			end
 		end
 	end
@@ -116,11 +116,11 @@ class UsersController < ApplicationController
 		@news = []
 		@events = []
 		
-		if params[:format] == 'html'
+		if params[:secret]
+			@user = User.find_by_secret(params[:secret])
+		else
 			return require_login unless logged_in?
 			@user = @current_user
-		else
-			@user = User.find_by_secret(params[:secret])
 		end
 
 		unless @user.courses.empty?
@@ -163,19 +163,6 @@ class UsersController < ApplicationController
 		end
 	end
 
-#	def forgot_password
-#		if request.post?
-#			u = User.find_by_email(params[:user][:email])
-#			if u and u.send_new_password
-#				flash[:message] = "Uma nova senha foi enviada para o seu email."
-#				redirect_to :action=>'login'
-#			else
-#				flash[:warning] = "Não foi possível gerar uma nova senha."
-#			end
-#		end
-#	end
-
-	#Funções do Fórum
 	protected
 	def find_user
 		params[:id] = User.find_by_login(params[:id]).id if params[:id] and !params[:id].is_numeric?

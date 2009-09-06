@@ -6,7 +6,7 @@
 .dashboard
   .box
     .cmd
-      =link_to "rss", dashboard_url(:secret => @current_user.secret, :format => 'rss')
+      =link_to "rss", formatted_dashboard_url(:secret => @current_user.secret, :format => 'rss')
     - last_time = nil
 
     %h3 Notícias Recentes
@@ -26,7 +26,7 @@
 
   .box
     .cmd
-      =link_to "ical", dashboard_url(:secret => @current_user.secret, :format => 'ics')
+      =link_to "ical", formatted_dashboard_url(:secret => @current_user.secret, :format => 'ics')
     - last_time = nil
 
     %h3 Próximos Eventos

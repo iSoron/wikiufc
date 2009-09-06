@@ -1,6 +1,6 @@
-= "Notícia " + link_to(h(entry.news.title), course_news_instance_url(entry.course, entry.news, :version => entry.version))
+= "criou "     if entry.kind_of?(NewsCreateLogEntry)
+= "editou "    if entry.kind_of?(NewsEditLogEntry)
+= "excluiu "   if entry.kind_of?(NewsDeleteLogEntry)
+= "restaurou " if entry.kind_of?(NewsRestoreLogEntry)
 
-= "criada "     if entry.kind_of?(NewsCreateLogEntry)
-= "editada "    if entry.kind_of?(NewsEditLogEntry)
-= "excluída "   if entry.kind_of?(NewsDeleteLogEntry)
-= "restaurada " if entry.kind_of?(NewsRestoreLogEntry)
+= "a notícia " + link_to(h(entry.news.title), course_news_instance_url(entry.course, entry.news, :version => entry.version))

@@ -46,8 +46,8 @@ module AuthenticationSystem
 	end
 	
 	def destroy_session
-		session.delete
-		cookies.delete :login_token
+		session.clear
+		cookies.delete(:login_token)
 	end
 
 	def redirect_to_stored

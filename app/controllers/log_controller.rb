@@ -20,9 +20,9 @@ class LogController < ApplicationController
 
 	def index
 		if @course
-			@log_entries = @course.log_entries.find(:all, :limit => 50) #.paginate(:page => params[:page], :per_page => 30)
+			@log_entries = @course.log_entries.paginate(:page => params[:page], :per_page => 30)
 		else
-			@log_entries = LogEntry.find(:all, :limit => 50, :order => 'created_at desc')
+			@log_entries = LogEntry.paginate(:page => params[:page], :per_page => 30) 
 		end
 
 		respond_to do |format|

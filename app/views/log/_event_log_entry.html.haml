@@ -1,6 +1,6 @@
-= "Evento " + link_to(h(entry.event.title), course_event_url(entry.course, entry.event, :version => entry.version))
+= "criou "     if entry.kind_of?(EventCreateLogEntry)
+= "editou "    if entry.kind_of?(EventEditLogEntry)
+= "excluiu "   if entry.kind_of?(EventDeleteLogEntry)
+= "restaurou " if entry.kind_of?(EventRestoreLogEntry)
 
-= "criado "     if entry.kind_of?(EventCreateLogEntry)
-= "editado "    if entry.kind_of?(EventEditLogEntry)
-= "excluído "   if entry.kind_of?(EventDeleteLogEntry)
-= "restaurado " if entry.kind_of?(EventRestoreLogEntry)
+= "o evento " + link_to(h(entry.event.title), course_event_url(entry.course, entry.event, :version => entry.version))

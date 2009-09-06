@@ -29,6 +29,15 @@ class CoursesControllerTest < ActionController::TestCase
 	end
 
 	context "An anonymous user" do
+
+		should_request_login_on_post_to(:new,       {})
+		should_request_login_on_post_to(:create,    {})
+		should_request_login_on_post_to(:edit,      {:id => 1})
+		should_request_login_on_post_to(:update,    {:id => 1})
+		should_request_login_on_post_to(:destroy,   {:id => 1})
+		should_request_login_on_post_to(:enroll,    {:id => 1})
+		should_request_login_on_post_to(:unenroll,  {:id => 1})
+
 		context "on get to :index" do
 			setup { get :index }
 
@@ -36,9 +45,35 @@ class CoursesControllerTest < ActionController::TestCase
 			should_render_template 'index'
 
 			should "display the course list" do
+				assert_select 'h1', "Disciplinas #{App.current_period}"
 				assert_select 'a[href=?]', course_url(@course)
 			end
+
+			should "choose display the selected period" do
+				get :index, :period => "1970.1"
+				assert_select 'h1', "Disciplinas 1970.1"
+			end
 		end
+
+		context "on get to :show" do
+			setup { get :show, :id => @course.id }
+
+			should_respond_with :success
+			should_render_template 'show'
+
+			should "display the course" do
+				assert_select 'a[href=?]', course_log_url(@course)
+				assert_select 'a[href=?]', course_news_url(@course)
+				assert_select 'a[href=?]', course_events_url(@course)
+				assert_select 'a[href=?]', new_course_event_url(@course)
+				assert_select 'a[href=?]', new_course_attachment_url(@course)
+				assert_select 'a[href=?]', new_course_wiki_instance_url(@course)
+			end
+		end
+	end
+
+	context "An authenticated user" do
+		setup { login_as :bob }
 	end
 
 	# REST - usuários autenticados

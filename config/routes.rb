@@ -57,7 +57,6 @@ ActionController::Routing::Routes.draw do |map|
 	map.with_options :controller => 'log' do |log|
 		log.course_log 'courses/:course_id/log', :action => 'index', :format => 'html'
 		log.undo_course_log 'courses/:course_id/log/:id/undo', :action => 'undo', :format => 'html'
-
 		log.formatted_course_log 'courses/:course_id/log.:format', :action => 'index'
 	end
 
@@ -78,7 +77,7 @@ ActionController::Routing::Routes.draw do |map|
    end
 	
 	# Pagina pessoal
-	map.dashboard '/dashboard', :controller => 'users', :action => 'dashboard', :format => 'html'
+	map.dashboard '/dashboard', :controller => 'users', :action => 'dashboard'
     map.formatted_dashboard '/dashboard/:secret.:format', :controller => 'users', :action => 'dashboard'
 
 	# Stylesheets

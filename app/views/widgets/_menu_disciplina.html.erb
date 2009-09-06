@@ -3,7 +3,8 @@
 		<h1>Disciplina</h1>
 		<ul>
 			<li><%= link_to "Visão Geral", course_url(@course) %></li>
-			<li><%= link_to "Noticias", course_news_url(@course) %></li>
+			<li><%= link_to "Participantes", course_events_url(@course) %></li>
+			<li><%= link_to "Notícias", course_news_url(@course) %></li>
 			<li><%= link_to "Calendário", course_events_url(@course) %></li>
 			<li><%= link_to "Mudanças recentes", course_log_url(@course) %></li>
 		</ul>

@@ -295,7 +295,7 @@ body {
 	border-bottom: 0px solid #ccc;
 }
 
-.widget_news li, .widget_events li, #shoutbox li, #shoutbox {
+.widget_users li, .widget_news li, .widget_events li {
   font-size: 11px;
 }
 
@@ -666,6 +666,14 @@ form dl {
   margin: 5px 18px 0px 0px;
 }
 
+.user_list {
+  list-style: none;
+}
+
+.user_list li {
+  background-image: none;
+}
+
 .card h1 { margin-bottom: 0px; }
 .card p { margin-top: 0px; }
 
@@ -827,7 +835,26 @@ form dt p {
   margin: 9px 0px;
 }
 
+.log_entries .date {
+  float: left;
+  width: 50px;
+  margin: 0px 15px 0px -90px;
+}
 
-xbody { background-image: url(<%= App.base_path %>/prototype/line.png); background-repeat: repeat; }
-xhtml * { background-color: transparent !important; }
+.log_entries .avatar {
+  float: left;
+  margin: 0px 0px 0px -40px;
+}
+
+.log_entries * {
+  vertical-align: top;
+  background-image: none !important;
+}
+
+.log_entries li {
+  padding-left: 110px !important;
+}
+
+/*body { background-image: url(<%= App.base_path %>/prototype/line.png); background-repeat: repeat; }
+html * { background-color: transparent !important; }*/
 

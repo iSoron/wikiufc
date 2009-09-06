@@ -41,7 +41,7 @@ class LogEntry < ActiveRecord::Base
 	end
 end
 
-require 'log_entry/attachment_log_entry.rb'
-require 'log_entry/event_log_entry.rb'
-require 'log_entry/news_log_entry.rb'
-require 'log_entry/wiki_log_entry.rb'
+load 'log_entry/attachment_log_entry.rb'
+load 'log_entry/event_log_entry.rb'
+load 'log_entry/news_log_entry.rb'
+load 'log_entry/wiki_log_entry.rb'

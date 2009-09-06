@@ -3,5 +3,6 @@
 %h1.title Usuários
 
 .box
-  %ul
+  %ul.user_list
     = render :partial => @users
+  = will_paginate @users

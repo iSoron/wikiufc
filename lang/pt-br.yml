@@ -39,7 +39,10 @@ recent_changes: Mudanças recentes
 log_about: Mudanças recentes em {disciplina}
 
 undo: Desfazer
+login_failed: Não foi possível fazer login
 login_required: É necessário fazer login para acessar esta área do site
+login_success: Olá, {u}!
+logout_success: Você fez logout
 
 navigation: navegação
 forums: fórums

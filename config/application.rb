@@ -3,7 +3,7 @@ App.language = "pt-br"
 App.title = "Wiki UFC"
 App.webmaster_email = "webmaster@wikiufc.gelsol.org"
 
-App.default_host = "wikiufc.gelsol.org"
+App.default_host = "localhost:3000"
 App.base_path = ""
 
 App.current_period = "2009.2"
@@ -16,7 +16,7 @@ App.max_upload_file_size = 5.megabytes
 
 # Tema
 App.default_color = 0
-App.default_avatar = "http://wikiufc.gelsol.org/images/avatar.png"
+App.default_avatar = "http://#{App.default_host}#{App.default_path}/images/avatar"
 App.color_schemes = [
     # Default
     [ "#037", "#069", "#455", "#778" ],

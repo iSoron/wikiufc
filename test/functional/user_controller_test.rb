@@ -22,12 +22,27 @@ class UsersController; def rescue_action(e) raise e end; end
 
 class UsersControllerTest < ActionController::TestCase
 
-	self.use_instantiated_fixtures  = true
+    context "An authenticated user" do
+        setup { login_as :bob }
 
-	fixtures :users
+        context "on get to :dashboard" do
+            setup { get :dashboard }
 
-	def test_true
-		assert true
-	end
+            should_respond_with :success
+            should_render_template "dashboard"
+        end
 
+        context "on post to :logout" do
+            setup { get :logout }
+
+            should_respond_with :redirect
+			should_redirect_to('the main page') { index_url }
+
+            should "log out" do
+                assert_nil session[:user_id]
+                assert_nil cookies[:login_token]
+            end
+        end
+
+    end
 end
