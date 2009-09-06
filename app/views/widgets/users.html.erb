@@ -1,0 +1,24 @@
+	<div class="menu">
+    <div class="cmd">
+      <% if @course.users.include?(@current_user) %>
+        <%= action_icon 'subtract', 'Deixar de participar', unenroll_course_url(@course) %>
+      <% else %>
+        <%= action_icon 'add', 'Participar', enroll_course_url(@course) %>
+      <% end %>
+    </div>
+		<h1>Participantes</h1>
+		<ul class="widget_users">
+		<% @course.users[0..7].each do |user| %>
+			<li>
+        <img class="avatar" src="<%=gravatar_url_for(user.email, 27)%>"/>
+        <%= link_to h(user.display_name), user_url(user) %>
+			</li>
+		<% end %>
+    <% if @course.users.size > 0 %>
+    <li><%= link_to("Ver todos os participantes", course_news_url(@course)) %></li>
+    <% end %>
+		<% if @course.users.empty? %>
+			<li class="no_itens">Nenhum participante</li>
+		<% end %>
+		</ul>
+	</div>
