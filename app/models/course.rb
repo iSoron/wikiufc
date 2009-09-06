@@ -40,6 +40,9 @@ class Course < ActiveRecord::Base
 	has_many :wiki_pages,
 	         :order => "position",
 	         :dependent => :destroy
+
+	has_and_belongs_to_many :users,
+	         :order => "last_seen desc"
 	
 	# Validacao
 	generate_validations

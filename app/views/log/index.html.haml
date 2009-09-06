@@ -15,9 +15,9 @@
           .date
             = tz(entry.created_at).strftime("%H:%M")
           %img.avatar{:src => gravatar_url_for(entry.user.email, 27)}
-          = "Disciplina " + link_to(h(entry.course.full_name), course_url(entry.course))
-          %br
           =link_to truncate(h(entry.user.display_name), :length => 20), user_url(entry.user.id)
           = render(:partial => 'log/log_entry', :locals => { :entry => entry }) 
+          %br
+          = "Disciplina " + link_to(h(entry.course.full_name), course_url(entry.course))
 
 = will_paginate @log_entries
