@@ -16,6 +16,14 @@ class String
 	%w[auto_link excerpt highlight sanitize simple_format strip_tags truncate word_wrap].each do |method|
 		eval "def #{method}(*args); ActionController::Base.helpers.#{method}(self, *args); end"
 	end
+
+	def pretty_url
+		self.mb_chars.normalize(:kd).
+			gsub(/[^\x00-\x7F]/n,'').
+			gsub(/[^a-z._0-9 -]/i,"").
+			gsub(/ +/,"_").
+			downcase.to_s
+	end
 end
 
 class Array

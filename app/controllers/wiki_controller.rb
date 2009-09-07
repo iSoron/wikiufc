@@ -164,7 +164,7 @@ class WikiController < ApplicationController
 		params[:course_id] = Course.find(:first, :conditions => ['short_name = ?', params[:course_id]], :order => 'period desc').id if !params[:course_id].is_numeric? and !Course.find_by_short_name(params[:course_id]).nil?
 		@course = Course.find(params[:course_id])
 
-		params[:id] = @course.wiki_pages.find_by_title(params[:id]).id if params[:id] and !params[:id].is_numeric? and !@course.wiki_pages.find_by_title(params[:id]).nil?
+		params[:id] = @course.wiki_pages.find_by_canonical_title(params[:id].pretty_url).id if params[:id] and !params[:id].is_numeric? and !@course.wiki_pages.find_by_canonical_title(params[:id].pretty_url).nil?
 		@wiki_page = params[:id] ? @course.wiki_pages.find(params[:id]) : WikiPage.new(params[:wiki_page])
 	end
 
