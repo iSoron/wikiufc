@@ -568,10 +568,12 @@ class BlueCloth < String
 			@log.debug "  Found list %p" % list
 			bullet = $1
 			list_type = (ListMarkerUl.match(bullet) ? "ul" : "ol")
+			list_start = (/([0-9]+)\./.match(bullet) ? " start='#{$1}'" : "")
 			list.gsub!( /\n{2,}/, "\n\n\n" )
 
-			%{<%s>\n%s</%s>\n} % [
+			%{<%s%s>\n%s</%s>\n} % [
 				list_type,
+				list_start,
 				transform_list_items( list, rs ),
 				list_type,
 			]
