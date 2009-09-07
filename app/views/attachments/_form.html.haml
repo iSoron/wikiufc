@@ -7,5 +7,10 @@
   %dd= file_field 'attachment', 'file'
 
   %dt
+    %label{:for => 'attachment_path'} Diretório
+    %p.grey= "Exemplo: Exercicios/Parte 1"
+  %dd= text_field 'attachment', 'path'
+
+  %dt
     %label{:for => "attachment_description"} Descrição
   %dd= preserve(text_area 'attachment', 'description')

@@ -461,6 +461,7 @@ h4.title, h1.title {
 .repositorio .mime_document { background-image: url(<%= App.base_path %>/images/tango/x-office-document.png); }
 .repositorio .mime_binary { background-image: url(<%= App.base_path %>/images/tango/application-x-executable.png); }
 .repositorio .mime_zip { background-image: url(<%= App.base_path %>/images/tango/package-x-generic.png); }
+.repositorio .mime_folder { background-image: url(<%= App.base_path %>/images/tango/folder.png); }
 
 .spinner {
   float: right;
@@ -855,6 +856,14 @@ form dt p {
   padding-left: 110px !important;
 }
 
+ul.nested {
+  padding-left: 36px;
+}
+
+ul.nested li {
+  padding-top: 5px !important;
+  padding-bottom: 4px !important;
+}
+
 /*body { background-image: url(<%= App.base_path %>/prototype/line.png); background-repeat: repeat; }
 html * { background-color: transparent !important; }*/
-
