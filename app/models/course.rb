@@ -21,7 +21,7 @@ class Course < ActiveRecord::Base
 	
 	# Associacoes
 	has_many :attachments,
-	         :order => "path, file_name",
+	         :order => "path is not null, path, file_name",
 	         :dependent => :destroy
 
 	has_many :events,
