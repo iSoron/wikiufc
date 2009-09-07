@@ -103,9 +103,9 @@ function enumerate_headers()
 	    }
 
 	    if(item.match('h5')) {
-			if(c5 != 0) contents += "</ol>";
+			if(c5 == 0) contents += "<ol>";
 
-	        n = c2 + "." + c3 + "." + c5 + "." + (++c5);
+	        n = c1 + "." + c2 + "." + c3 + "." + c4 + "." + (++c5);
 
 			contents += "<li><a href='#" + n + "'>" + n + ". " + text + "</a></li>";
 			text += "<a name='" + n + "'></a>";
