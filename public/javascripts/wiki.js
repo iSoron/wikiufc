@@ -26,6 +26,7 @@ events['#show_markup_help:click'] = function(element, e)
 
 function enumerate_headers()
 {
+	contents = "";
 	elems = $('wiki_text').childElements();
 
 	count = 0;
@@ -50,31 +51,70 @@ function enumerate_headers()
 		if(ignore-- > 0) return;
 
 	    text = item.innerHTML;
+
 	    if(item.match('h1')) {
-	        text = (++c1) + ". " + text;    
+			if(c5 != 0) contents += "</ol>";
+			if(c4 != 0) contents += "</ol>";
+			if(c3 != 0) contents += "</ol>";
+			if(c2 != 0) contents += "</ol>";
+			if(c1 == 0) contents += "<ol>";
+
+	        n = (++c1);
 	        c2 = c3 = c4 = c5 = 0;
+
+			contents += "<li><a href='#" + n + "'>" + n + ". " + text + "</a></li>";
+			text += "<a name='" + n + "'></a>";
 	    }
 
 	    if(item.match('h2')) {
-	        text = c1 + "." + (++c2) + " " + text;    
+			if(c5 != 0) contents += "</ol>";
+			if(c4 != 0) contents += "</ol>";
+			if(c3 != 0) contents += "</ol>";
+			if(c2 == 0) contents += "<ol>";
+
+	        n = c1 + "." + (++c2);
 	        c3 = c4 = c5 = 0;
+
+			contents += "<li><a href='#" + n + "'>" + n + ". " + text + "</a></li>";
+			text += "<a name='" + n + "'></a>";
 	    }
 
 	    if(item.match('h3')) {
-	        text = c1 + "." + c2 + "." + (++c3) + " " + text;
+			if(c5 != 0) contents += "</ol>";
+			if(c4 != 0) contents += "</ol>";
+			if(c3 == 0) contents += "<ol>";
+
+	        n = c1 + "." + c2 + "." + (++c3);
 	        c4 = c5 = 0;
+
+			contents += "<li><a href='#" + n + "'>" + n + ". " + text + "</a></li>";
+			text += "<a name='" + n + "'></a>";
 	    }
 
 	    if(item.match('h4')) {
-	        text = c1 + "." + c2 + "." + c3 + "." + (++c4) + " " + text;
+			if(c5 != 0) contents += "</ol>";
+			if(c4 == 0) contents += "<ol>";
+
+	        n = c1 + "." + c2 + "." + c3 + "." + (++c4);
 	        c5 = 0;
+
+			contents += "<li><a href='#" + n + "'>" + n + ". " + text + "</a></li>";
+			text += "<a name='" + n + "'></a>";
 	    }
 
 	    if(item.match('h5')) {
-	        text = c2 + "." + c3 + "." + c5 + "." + (++c5) + " " + text;
+			if(c5 != 0) contents += "</ol>";
+
+	        n = c2 + "." + c3 + "." + c5 + "." + (++c5);
+
+			contents += "<li><a href='#" + n + "'>" + n + ". " + text + "</a></li>";
+			text += "<a name='" + n + "'></a>";
 	    }
 	    
 	    item.innerHTML = text;
 	});
+
+	$('contents').toggle();
+	$('contents').innerHTML += contents;
 }
 

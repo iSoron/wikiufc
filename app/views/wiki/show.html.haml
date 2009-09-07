@@ -1,7 +1,6 @@
 -# cache(course_wiki_path(@course.id, @wiki_page.id)) do
 
 = javascript_include_tag 'wiki'
-
 .cmd
   = action_icon 'edit', 'Editar', edit_course_wiki_instance_url
   = action_icon 'undo', 'Historico', versions_course_wiki_instance_url
@@ -9,5 +8,11 @@
 
 %h4.title= h(@course.full_name)
 %h1.title= h(@wiki_page.title)
+#contents{:style => "display: none"}
+  %h1 Índice
 #wiki_text
   = @wiki_page.content.format_wiki
+
+%script
+  = "enumerate_headers();"
+
