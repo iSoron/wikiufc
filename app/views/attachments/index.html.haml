@@ -1,0 +1,15 @@
+.cmd
+  = action_icon 'add', 'Adicionar', new_course_attachment_url(@course)
+
+%h4.title= h(@course.full_name)
+%h1.title Repositório de Arquivos
+
+.box.repositorio
+  - if !@course.attachments.empty?
+    %ul
+      = nested_attachments_to_html(attachments_to_nested_hash(@course.attachments))
+
+  - else
+    .box
+      %ul
+        %li.no_itens Nenhum arquivo

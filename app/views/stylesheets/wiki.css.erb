@@ -231,7 +231,7 @@ body {
   list-style: none;
 }
 
-.menu li, .news li, #shoutbox li {
+.menu li, #shoutbox li {
   border-top: 1px solid #eee;
   margin-top: -1px;
   padding: 9px 10px;
@@ -295,16 +295,9 @@ body {
 	border-bottom: 0px solid #ccc;
 }
 
-.widget_users li, .widget_news li, .widget_events li {
+.widget_users li {
   font-size: 11px;
 }
-
-.widget_news li, #shoutbox li {
-  line-height: 18px;
-  margin: 0px; margin-top: -1px;
-  padding: 9px 0px;
-}
-
 
 #shoutbox textarea {
   font-family: sans-serif;
@@ -559,8 +552,14 @@ textarea {
   width: 100%;
 }
 
-.no_itens {
+.no_itens, .see_all {
   color: #aaa;
+}
+
+.box .see_all {
+  font-size: 11px;
+  background-image: none;
+  border-bottom-width: 0px;
 }
 
 
@@ -888,6 +887,12 @@ ul.nested li {
   margin: 0px;
   padding: 0px 0px 0px 18px;
 }
+
+.box li.show_all {
+  background-image: none;
+  font-size: 11px;
+}
+
 
 
 /*body { background-image: url(<%= App.base_path %>/prototype/line.png); background-repeat: repeat; }

@@ -3,7 +3,7 @@
   = link_to(App.title, index_url) + "&rsaquo;"
   = link_to("Disciplinas", courses_url) + "&rsaquo;"
   = link_to(h(@course.full_name), course_url(@course)) + "&rsaquo;"
-  = link_to("Arquivos", course_url(@course))
+  = link_to("Arquivos", course_attachments_url(@course))
   - if @attachment.id
     = "&rsaquo;" + link_to(truncate(h(@attachment.file_name)), course_attachment_url)
     - @title = @title + " - #{truncate(h(@attachment.file_name))}"

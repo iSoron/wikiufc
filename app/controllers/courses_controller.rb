@@ -26,9 +26,9 @@ class CoursesController < ApplicationController
 		@period = params[:period] || App.current_period
 
 		if logged_in? and !@current_user.courses.empty?
-			@courses = Course.find(:all, :order => 'grade asc, full_name asc', :conditions => ['period = ? and id not in (?)', @period, @current_user.courses])
+			@courses = Course.find(:all, :order => 'grade asc, full_name asc', :conditions => ['period = ? and hidden = ? and id not in (?)', @period, false, @current_user.courses])
 		else
-			@courses = Course.find(:all, :order => 'grade asc, full_name asc', :conditions => ['period = ?', @period])
+			@courses = Course.find(:all, :order => 'grade asc, full_name asc', :conditions => ['period = ? and hidden = ?', @period, false])
 		end
 
 		respond_to do |format|

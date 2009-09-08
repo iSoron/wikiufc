@@ -9,10 +9,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090907095812) do
+ActiveRecord::Schema.define(:version => 20090908200528) do
 
   create_table "attachments", :force => true do |t|
-    t.string   "file_name",     :null => false
+    t.string   "file_name",                       :null => false
     t.string   "content_type"
     t.datetime "last_modified"
     t.text     "description"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20090907095812) do
     t.integer  "course_id"
     t.datetime "deleted_at"
     t.string   "path"
+    t.boolean  "front_page",    :default => true, :null => false
   end
 
   create_table "courses", :force => true do |t|
@@ -30,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20090907095812) do
     t.datetime "deleted_at"
     t.integer  "grade",       :default => 1
     t.string   "period"
+    t.boolean  "hidden",      :default => false,   :null => false
   end
 
   add_index "courses", ["short_name"], :name => "index_courses_on_short_name"
@@ -137,17 +139,18 @@ ActiveRecord::Schema.define(:version => 20090907095812) do
   end
 
   create_table "wiki_pages", :force => true do |t|
-    t.integer  "course_id",       :null => false
-    t.integer  "user_id",         :null => false
-    t.integer  "version",         :null => false
-    t.string   "description",     :null => false
-    t.string   "title",           :null => false
-    t.text     "content",         :null => false
+    t.integer  "course_id",                         :null => false
+    t.integer  "user_id",                           :null => false
+    t.integer  "version",                           :null => false
+    t.string   "description",                       :null => false
+    t.string   "title",                             :null => false
+    t.text     "content",                           :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "position"
     t.datetime "deleted_at"
     t.string   "canonical_title"
+    t.boolean  "front_page",      :default => true, :null => false
   end
 
 end

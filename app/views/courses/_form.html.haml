@@ -22,5 +22,9 @@
   %dd= text_field 'course', 'period'
 
   %dt
+    %label{:for => "course_hidden"} Ocultar
+  %dd= check_box 'course', 'hidden'
+
+  %dt
     %label{:for => "course_description"} Descrição
   %dd= preserve(text_area('course', 'description', :cols => 60, :rows => 10))

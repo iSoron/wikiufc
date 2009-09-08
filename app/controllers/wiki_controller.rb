@@ -29,7 +29,7 @@ class WikiController < ApplicationController
 
 	def index
 		respond_to do |format|
-			format.html { redirect_to course_url(@course) }
+			format.html
 			format.xml { render :xml => @wiki_pages }
 		end
 	end

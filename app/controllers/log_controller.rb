@@ -22,7 +22,9 @@ class LogController < ApplicationController
 		if @course
 			@log_entries = @course.log_entries.paginate(:page => params[:page], :per_page => 30, :order => "created_at desc")
 		else
-			@log_entries = LogEntry.paginate(:page => params[:page], :per_page => 30, :order => "created_at desc") 
+			@log_entries = LogEntry.paginate(:page => params[:page], :per_page => 30,
+				:conditions => [ "course_id not in (select id from courses where hidden = ?)", true],
+				:order => "created_at desc") 
 		end
 
 		respond_to do |format|

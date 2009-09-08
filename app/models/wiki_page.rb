@@ -25,6 +25,7 @@ class WikiPage < ActiveRecord::Base
 	acts_as_list :scope => 'course_id = #{course_id}'
 	acts_as_versioned :if_changed => [ :content, :description, :title ]
 	acts_as_paranoid_versioned
+	self.non_versioned_columns << 'front_page'
 	self.non_versioned_columns << 'position'
 	self.non_versioned_columns << 'deleted_at'
 	self.non_versioned_columns << 'canonical_title'
@@ -43,6 +44,14 @@ class WikiPage < ActiveRecord::Base
 		self.canonical_title = self.title.pretty_url
 	end
 
+	def before_save
+		if !self.front_page
+			self.remove_from_list
+		elsif self.position.nil?
+			self.insert_at(1)
+		end
+	end
+
 	def validate
 		begin
 			self.content.format_wiki
@@ -53,6 +62,10 @@ class WikiPage < ActiveRecord::Base
 
 	def to_param
 		self.canonical_title
+	end
+
+	def self.find_front_page
+		WikiPage.find(:all, :conditions => [ "front_page = ?", true ])
 	end
 
 	def WikiPage.diff(from, to)

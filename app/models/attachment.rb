@@ -27,6 +27,10 @@ class Attachment < ActiveRecord::Base
 	# Validacao
 	generate_validations
 
+	def self.find_front_page
+		Attachment.find(:all, :conditions => [ "front_page = ?", true ])
+	end
+
 	# Atributo virtual file
 	def file=(new_file)
 		@tmp_file = new_file

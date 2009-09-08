@@ -25,7 +25,7 @@ class NewsDeleteLogEntry < NewsLogEntry
         news.deleted?
 	end
 	def undo!(current_user)
-		news.restore!
+		news.recover!
 		NewsRestoreLogEntry.create!(:target_id => news.id, :user_id => current_user.id, :course => news.course, :version => news.version)
 	end
 end

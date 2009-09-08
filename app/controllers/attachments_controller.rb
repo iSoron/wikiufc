@@ -35,6 +35,7 @@ class AttachmentsController < ApplicationController
 	def create
 		@attachment.course_id = @course.id
 		@attachment.path = params[:attachment][:path]
+		@attachment.front_page = params[:attachment][:front_page]
 		@attachment.description = params[:attachment][:description]
 		@attachment.file_name = "blank"
 		unless params[:attachment][:file].nil?
@@ -58,6 +59,7 @@ class AttachmentsController < ApplicationController
 
 	def update
 		@attachment.path = params[:attachment][:path]
+		@attachment.front_page = params[:attachment][:front_page]
 		@attachment.description = params[:attachment][:description]
 		unless params[:attachment][:file].nil?
 			@attachment.file = params[:attachment][:file]
@@ -93,10 +95,11 @@ class AttachmentsController < ApplicationController
 	end
 
 	def download
+
 		send_file("#{RAILS_ROOT}/public/upload/#{@course.id}/#{@attachment.id}",
 				:filename    =>  @attachment.file_name,
 				:type        =>  @attachment.content_type,
-				:disposition =>  'attachment',
+				:disposition =>  'inline',
 				:streaming   =>  'true')
 	end
 

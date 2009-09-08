@@ -51,6 +51,10 @@ class Course < ActiveRecord::Base
 	def related_courses
 		Course.find(:all, :conditions => [ 'short_name = ?', self.short_name], :limit => 4, :order => 'period desc')
 	end
+
+	def recent_news
+		self.news.find(:all, :conditions => [ 'timestamp > ?', 7.days.ago ])
+	end
 	
 	def after_create
 		App.inital_wiki_pages.each do |page_title|

@@ -1,0 +1,16 @@
+.cmd
+  = action_icon 'add', 'Adicionar', new_course_wiki_instance_url(@course)
+
+%h4.title= h(@course.full_name)
+%h1.title Páginas Wiki
+
+.box.div_news
+  - if !@course.wiki_pages.empty?
+    %ul
+      - @course.wiki_pages.find(:all, :order => 'title').each do |w|
+        %li= link_to(w.title, course_wiki_instance_url(@course, w))
+
+  - else
+    .box
+      %ul
+        %li.no_itens Nenhuma página wiki

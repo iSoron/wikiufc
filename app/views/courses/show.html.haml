@@ -10,13 +10,32 @@
 
 %p= @course.description.format_wiki
 
+-#.box
+-#  .cmd
+-#    = action_icon 'add', 'Adicionar notícia', new_course_news_instance_url(@course)
+-#
+-#  %h3 Notícias Recentes
+-#  %ul.news
+-#    - @course.recent_news.each do |news|
+-#      %li{highlight(news.id)}
+-#        .cmd{:style => 'margin-top: -9px;'}
+-#          = action_icon 'edit', 'Editar', edit_course_news_instance_url(@course, news, :version => news.version)
+-#          = action_icon 'trash', 'Excluir', course_news_instance_url(@course, news), :confirm => 'Tem certeza que deseja excluir?', :method => :delete
+-#        = link_to h(news.title), course_news_instance_url(@course, news)
+-#        = formatted(news.body)
+-#        = "Enviada por %s há %s." % [link_to(news.user.display_name, user_url(news.user)), distance_of_time_in_words(Time.now, news.timestamp)]
+-#    - if @course.news.empty?
+-#      %li.no_itens Nenhuma notícia recente
+-#    - else
+-#      %li.see_all= link_to "Ver todas as noticias", course_news_url(@course)
+
 .box
   .cmd
     = action_icon 'add', 'Adicionar página wiki', new_course_wiki_instance_url(@course)
 
   %h3 Páginas Wiki
   %ul.wiki
-    - @course.wiki_pages.each do |wiki|
+    - @course.wiki_pages.find_front_page.each do |wiki|
       %li{highlight(wiki.id)}
         .cmd{:style => 'margin-bottom: -27px; margin-top: -9px;'}
           =action_icon 'arrow2_n', 'Mover para cima', move_up_course_wiki_instance_url(@course, wiki) unless wiki.first?
@@ -26,14 +45,18 @@
         =link_to h(wiki.title), course_wiki_instance_url(@course, wiki)
     - if @course.wiki_pages.empty?
       %li.no_itens Nenhuma página wiki
+    - else
+      %li.show_all= link_to "Ver todas as páginas wiki", course_wiki_url(@course)
 
   .box
     .cmd= action_icon 'add', 'Adicionar anexo', new_course_attachment_url(@course)
 
     %h3 Repositório de Arquivos
     .repositorio
-      = nested_attachments_to_html(attachments_to_nested_hash(@course.attachments))
+      = nested_attachments_to_html(attachments_to_nested_hash(@course.attachments.find_front_page))
       - if @course.attachments.empty?
         %ul.wiki
           %li.no_itens Nenhum arquivo
+      - else
+        %li.show_all= link_to "Ver todos os arquivos", course_attachments_url(@course)
 
