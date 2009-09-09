@@ -23,9 +23,9 @@ class WikiController < ApplicationController
 	#after_filter :cache_sweep, :only => [ :create, :update, :destroy, :move_up,
 	#		:move_down, :undelete ]
 
-	before_filter :find_wiki, :except => [ :preview, :undelete ]
+	before_filter :find_wiki, :except => [ :preview ]
 	before_filter :require_login, :only => [ :new, :create, :edit, :update, :destroy,
-			:move_up, :move_down, :undelete ]
+			:move_up, :move_down ]
 
 	def index
 		respond_to do |format|
@@ -87,11 +87,12 @@ class WikiController < ApplicationController
 	end
 
 	def destroy
+        @wiki_page.remove_from_list
 		@wiki_page.destroy
 		flash[:notice] = "Wiki page removed"[]
-		flash[:undo] = undelete_course_wiki_instance_url(@course, @wiki_page.id)
 
-		WikiDeleteLogEntry.create!(:target_id => @wiki_page.id, :user => @current_user, :course => @course)
+		log = WikiDeleteLogEntry.create!(:target_id => @wiki_page.id, :user => @current_user, :course => @course)
+		flash[:undo] = undo_course_log_url(@course, log)
 
 		respond_to do |format|
 			format.html { redirect_to course_url(@course) }
@@ -143,19 +144,6 @@ class WikiController < ApplicationController
 
 		respond_to do |format|
 			format.html { redirect_to course_url(@course) }
-		end
-	end
-
-	def undelete
-		@wiki_page = WikiPage.find_with_deleted(params[:id])
-		@wiki_page.recover!
-		@wiki_page.insert_at(1)
-		flash[:notice] = "Wiki page restored"[]
-
-		WikiRestoreLogEntry.create!(:target_id => @wiki_page.id, :user => @current_user, :course => @wiki_page.course)
-
-		respond_to do |format|
-			format.html { redirect_to course_wiki_instance_url(@wiki_page.course, @wiki_page) }
 		end
 	end
 

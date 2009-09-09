@@ -29,8 +29,8 @@ class WikiDeleteLogEntry < WikiLogEntry
 		wiki_page.deleted?
 	end
 	def undo!(current_user)
-		wiki_page.update_attribute(:deleted_at, nil)
 		wiki_page.update_attribute(:position, (wiki_page.course.wiki_pages.maximum(:position)||0) + 1)
+		wiki_page.update_attribute(:deleted_at, nil)
 		WikiRestoreLogEntry.create!(:target_id => wiki_page.id, :user_id => current_user.id, :course => wiki_page.course)
 	end
 end

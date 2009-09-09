@@ -58,8 +58,8 @@ class NewsControllerTest < ActionController::TestCase
 	#	end
 	#end
 
-	def test_should_accept_rss_on_index
-		get :index, :format => 'rss', :course_id => 1
-		assert_formatted_response :rss
-	end
+	#def test_should_accept_rss_on_index
+	#	get :index, :format => 'rss', :course_id => 1
+	#	assert_formatted_response :rss
+	#end
 end

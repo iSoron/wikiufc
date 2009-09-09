@@ -20,6 +20,7 @@ course_1:
   full_name: Firt Course
   description: Description goes here
   period: <%= App.current_period %>
+  hidden: false
 
 old_course:
   id: 2
@@ -27,3 +28,4 @@ old_course:
   full_name: Old Course
   description: Description goes here
   period: 1970.1
+  hidden: false

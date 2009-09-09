@@ -19,8 +19,9 @@ class AttachmentsController < ApplicationController
 	#verify :method => :post, :only => [ :destroy, :create, :update ],
 	#	:redirect_to => { :controller => 'courses', :action => :show }
 
-	before_filter :find_attachment, :except => [ :undelete ]
 	#after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
+
+	before_filter :find_attachment
 	
 	def show
 		respond_to do |format|
@@ -84,9 +85,9 @@ class AttachmentsController < ApplicationController
 	def destroy
 		@attachment.destroy
 		flash[:notice] = 'Attachment removed'[]
-		flash[:undo] = undelete_course_attachment_url(@course, @attachment)
 
-		AttachmentDeleteLogEntry.create!(:target_id => @attachment.id, :user => @current_user, :course => @course)
+		log = AttachmentDeleteLogEntry.create!(:target_id => @attachment.id, :user => @current_user, :course => @course)
+		flash[:undo] = undo_course_log_url(@course, log)
 		
 		respond_to do |format|
 			format.html { redirect_to course_url(@course) }
@@ -101,14 +102,6 @@ class AttachmentsController < ApplicationController
 				:type        =>  @attachment.content_type,
 				:disposition =>  'inline',
 				:streaming   =>  'true')
-	end
-
-	def undelete
-		@attachment = Attachment.find_with_deleted(params[:id])
-		@attachment.recover!
-		flash[:notice] = 'Attachment restored'[]
-		AttachmentRestoreLogEntry.create!(:target_id => @attachment.id, :user => @current_user, :course => @attachment.course)
-		redirect_to course_attachment_url(@attachment.course, @attachment)
 	end
 
 	protected

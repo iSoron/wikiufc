@@ -17,6 +17,8 @@
 one:
   id: 1
   file_name: one
+  path: /
 two:
   id: 2
   file_name: two
+  path: /

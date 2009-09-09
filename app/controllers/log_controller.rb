@@ -16,7 +16,7 @@
 
 class LogController < ApplicationController
 
-	before_filter :find_course
+	before_filter :require_login, :only => [ :undo ]
 
 	def index
 		if @course
@@ -39,7 +39,12 @@ class LogController < ApplicationController
 		@log_entry.undo!(@current_user)
 
 		respond_to do |format|
-			format.html { redirect_to course_log_url }
+			format.html do
+				redirect_to course_event_url(@log_entry.course, @log_entry.target_id) if @log_entry.kind_of?(EventDeleteLogEntry) 
+				redirect_to course_attachment_url(@log_entry.course, @log_entry.target_id) if @log_entry.kind_of?(AttachmentDeleteLogEntry) 
+				redirect_to course_news_instance_url(@log_entry.course, @log_entry.target_id) if @log_entry.kind_of?(NewsDeleteLogEntry) 
+				redirect_to course_wiki_instance_url(@log_entry.course, @log_entry.target_id) if @log_entry.kind_of?(WikiDeleteLogEntry) 
+            end
 		end
 	end
 

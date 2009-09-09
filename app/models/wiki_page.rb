@@ -46,9 +46,9 @@ class WikiPage < ActiveRecord::Base
 
 	def before_save
 		if !self.front_page
-			self.remove_from_list
+            self.remove_from_list
 		elsif self.position.nil?
-			self.insert_at(1)
+            self.update_attribute(:position, (self.course.wiki_pages.maximum(:position)||0) + 1)
 		end
 	end
 

@@ -20,7 +20,6 @@ class NewsController < ApplicationController
 	#verify :method => :post, :only => [ :destroy, :create, :update ],
 	#	:redirect_to => { :action => :list }
 
-	before_filter :find_new, :except => [ :undelete ]
 	#after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
 
 	def index
@@ -80,28 +79,15 @@ class NewsController < ApplicationController
 	def destroy
 		@news.destroy
 		flash[:notice] = 'News removed'[]
-		flash[:undo] = undelete_course_news_instance_url(@course, @news)
 
-		NewsDeleteLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @course, :version => @news.version)
+		log = NewsDeleteLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @course, :version => @news.version)
+		flash[:undo] = undo_course_log_url(@course, log)
 
 		respond_to do |format|
 			format.html { redirect_to course_news_path(@course) }
 			format.xml { head :ok }
 		end
 	end
-
-	def undelete
-		@news = News.find_with_deleted(params[:id])
-		@news.recover!
-
-		flash[:notice] = "News restored"[]
-		NewsRestoreLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @news.course, :version => @news.version)
-		
-		respond_to do |format|
-			format.html { redirect_to course_news_instance_url(@news.course, @news) }
-		end
-	end
-
 
 	protected
 	def find_new

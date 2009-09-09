@@ -48,12 +48,11 @@ class WikiControllerTest < ActionController::TestCase
 		should_request_login_on_post_to(:destroy,   {:course_id => 1, :id => 1})
 		should_request_login_on_post_to(:move_up,   {:course_id => 1, :id => 1})
 		should_request_login_on_post_to(:move_down, {:course_id => 1, :id => 1})
-		should_request_login_on_post_to(:undelete,  {:course_id => 1, :id => 1})
 
-		context "on get to :index" do
-			setup { get :index, :course_id => @course.id }
-			should_redirect_to('the course page') { course_url(@course) }
-		end
+		#context "on get to :index" do
+		#	setup { get :index, :course_id => @course.id }
+		#	should_redirect_to('the course page') { course_url(@course) }
+		#end
 		
 		context "on get to :show" do
 			setup { get :show, :course_id => @course.id, :id => @wiki_page.id }
@@ -242,21 +241,6 @@ class WikiControllerTest < ActionController::TestCase
 				@another_wiki_page.reload
 				assert_equal 2, @wiki_page.position
 				assert_equal 1, @another_wiki_page.position
-			end
-		end
-
-		context "on post to :undelete" do
-			setup do
-				@wiki_page.destroy
-				post :undelete, :course_id => @course.id, :id => @wiki_page.id
-			end
-
-			should_set_the_flash_to(/restored/i)
-			should_redirect_to('the wiki page') { course_wiki_instance_url(@course, @wiki_page) }
-			should_create_log_entry {[ WikiRestoreLogEntry, @wiki_page.id, users(:bob).id ]}
-
-			should "restore the wiki page" do
-				assert WikiPage.find(@wiki_page.id)
 			end
 		end
 

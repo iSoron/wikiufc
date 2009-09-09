@@ -16,7 +16,7 @@
 
 class EventsController < ApplicationController
 
-	before_filter :find_event, :except => [ :mini_calendar, :undelete ]
+	before_filter :find_event, :except => [ :mini_calendar ]
 	#after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
 
 	def index
@@ -76,9 +76,9 @@ class EventsController < ApplicationController
 	def destroy
 		@event.destroy
 		flash[:notice] = 'Event removed'[]
-		flash[:undo] = undelete_course_event_url(@course, @event)
 
-		EventDeleteLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @course, :version => @event.version)
+		log = EventDeleteLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @course, :version => @event.version)
+		flash[:undo] = undo_course_log_url(@course, log)
 
 		respond_to do |format|
 			format.html { redirect_to course_events_path(@course) }
@@ -97,19 +97,6 @@ class EventsController < ApplicationController
 
 		render :template => 'widgets/calendario', :layout => false
 	end
-
-	def undelete
-		@event = Event.find_with_deleted(params[:id])
-		@event.recover!
-
-		flash[:notice] = "Event restored"[]
-		EventRestoreLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @event.course, :version => @event.version)
-		
-		respond_to do |format|
-			format.html { redirect_to course_event_url(@event.course, @event) }
-		end
-	end
-
 
 	protected
 	def find_event

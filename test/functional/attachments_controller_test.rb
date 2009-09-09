@@ -26,7 +26,8 @@ class AttachmentsControllerTest < ActionController::TestCase
 	def setup
 		@course = Course.find(:first)
 		@data = fixture_file_upload('/files/attachment.txt', 'text/plain')
-		@att = @course.attachments.create(:file => @data, :file_name => 'attachment.txt', :description => 'hello world')
+		@att = @course.attachments.create(:file => @data, :file_name => 'attachment.txt',
+				:description => 'hello world', :path => "", :front_page => true)
 		@att.save!
 	end
 
@@ -41,7 +42,6 @@ class AttachmentsControllerTest < ActionController::TestCase
 		should_request_login_on_post_to(:edit,	   {:course_id => 1, :id => 1})
 		should_request_login_on_post_to(:update,   {:course_id => 1, :id => 1})
 		should_request_login_on_post_to(:destroy,  {:course_id => 1, :id => 1})
-		should_request_login_on_post_to(:undelete, {:course_id => 1, :id => 1})
 
 		context "on get to :show" do
 			setup { get :show, :course_id => @course.id, :id => @att.id }
@@ -66,7 +66,7 @@ class AttachmentsControllerTest < ActionController::TestCase
 		context "on post to :create" do
 			setup do
 				assert_nil @course.attachments.find_by_description('test')
-				post :create, :course_id => @course.id, :attachment => { :description => 'test', :file => @data }
+				post :create, :course_id => @course.id, :attachment => { :description => 'test', :file => @data, :path => "", :front_page => 't' }
 				@att = @course.attachments.find_by_description('test')
 			end
 			
@@ -88,7 +88,7 @@ class AttachmentsControllerTest < ActionController::TestCase
 		context "on post to :update" do
 			context "with unmodified data" do
 				setup do
-					post :update, :course_id => @course.id, :id => @att.id, :attachment => { :description => @att.description }
+					post :update, :course_id => @course.id, :id => @att.id, :attachment => { :description => @att.description, :path => "", :front_page => 't' }
 				end
 
 				should_not_set_the_flash
@@ -101,7 +101,7 @@ class AttachmentsControllerTest < ActionController::TestCase
 
 			context "with new description only" do
 				setup do
-					post :update, :course_id => @course.id, :id => @att.id, :attachment => { :description => 'new description' }
+					post :update, :course_id => @course.id, :id => @att.id, :attachment => { :description => 'new description', :front_page => 't' }
 				end
 				should_set_the_flash_to(/updated/i)
 				should_redirect_to('the attachment') { course_attachment_url(@course, @att) }
@@ -111,7 +111,7 @@ class AttachmentsControllerTest < ActionController::TestCase
 			context "with new file" do
 				setup do
 					@new_data = fixture_file_upload('/files/another_attachment.txt', 'plain/text')
-					post :update, :course_id => @course.id, :id => @att.id, :attachment => { :data => @new_data }
+					post :update, :course_id => @course.id, :id => @att.id, :attachment => { :data => @new_data, :front_page => 't' }
 				end
 				teardown do
 					@new_data.close!
@@ -135,20 +135,20 @@ class AttachmentsControllerTest < ActionController::TestCase
 			end
 		end
 
-		context "on post to :undelete" do
-			setup do
-				@att.destroy
-				post :undelete, :course_id => @course.id, :id => @att.id
-			end
+		#context "on post to :undelete" do
+		#	setup do
+		#		@att.destroy
+		#		post :undelete, :course_id => @course.id, :id => @att.id
+		#	end
 
-			should_set_the_flash_to(/restored/i)
-			should_redirect_to('the attachment'){ course_attachment_url(@course, @att) }
-			should_create_log_entry {[ AttachmentRestoreLogEntry, @att.id, users(:bob).id ]}
+		#	should_set_the_flash_to(/restored/i)
+		#	should_redirect_to('the attachment'){ course_attachment_url(@course, @att) }
+		#	should_create_log_entry {[ AttachmentRestoreLogEntry, @att.id, users(:bob).id ]}
 
-			should "restore the attachment" do
-				assert Attachment.find(@att.id)
-			end
-		end
+		#	should "restore the attachment" do
+		#		assert Attachment.find(@att.id)
+		#	end
+		#end
 
 		context "on get to :download" do
 			setup { get :download, :course_id => @course.id, :id => @att.id }
