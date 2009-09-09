@@ -1,6 +1,6 @@
 .cmd
-  = action_icon 'edit', 'Editar', edit_course_attachment_url
-  = action_icon 'trash', 'Excluir', course_attachment_url, :confirm => 'Tem certeza que deseja excluir o arquivo?', :method => :delete
+  = action_icon 'edit', 'Editar', edit_course_attachment_url, :accesskey => 'e'
+  = action_icon 'trash', 'Excluir', course_attachment_url, :confirm => 'Tem certeza que deseja excluir o arquivo?', :method => :delete, :accesskey => '-'
 
 %h4.title= h(@attachment.course.full_name)
 %h1.title Repositório de Arquivos

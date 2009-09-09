@@ -6,8 +6,8 @@
 %p
   - form_tag course_wiki_instance_url(@course, @wiki_page.id), :method => :put do
     = render :partial => 'form'
-    = submit_tag 'Salvar'
-    %button#show_preview{:type => "button"}
+    = submit_tag 'Salvar', :accesskey => 'e'
+    %button#show_preview{:type => "button", :accesskey => 'v'}
       Visualizar
       = image_tag "loading.gif", :class => "spinner_button", :id => "spinner_preview", :style => "display: none"
   #wiki_preview{:style => "display: none"}

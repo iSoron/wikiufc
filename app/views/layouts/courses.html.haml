@@ -1,6 +1,6 @@
 - @title = "#{App.title}"
 - @location = capture do
-  = link_to(App.title, index_url) + "&rsaquo;";
+  = link_to(App.title, index_url, :accesskey => 'z') + "&rsaquo;";
   = link_to("Disciplinas", courses_url)
   - if @course and @course.id
     = "&rsaquo; " + link_to(h(@course.full_name), course_url)

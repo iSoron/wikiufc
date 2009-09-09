@@ -6,8 +6,8 @@
 %p
   - form_tag course_wiki_url(@course) do
     = render :partial => 'form'
-    = submit_tag "Criar"
-    %button#show_preview{:type => "button"}
+    = submit_tag "Criar", :accesskey => 'e'
+    %button#show_preview{:type => "button", :accesskey => 'v'}
       Visualizar
       = image_tag "loading.gif", :class => "spinner_button", :id => "spinner_preview", :style => "display: none"
   #wiki_preview{:style => "display: none"}

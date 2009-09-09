@@ -7,7 +7,8 @@
     %meta{'name' => 'robots', :content => 'noindex,nofollow'}
     %meta{'http-equiv' => 'Content-Type', 'content' => 'text/html; charset=UTF-8'}
 
-    %link{'href' => "#{App.base_path}/stylesheets/cache/wiki.css", 'rel' => 'Stylesheet', 'type' => %'text/css'}
+    %link{'href' => "#{App.base_path}/stylesheets/cache/wiki.css", 'rel' => 'Stylesheet', 'type' => 'text/css'}
+    %link{'href' => "#{App.base_path}/favicon.ico", 'rel' => 'icon', 'type' => 'image/vnd.microsoft.icon'}
     %link#css_color{'href' => "#{App.base_path}/stylesheets/cache/color.#{@color}.css", 'rel' => 'Stylesheet', 'type' => %'text/css'}
 
     /[if IE]
@@ -29,10 +30,10 @@
         %ul
           - if logged_in?
             %li.grey= "Logged in as {u}"[:logged_in_as, h(@current_user.display_name)]
-            %li.last= link_to 'Logout', logout_path
+            %li.last= link_to 'Logout', logout_path, :accesskey => 'l'
           - else
             %li= link_to 'Cadastrar', signup_path
-            %li.last= link_to 'Login', login_path
+            %li.last= link_to 'Login', login_path, :accesskey => 'l'
 
       #strip
 

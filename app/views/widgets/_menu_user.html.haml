@@ -2,6 +2,6 @@
   .menu
     %h1= "User"[].titleize
     %ul
-      %li= link_to "Dashboard"[].titleize, dashboard_path
-      %li= link_to("User profile"[].titleize, user_url(@current_user))
-      %li= link_to("Edit settings"[].titleize, settings_url)
+      %li= link_to("Dashboard"[].titleize, dashboard_path, :accesskey => '.')
+      %li= link_to("User profile"[].titleize, user_url(@current_user), :accesskey => ',')
+      %li= link_to("Edit settings"[].titleize, settings_url, :accesskey => 's')

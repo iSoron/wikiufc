@@ -1,6 +1,6 @@
 - @title = "#{App.title} - #{h(@course.full_name)}"
 - @location = capture do 
-  = link_to(App.title, index_url) + "&rsaquo;"
+  = link_to(App.title, index_url, :accesskey => 'z') + "&rsaquo;"
   = link_to("Disciplinas", courses_url) + "&rsaquo;"
   = link_to(h(@course.full_name), course_url(@course)) + "&rsaquo;"
   = link_to("Wiki", course_wiki_url(@course))

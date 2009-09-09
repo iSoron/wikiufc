@@ -1,6 +1,6 @@
 .cmd
   - if admin?
-    = action_icon 'edit', 'Editar disciplina', edit_course_url
+    = action_icon 'edit', 'Editar disciplina', edit_course_url, :accesskey => 'e'
     =# action_icon 'trash', 'Excluir disciplina', course_url, :confirm => 'Tem certeza que deseja excluir?', :method => :delete
 
 -# cache(course_path(@course.id)) do

@@ -1,6 +1,6 @@
 #users
   .cmd
-    = action_icon('edit', 'Editar perfil', edit_user_url) if admin? or @current_user == @user
+    = action_icon('edit', 'Editar perfil', edit_user_url, :accesskey => 'e') if admin? or @current_user == @user
     =# action_icon 'trash', 'Excluir usuário', user_url, :confirm => 'Tem certeza que deseja excluir?', :method => :delete
 
   .card

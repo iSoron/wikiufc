@@ -4,4 +4,4 @@
 %p
   - form_tag course_news_instance_url(@course, @news), :method => :put do
     = render :partial => 'form'
-    = submit_tag 'Editar'
+    = submit_tag 'Editar', :accesskey => 'e'

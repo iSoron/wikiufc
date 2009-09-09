@@ -2,13 +2,13 @@
 	<div class="menu">
 		<h1>Disciplina</h1>
 		<ul>
-			<li><%= link_to "Visão Geral", course_url(@course) %></li>
-			<li><%= link_to "Arquivos", course_attachments_url(@course) %></li>
-			<li><%= link_to "Calendário", course_events_url(@course) %></li>
-			<li><%= link_to "Notícias", course_news_url(@course) %></li>
-			<li><%= link_to "Participantes", course_events_url(@course) %></li>
-			<li><%= link_to "Páginas Wiki", course_wiki_url(@course) %></li>
-			<li><%= link_to "Mudanças recentes", course_log_url(@course) %></li>
+			<li><%= link_to "Visão Geral", course_url(@course), :accesskey => 'd' %></li>
+			<li><%= link_to "Arquivos", course_attachments_url(@course), :accesskey => 'a' %></li>
+			<li><%= link_to "Calendário", course_events_url(@course), :accesskey => 'c' %></li>
+			<li><%= link_to "Notícias", course_news_url(@course), :accesskey => 'n' %></li>
+			<li><%= link_to "Participantes", course_events_url(@course), :accesskey => 'p' %></li>
+			<li><%= link_to "Páginas Wiki", course_wiki_url(@course), :accesskey => 'w' %></li>
+			<li><%= link_to "Mudanças recentes", course_log_url(@course), :accesskey => 'r' %></li>
 		</ul>
 	</div>
 

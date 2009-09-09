@@ -4,4 +4,4 @@
 %p
   - form_for :attachment, @attachment, :url => course_attachments_url, :html => { :method => 'post', :multipart => 'true' } do
     = render :partial => 'form'
-    = submit_tag "Criar"
+    = submit_tag "Criar", :accesskey => 'e'

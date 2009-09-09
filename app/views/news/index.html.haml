@@ -1,7 +1,7 @@
 = javascript_include_tag 'news'
 
 .cmd
-  = action_icon 'add', 'Adicionar', new_course_news_instance_url
+  = action_icon 'add', 'Adicionar', new_course_news_instance_url, :accesskey => '+'
 
 %h4.title= h(@course.full_name)
 %h1.title Notícias

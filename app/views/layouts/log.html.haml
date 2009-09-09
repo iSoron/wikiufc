@@ -1,10 +1,10 @@
 - if @course
   - @title = "#{App.title} - #{h(@course.full_name)} - Mudanças recentes"
   - @location = capture do 
-    = link_to(App.title, index_url) + "&rsaquo;"
+    = link_to(App.title, index_url, :accesskey => 'z') + "&rsaquo;"
     = link_to("Disciplinas", courses_url) + "&rsaquo;"
     = link_to(h(@course.full_name), course_url(@course)) + "&rsaquo;"
-    = link_to("Log", course_log_url(@course))
+    = link_to("Mudanças Recentes", course_log_url(@course))
 
   - @left_panel = render 'courses/left_panel'
   - @content = yield

@@ -1,6 +1,6 @@
 .menu
   %h1= App.title
   %ul
-    %li= link_to "Courses"[].titleize, courses_url 
-    %li= link_to "Users"[].titleize, users_url 
-    %li= link_to "Mudanças recentes", log_url
+    %li= link_to "Courses"[].titleize, courses_url, :accesskey => 'd'
+    %li= link_to "Users"[].titleize, users_url, :accesskey => 'p'
+    %li= link_to "Mudanças recentes", log_url, :accesskey => 'r'

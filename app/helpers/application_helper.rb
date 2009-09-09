@@ -32,7 +32,7 @@ module ApplicationHelper
 		for name in FLASH_NAMES
 			if flash[name]
 				output << "<div id='validation' class='validation #{name}' style='display: none'>#{flash[name]}"
-				output << ". " + link_to("Undo"[] + "?", flash[:undo], :method => 'post') if flash[:undo]
+				output << ". " + link_to("Undo"[] + "?", flash[:undo], :method => 'post', :accesskey => 'u') if flash[:undo]
 				output << "</div>"
 			end
 		end

@@ -4,4 +4,4 @@
 %p
   - form_tag course_path(@course.id), :method => :put do
     = render :partial => 'form'
-    = submit_tag 'Editar'
+    = submit_tag 'Editar', :accesskey => 'e'
