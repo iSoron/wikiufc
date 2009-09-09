@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 	before_filter :require_admin, :only => [ :edit, :update, :destroy ]
 
 	def index
-		@users = User.paginate(:page => params[:page], :per_page => 20, :order => 'last_seen')
+		@users = User.paginate(:page => params[:page], :per_page => 20, :order => 'last_seen desc')
 
 		respond_to do |format|
 			format.html

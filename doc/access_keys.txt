@@ -1,0 +1,23 @@
+navegacao
+	z	pagina principal
+	d	disciplina
+	a	arquivos
+	c	calendario
+	n	noticias
+	p	participantes
+	w	paginas wiki
+	r	mudancas recentes
+	.	dashboard
+	,	perfil publico
+	s	configuracoes
+	l	login/logout
+
+acoes
+	+	adicionar
+	-	excluir
+	e	editar, salvar
+	h	historico
+	s	salvar
+	v	visualizar
+	u	undo
+
