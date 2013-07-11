@@ -13,6 +13,6 @@
 
   %dt
     %label{:for => "attachment_description"} Descrição
-  %dd= preserve(text_area 'attachment', 'description', {:rows => 10})
+  %dd= preserve(text_area('attachment', 'description', {:rows => 10}))
 
   %dt= check_box('attachment', 'front_page') + " Exibir arquivo na página inicial do curso"
