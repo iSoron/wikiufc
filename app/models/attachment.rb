@@ -25,7 +25,9 @@ class Attachment < ActiveRecord::Base
 	belongs_to :course
 
 	# Validacao
-	generate_validations
+	validates_presence_of :file_name
+	validates_numericality_of :size, :allow_nil => true, :only_integer => true
+	validates_inclusion_of :front_page, :in => [true, false], :allow_nil => false, :message => ActiveRecord::Errors.default_error_messages[:blank]
 
 	def self.find_front_page
 		Attachment.find(:all, :conditions => [ "front_page = ?", true ])

@@ -73,7 +73,6 @@ Rails::Initializer.run do |config|
 	noresize nowrap rel rows rowspan rules scope shape size span src start
 	style summary title type usemap valign width)
 
-  config.gem "dr_nic_magic_models"
   config.gem "bluecloth"
   config.gem "haml"
   config.gem "hpricot"

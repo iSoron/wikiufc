@@ -26,7 +26,7 @@ class Event < ActiveRecord::Base
 	belongs_to :course
 
 	# Validacao
-	generate_validations
+	validates_presence_of :title
 
 	def Event.to_ical(courses)
 		courses = [courses] unless courses.kind_of?(Array)

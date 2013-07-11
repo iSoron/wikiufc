@@ -45,7 +45,11 @@ class Course < ActiveRecord::Base
 	         :order => "last_seen desc"
 	
 	# Validacao
-	generate_validations
+	validates_presence_of :short_name
+	validates_presence_of :full_name
+	validates_presence_of :code
+	validates_numericality_of :grade, :only_integer => true
+	validates_inclusion_of :hidden, :in => [true, false], :allow_nil => false
 	validates_format_of :short_name, :with => /^[^0-9]/
 
 	def related_courses

@@ -35,7 +35,9 @@ class WikiPage < ActiveRecord::Base
 	belongs_to :user, :with_deleted => true
 
 	# Valicacao
-	generate_validations
+	validates_presence_of :description
+	validates_presence_of :title
+	validates_presence_of :content
 	validates_uniqueness_of :title, :scope => :course_id
 	validates_uniqueness_of :canonical_title, :scope => :course_id
 	validates_format_of :title, :with => /^[^0-9]/
