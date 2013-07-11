@@ -78,5 +78,6 @@ Rails::Initializer.run do |config|
   config.gem "haml"
   config.gem "hpricot"
   config.gem "icalendar"
+  config.gem "brI18n"
   config.gem 'thoughtbot-shoulda', :lib => 'shoulda/rails', :source => "http://gems.github.com"
 end
