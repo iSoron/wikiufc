@@ -75,7 +75,6 @@ Rails::Initializer.run do |config|
 
   config.gem "dr_nic_magic_models"
   config.gem "bluecloth"
-  config.gem "acts_as_versioned"
   config.gem "haml"
   config.gem "hpricot"
   config.gem "icalendar"
