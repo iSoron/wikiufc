@@ -1,2 +1,0 @@
-class FunUserPlus < FunUser
-end

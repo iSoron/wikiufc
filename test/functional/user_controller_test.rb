@@ -28,15 +28,15 @@ class UsersControllerTest < ActionController::TestCase
         context "on get to :dashboard" do
             setup { get :dashboard }
 
-            should_respond_with :success
-            should_render_template "dashboard"
+            should respond_with :success
+            should render_template "dashboard"
         end
 
         context "on post to :logout" do
             setup { get :logout }
 
-            should_respond_with :redirect
-			should_redirect_to('the main page') { index_url }
+            should respond_with :redirect
+			should redirect_to('the main page') { index_url }
 
             should "log out" do
                 assert_nil session[:user_id]

@@ -51,14 +51,14 @@ class WikiControllerTest < ActionController::TestCase
 
 		#context "on get to :index" do
 		#	setup { get :index, :course_id => @course.id }
-		#	should_redirect_to('the course page') { course_url(@course) }
+		#	should redirect_to('the course page') { course_url(@course) }
 		#end
 		
 		context "on get to :show" do
 			setup { get :show, :course_id => @course.id, :id => @wiki_page.id }
 
-			should_respond_with :success
-			should_render_template 'show'
+			should respond_with :success
+			should render_template 'show'
 
 			should "show the wiki page" do
 				assert_select 'h1.title', @wiki_page.title
@@ -74,8 +74,8 @@ class WikiControllerTest < ActionController::TestCase
 		context "on get to :versions" do
 			setup { get :versions, :course_id => @course.id, :id => @wiki_page.id }
 
-			should_respond_with :success
-			should_render_template 'versions'
+			should respond_with :success
+			should render_template 'versions'
 
 			should "show the wiki page versions" do
 				@wiki_page.versions.each do |v|
@@ -88,7 +88,7 @@ class WikiControllerTest < ActionController::TestCase
 			context "with valid markup" do
 				setup { get :preview, :text => "hello {$x$} <script>foo();</script> <i onclick='foo()'>x</i>" }
 
-				should_respond_with :success
+				should respond_with :success
 
 				should "display latex formulas" do
 					assert_select 'img[class=tex_inline]'
@@ -102,14 +102,14 @@ class WikiControllerTest < ActionController::TestCase
 
 			context "with invalid markup" do
 				setup { get :preview, :text => "<a" }
-				should_respond_with :bad_request
+				should respond_with :bad_request
 			end
 		end
 
 		context "on get to :diff" do
 			setup { get :diff, :course_id => @course.id, :id => @wiki_page.id, :from => 1, :to => 2 }
-			should_respond_with :success
-			should_assign_to :diff
+			should respond_with :success
+			should assign_to :diff
 		end
 
 	end
@@ -119,8 +119,8 @@ class WikiControllerTest < ActionController::TestCase
 
 		context "on get to :new" do
 			setup { get :new, :course_id => @course.id }
-			should_render_a_form
-			should_respond_with :success
+			#should render_a_form
+			should respond_with :success
 		end
 
 		context "on post to :create" do
@@ -130,8 +130,8 @@ class WikiControllerTest < ActionController::TestCase
 				@wiki_page = @course.wiki_pages.find_by_title('test2')
 			end
 			
-			should_set_the_flash_to(/created/i)
-			should_redirect_to('the wiki page') { course_wiki_instance_url(@course, @wiki_page) }
+			should set_the_flash.to(/created/i)
+			should redirect_to('the wiki page') { course_wiki_instance_url(@course, @wiki_page) }
 			should_create_log_entry {[ WikiCreateLogEntry, @wiki_page.id, users(:bob).id ]}
 
 			should "create a new wiki page" do
@@ -144,8 +144,8 @@ class WikiControllerTest < ActionController::TestCase
 		context "on get to :edit" do
 			setup { get :edit, :course_id => @course.id, :id => @wiki_page.id }
 
-			should_render_a_form
-			should_render_template 'edit'
+			#should render_a_form
+			should render_template 'edit'
 
 			should "render a form with the correct fields" do
 				assert_select "input[name='wiki_page[title]'][value=?]", @wiki_page.title
@@ -168,8 +168,8 @@ class WikiControllerTest < ActionController::TestCase
 							:title => @wiki_page.title, :content => @wiki_page.content}
 				end
 
-				should_not_set_the_flash
-				should_redirect_to('the wiki page') { course_wiki_instance_url(@course, @wiki_page) }
+				should_not set_the_flash
+				should redirect_to('the wiki page') { course_wiki_instance_url(@course, @wiki_page) }
 
 				should "not create a new log entry" do
 					assert_nil WikiEditLogEntry.find(:first, :conditions => { :target_id => @wiki_page.id })
@@ -184,8 +184,8 @@ class WikiControllerTest < ActionController::TestCase
 					@wiki_page.reload
 				end
 
-				should_set_the_flash_to(/updated/i)
-				should_redirect_to('the wiki page') { course_wiki_instance_url(@course, @wiki_page) }
+				should set_the_flash.to(/updated/i)
+				should redirect_to('the wiki page') { course_wiki_instance_url(@course, @wiki_page) }
 				should_create_log_entry {[ WikiEditLogEntry, @wiki_page.id, users(:bob).id ]}
 
 				should "update the wiki page" do
@@ -200,8 +200,8 @@ class WikiControllerTest < ActionController::TestCase
 		context "on post to :destroy" do
 			setup { post :destroy, :course_id => @course.id, :id => @wiki_page.id }
 
-			should_set_the_flash_to(/removed/i)
-			should_redirect_to('the course page') { course_url(@course) }
+			should set_the_flash.to(/removed/i)
+			should redirect_to('the course page') { course_url(@course) }
 			should_create_log_entry {[ WikiDeleteLogEntry, @wiki_page.id, users(:bob).id ]}
 
 			should "delete the wiki page" do
@@ -217,7 +217,7 @@ class WikiControllerTest < ActionController::TestCase
 				get :move_up, :course_id => @course.id, :id => @another_wiki_page.id
 			end
 
-			should_redirect_to('the course page') { course_url(@course) }
+			should redirect_to('the course page') { course_url(@course) }
 
 			should "move the page up" do
 				@wiki_page.reload
@@ -234,7 +234,7 @@ class WikiControllerTest < ActionController::TestCase
 				get :move_down, :course_id => @course.id, :id => @wiki_page.id
 			end
 
-			should_redirect_to('the course page') { course_url(@course) }
+			should redirect_to('the course page') { course_url(@course) }
 
 			should "move the page up" do
 				@wiki_page.reload
@@ -246,17 +246,17 @@ class WikiControllerTest < ActionController::TestCase
 
 	end
 
-	#def test_should_accept_text_on_show
+	#def test_should accept_text_on_show
 	#	get :show, :format => 'txt', :course_id => 1, :id => @wiki_page.id
 	#	assert_formatted_response :text
 	#end
 
-	#def test_should_accept_html_on_versions
+	#def test_should accept_html_on_versions
 	#	get :versions, :course_id => 1, :id => @wiki_page.id
 	#	assert_response :success
 	#end
 
-	#def test_should_accept_xml_on_versions
+	#def test_should accept_xml_on_versions
 	#	get :versions, :format => 'xml', :course_id => 1, :id => @wiki_page.id
 	#	assert_formatted_response :xml, :versions
 	#end

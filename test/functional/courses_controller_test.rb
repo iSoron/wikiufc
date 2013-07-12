@@ -41,8 +41,8 @@ class CoursesControllerTest < ActionController::TestCase
 		context "on get to :index" do
 			setup { get :index }
 
-			should_respond_with :success
-			should_render_template 'index'
+			should respond_with :success
+			should render_template 'index'
 
 			should "display the course list" do
 				assert_select 'h1', "Disciplinas #{App.current_period}"
@@ -58,8 +58,8 @@ class CoursesControllerTest < ActionController::TestCase
 		context "on get to :show" do
 			setup { get :show, :id => @course.id }
 
-			should_respond_with :success
-			should_render_template 'show'
+			should respond_with :success
+			should render_template 'show'
 
 			should "display the course" do
 				assert_select 'a[href=?]', course_log_url(@course)

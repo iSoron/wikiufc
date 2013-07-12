@@ -1,2 +1,0 @@
-h1. Version JS file
-MagicAnnouncement.show('magicmodels', version);
