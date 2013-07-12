@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Wiki UFC
 # Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
 # 
@@ -23,7 +24,7 @@ class ApplicationController < ActionController::Base
 
 	helper :all
 	before_filter :startup
-	before_filter :set_timezone
+	#before_filter :set_timezone
 	
 	# Força o login para algumas áreas do sistema
 	before_filter :require_login, :only => [ :edit, :new, :create, :update, :delete, :destroy ]
@@ -63,10 +64,10 @@ class ApplicationController < ActionController::Base
 		end
 	end
 
-	def set_timezone
-		#Time.zone = session[:user].tz
-		Time.zone = "America/Fortaleza"
-	end	
+	#def set_timezone
+	#	#Time.zone = session[:user].tz
+	#	Time.zone = "America/Fortaleza"
+	#end	
 
 	def startup
 		if session[:user_id]

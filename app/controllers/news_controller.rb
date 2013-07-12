@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Wiki UFC
 # Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
 # 
@@ -47,7 +48,7 @@ class NewsController < ApplicationController
 		@news.sender_id = session[:user_id]
 		@news.timestamp = Time.now.utc
 		@news.save!
-		flash[:notice] = 'News created'[]
+		flash[:notice] = t(:news_created)
 
 		NewsCreateLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @course, :version => @news.version)
 
@@ -66,7 +67,7 @@ class NewsController < ApplicationController
 		@news.timestamp = Time.now.utc
 		dirty = @news.changed?
 		@news.save!
-		flash[:notice] = 'News updated'[]
+		flash[:notice] = t(:news_updated)
 
 		NewsEditLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @course, :version => @news.version) if dirty
 
@@ -78,7 +79,7 @@ class NewsController < ApplicationController
 
 	def destroy
 		@news.destroy
-		flash[:notice] = 'News removed'[]
+		flash[:notice] = t(:news_removed)
 
 		log = NewsDeleteLogEntry.create!(:target_id => @news.id, :user => @current_user, :course => @course, :version => @news.version)
 		flash[:undo] = undo_course_log_url(@course, log)

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Wiki UFC
 # Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
 # 

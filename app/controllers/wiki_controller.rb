@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Wiki UFC
 # Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
 # 
@@ -43,7 +44,7 @@ class WikiController < ApplicationController
 		@wiki_page.course_id = @course.id
 		@wiki_page.description = "Nova página"
 		@wiki_page.save!
-		flash[:notice] = "Wiki page created"[]
+		flash[:notice] = t(:wiki_page_created)
 
 		WikiCreateLogEntry.create!(:target_id => @wiki_page.id, :user => @current_user, :course => @course)
 
@@ -77,7 +78,7 @@ class WikiController < ApplicationController
 		if changed
 			@wiki_page.save!
 			WikiEditLogEntry.create!(:target_id => @wiki_page.id, :user => @current_user, :course => @course, :version => @wiki_page.version)
-			flash[:notice] = "Wiki page updated"[]
+			flash[:notice] = t(:wiki_page_updated)
 		end
 
 		respond_to do |format|
@@ -89,7 +90,7 @@ class WikiController < ApplicationController
 	def destroy
         @wiki_page.remove_from_list
 		@wiki_page.destroy
-		flash[:notice] = "Wiki page removed"[]
+		flash[:notice] = t(:wiki_page_removed)
 
 		log = WikiDeleteLogEntry.create!(:target_id => @wiki_page.id, :user => @current_user, :course => @course)
 		flash[:undo] = undo_course_log_url(@course, log)

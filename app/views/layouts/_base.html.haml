@@ -29,7 +29,7 @@
       #header_menu
         %ul
           - if logged_in?
-            %li.grey= "Logged in as {u}"[:logged_in_as, h(@current_user.display_name)]
+            %li.grey= t(:logged_in_as, :u => h(@current_user.display_name))
             %li.last= link_to 'Logout', logout_path, :accesskey => 'l'
           - else
             %li= link_to 'Cadastrar', signup_path

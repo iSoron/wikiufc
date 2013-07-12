@@ -6,6 +6,10 @@ require 'quietbacktrace'
 
 class ActiveSupport::TestCase
 
+	setup do
+		I18n.default_locale = :en
+	end
+
 	self.new_backtrace_silencer :shoulda do |line| 
 		line.include? 'vendor/plugins/shoulda'
 	end

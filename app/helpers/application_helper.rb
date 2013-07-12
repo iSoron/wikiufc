@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Wiki UFC
 # Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
 # 
@@ -32,7 +33,7 @@ module ApplicationHelper
 		for name in FLASH_NAMES
 			if flash[name]
 				output << "<div id='validation' class='validation #{name}' style='display: none'>#{flash[name]}"
-				output << ". " + link_to("Undo"[] + "?", flash[:undo], :method => 'post', :accesskey => 'u') if flash[:undo]
+				output << ". " + link_to(t(:undo).capitalize + "?", flash[:undo], :method => 'post', :accesskey => 'u') if flash[:undo]
 				output << "</div>"
 			end
 		end

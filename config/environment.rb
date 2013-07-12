@@ -43,8 +43,8 @@ Rails::Initializer.run do |config|
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :session_key => '_wikiufc_session_id',
-    :secret      => '9194c999d4c15148e1fe79e5afe2b77f9f0878f8f8391b72ff62d2ee7243d21d809096b5171be863f56701aa21efbc487d725b3660e86d0022968c19797f6f75'
+    :key    => '_wikiufc_session_id',
+    :secret => '9194c999d4c15148e1fe79e5afe2b77f9f0878f8f8391b72ff62d2ee7243d21d809096b5171be863f56701aa21efbc487d725b3660e86d0022968c19797f6f75'
   }
 
   # Use the database for sessions instead of the cookie-based default,
@@ -64,19 +64,20 @@ Rails::Initializer.run do |config|
   config.active_record.default_timezone = :utc
 
   config.action_view.sanitized_allowed_tags = %W(p h1 h2 h3 h4 h5 h6 dl dt ol
-  	ul li address blockquote del div hr ins pre a abbr acronym dfn em strong
-	code samp kbd var b i big small tt span br bdo  cite del ins q sub sup
-	img map table tr td th colgroup col caption thead tbody tfoot)
+  ul li address blockquote del div hr ins pre a abbr acronym dfn em strong
+  code samp kbd var b i big small tt span br bdo  cite del ins q sub sup
+  img map table tr td th colgroup col caption thead tbody tfoot)
 
   config.action_view.sanitized_allowed_attributes = %W(align alt border
-  	cellpadding cellspacing cols colspan coords height href longdesc name
-	noresize nowrap rel rows rowspan rules scope shape size span src start
-	style summary title type usemap valign width)
+  cellpadding cellspacing cols colspan coords height href longdesc name
+  noresize nowrap rel rows rowspan rules scope shape size span src start
+  style summary title type usemap valign width)
+
+  config.time_zone = 'America/Fortaleza'
 
   config.gem "bluecloth"
   config.gem "haml"
   config.gem "hpricot"
   config.gem "icalendar"
-  config.gem "brI18n"
   config.gem 'thoughtbot-shoulda', :lib => 'shoulda/rails', :source => "http://gems.github.com"
 end

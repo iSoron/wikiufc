@@ -7,8 +7,8 @@
     %img.avatar{:src => gravatar_url_for(@user.email)}
     %h1.title= h(@user.display_name)
     %p= h(@user.name)
-    %p= "Membro desde {c}"[:member_since, @user.created_at.strftime("%d de %B de %Y")]
-    %p= "Última visita há {c}"[:last_seen, distance_of_time_in_words(Time.now, @user.last_seen)]
+    %p= t(:member_since, :c => @user.created_at.strftime("%d de %B de %Y"))
+    %p= t(:last_seen, :c => distance_of_time_in_words(Time.now, @user.last_seen))
 
   -# cache(user_path(@user.id)) do
   = @user.description.format_wiki if !@user.description.blank?

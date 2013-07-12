@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Wiki UFC
 # Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
 # 
@@ -47,7 +48,7 @@ class AttachmentsController < ApplicationController
 		@attachment.save!
 
 		AttachmentCreateLogEntry.create!(:target_id => @attachment.id, :user => @current_user, :course => @course)
-		flash[:notice] = 'Attachment created'[]
+		flash[:notice] = t(:attachment_created)
 
 		respond_to do |format|
 			format.html { redirect_to course_attachment_url(@course, @attachment) }
@@ -73,7 +74,7 @@ class AttachmentsController < ApplicationController
 			@attachment.last_modified = Time.now.utc
 			@attachment.save!
 			AttachmentEditLogEntry.create!(:target_id => @attachment.id, :user => @current_user, :course => @course)
-			flash[:notice] = 'Attachment updated'[]
+			flash[:notice] = t(:attachment_updated)
 		end
 
 		respond_to do |format|
@@ -84,7 +85,7 @@ class AttachmentsController < ApplicationController
 
 	def destroy
 		@attachment.destroy
-		flash[:notice] = 'Attachment removed'[]
+		flash[:notice] = t(:attachment_removed)
 
 		log = AttachmentDeleteLogEntry.create!(:target_id => @attachment.id, :user => @current_user, :course => @course)
 		flash[:undo] = undo_course_log_url(@course, log)

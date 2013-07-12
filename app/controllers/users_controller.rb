@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Wiki UFC
 # Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
 # 
@@ -46,7 +47,7 @@ class UsersController < ApplicationController
 
 		@user.attributes = params[:user]
 		@user.save!
-		flash[:notice] = 'User account updated'[]
+		flash[:notice] = t(:user_account_updated)
 
 		respond_to do |format|
 			format.html { redirect_to user_path(@user) }
@@ -56,7 +57,7 @@ class UsersController < ApplicationController
 
 	def destroy
 		@user.destroy
-		flash[:notice] = 'User account removed'[]
+		flash[:notice] = t(:user_account_removed)
 
 		respond_to do |format|
 			format.html { redirect_to users_path }
@@ -71,7 +72,7 @@ class UsersController < ApplicationController
 				@user.last_seen = Time.now.utc
 				@user.save!
 				setup_session(@user)
-				flash[:message] = 'User account created'[]
+				flash[:message] = t(:user_account_created)
 				redirect_to dashboard_url
 			rescue ActiveRecord::RecordInvalid
 				flash[:warning] = 'Não foi possível cadastrar a conta.'
@@ -86,7 +87,7 @@ class UsersController < ApplicationController
 			@user.attributes = params[:user]
 			@user.save!
 			@color = @user.pref_color
-			flash[:message] = 'Settings updated'[]
+			flash[:message] = t(:settings_updated)
 			redirect_to dashboard_url
 		end
 	end
@@ -98,17 +99,17 @@ class UsersController < ApplicationController
 			if !@user.nil?
 				setup_session(@user, (params[:remember_me] == "1"))
 				@user.update_attribute(:last_seen, Time.now.utc)
-				flash[:message] = 'Welcome back, {u}'[:login_success, @user.login]
+				flash[:message] = t(:welcome_back, :u => @user.login)
 				redirect_to_stored
 			else
-				flash[:warning] = 'Login failed'[]
+				flash[:warning] = t(:login_failed)
 			end
 		end
 	end
 
 	def logout
 		destroy_session
-		flash[:message] = 'You have logged out'[:logout_success]
+		flash[:message] = t(:logout_success)
 		redirect_to index_path
 	end
 

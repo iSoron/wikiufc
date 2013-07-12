@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Wiki UFC
 # Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
 # 
@@ -45,7 +46,7 @@ class EventsController < ApplicationController
 		@event.course_id = @course.id
 		@event.created_by = session[:user_id]
 		@event.save!
-		flash[:notice] = 'Event created'[]
+		flash[:notice] = t(:event_created)
 
 		EventCreateLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @course, :version => @event.version)
 
@@ -63,7 +64,7 @@ class EventsController < ApplicationController
 		@event.attributes = params[:event]
 		dirty = @event.changed?
 		@event.save!
-		flash[:notice] = 'Event updated'[]
+		flash[:notice] = t(:event_updated)
 
 		EventEditLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @course, :version => @event.version) if dirty
 
@@ -75,7 +76,7 @@ class EventsController < ApplicationController
 
 	def destroy
 		@event.destroy
-		flash[:notice] = 'Event removed'[]
+		flash[:notice] = t(:event_removed)
 
 		log = EventDeleteLogEntry.create!(:target_id => @event.id, :user => @current_user, :course => @course, :version => @event.version)
 		flash[:undo] = undo_course_log_url(@course, log)

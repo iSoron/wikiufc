@@ -18,4 +18,4 @@ required_fields.each do |field|
 end
 
 # Internacionalizacao
-Gibberish.current_language = App.language if RAILS_ENV != 'test'
+#Gibberish.current_language = App.language if RAILS_ENV != 'test'

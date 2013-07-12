@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Wiki UFC
 # Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
 # 
@@ -49,7 +50,7 @@ class CoursesController < ApplicationController
 
 	def create
 		@course.save!
-		flash[:notice] = 'Course created'[]
+		flash[:notice] = t(:course_created)
 
 		respond_to do |format|
 			format.html { redirect_to course_path(@course) }
@@ -64,7 +65,7 @@ class CoursesController < ApplicationController
 		@course.attributes = params[:course]
 		@course.save!
 
-		flash[:notice] = 'Course updated'[]
+		flash[:notice] = t(:course_updated)
 		respond_to do |format|
 			format.html { redirect_to course_path(@course) }
 			format.xml { head :ok }
@@ -73,7 +74,7 @@ class CoursesController < ApplicationController
 
 	def destroy
 		@course.destroy
-		flash[:notice] = 'Course removed'[]
+		flash[:notice] = t(:course_removed)
 
 		respond_to do |format|
 			format.html { redirect_to courses_path }

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Wiki UFC
 # Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
 # 
@@ -27,7 +28,6 @@ class Attachment < ActiveRecord::Base
 	# Validacao
 	validates_presence_of :file_name
 	validates_numericality_of :size, :allow_nil => true, :only_integer => true
-	validates_inclusion_of :front_page, :in => [true, false], :allow_nil => false, :message => ActiveRecord::Errors.default_error_messages[:blank]
 
 	def self.find_front_page
 		Attachment.find(:all, :conditions => [ "front_page = ?", true ])
@@ -49,12 +49,12 @@ class Attachment < ActiveRecord::Base
 	def validate
 		if @tmp_file
 			errors.add("file") if @tmp_file.size == 0
-			errors.add("file", "is too large"[]) if @tmp_file.size > App.max_upload_file_size
+			errors.add("file", I18n.t(:is_too_large)) if @tmp_file.size > App.max_upload_file_size
 		else
 			# Caso o objeto possua id, significa que ele já está no banco de dados.
 			# Um arquivo em branco, entao, não é inválido: significa que a pessoa só quer
 			# modificar a descrição, ou algo assim..
-			errors.add("file", "is needed"[]) if not self.id
+			errors.add("file", I18n.t(:is_needed)) if not self.id
 		end
 
 		errors.add("path", "muito longo") if !@path.nil? and @path.split('/').size > 10
