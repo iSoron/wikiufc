@@ -18,6 +18,7 @@
 require 'digest/md5'
 
 module ApplicationHelper
+	include CalendarHelper
 
 	# Converte para o timezone local
 	def tz(time_at)
@@ -77,7 +78,7 @@ module ApplicationHelper
     end
 
 	def gravatar_url_for(email, size=80)
-		"http://www.gravatar.com/avatar.php?gravatar_id=#{Digest::MD5.hexdigest(email)}&size=#{size}&default=#{App.default_avatar}_#{size}.png"
+		"http://www.gravatar.com/avatar.php?gravatar_id=#{Digest::MD5.hexdigest(email)}&size=#{size}&default=#{u(App.default_avatar)}_#{size}.png"
 	end
 
 	def action_icon(action_name, description, options = {}, html_options = {})

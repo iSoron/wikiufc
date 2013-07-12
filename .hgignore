@@ -5,3 +5,4 @@ public/upload/*
 *.log
 *.orig
 config/database.yml
+config/application.rb

@@ -80,5 +80,6 @@ Rails::Initializer.run do |config|
   config.gem "hpricot"
   config.gem "icalendar"
   config.gem "will_paginate"
+  config.gem "calendar_helper"
   config.gem 'thoughtbot-shoulda', :lib => 'shoulda/rails', :source => "http://gems.github.com"
 end
