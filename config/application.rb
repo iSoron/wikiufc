@@ -1,56 +1,62 @@
-# Geral
-App.language = "pt-br"
-App.title = "Wiki UFC"
-App.webmaster_email = "webmaster@wikiufc.gelsol.org"
+require File.expand_path('../boot', __FILE__)
 
-App.default_host = "localhost:3000"
-App.base_path = ""
+require 'rails/all'
 
-App.current_period = "2009.2"
+if defined?(Bundler)
+  # If you precompile assets before deploying to production, use this line
+  Bundler.require(*Rails.groups(:assets => %w(development test)))
+  # If you want your assets lazily compiled in production, use this line
+  # Bundler.require(:default, :assets, Rails.env)
+end
 
-# Limites
-App.max_upload_file_size = 5.megabytes
+module Wikiufc
+  class Application < Rails::Application
+    # Settings in config/environments/* take precedence over those specified here.
+    # Application configuration should go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded.
 
-# Forum
-#App.forum_uri = "http://127.0.0.1:3001/"
+    # Custom directories with classes and modules you want to be autoloadable.
+    # config.autoload_paths += %W(#{config.root}/extras)
 
-# Tema
-App.default_color = 0
-App.default_avatar = "http://#{App.default_host}#{App.default_path}/images/avatar"
-App.color_schemes = [
-    # Default
-    [ "#037", "#069", "#455", "#778" ],
+    # Only load the plugins named here, in the order given (default is alphabetical).
+    # :all can be used as a placeholder for all plugins not explicitly named.
+    # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
-    # Legado
-    [ "#000", "#069", "#455", "#455" ],
-    [ "#000", "#690", "#444", "#666" ],
+    # Activate observers that should always be running.
+    # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
 
-	# Mono
+    # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
+    # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
+    # config.time_zone = 'Central Time (US & Canada)'
 
-    [ "#900", "#c00", "#444", "#888" ],
-    
-	# Aqua 
-    [ "#7b7", "#455", "#899", "#abb" ],
-    [ "#005B9A", "#455", "#899", "#abb" ],
-    [ "#8D009A", "#455", "#899", "#abb" ],
-    [ "#9A000D", "#455", "#899", "#abb" ],
-    [ "#5A9A00", "#455", "#899", "#abb" ],
+    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
+    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+    # config.i18n.default_locale = :de
 
-    # Complementar
-    #[ "#037", "#c60", "#457", "#568" ],
-    #[ "#070", "#c00", "#474", "#585" ],
+    # Configure the default encoding used in templates for Ruby 1.9.
+    config.encoding = "utf-8"
 
-    # Pink
-    [ "#d18", "#d18", "#457", "#668" ],
-    #[ "#609", "#455", "#547", "#658" ],
+    # Configure sensitive parameters which will be filtered from the log file.
+    config.filter_parameters += [:password]
 
-    # Sand
-    [ "#900", "#663", "#888", "#cc9" ],
-    [ "#036", "#663", "#888", "#cc9" ],
-    [ "#680", "#663", "#888", "#cc9" ]
-]
+    # Enable escaping HTML in JSON.
+    config.active_support.escape_html_entities_in_json = true
 
+    # Use SQL instead of Active Record's schema dumper when creating the database.
+    # This is necessary if your schema can't be completely dumped by the schema dumper,
+    # like if you have constraints or database-specific column types
+    # config.active_record.schema_format = :sql
 
-# Templates
-App.inital_wiki_pages = ['Ementa', 'Notas de Aula']
-App.initial_wiki_page_content = "Página em branco."
+    # Enforce whitelist mode for mass assignment.
+    # This will create an empty whitelist of attributes available for mass-assignment for all models
+    # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
+    # parameters by using an attr_accessible or attr_protected declaration.
+    config.active_record.whitelist_attributes = true
+
+    # Enable the asset pipeline
+    config.assets.enabled = true
+
+    # Version of your assets, change this if you want to expire all your assets
+    config.assets.version = '1.0'
+  end
+end

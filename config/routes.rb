@@ -1,93 +1,58 @@
-# Wiki UFC
-# Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
-# 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+Wikiufc::Application.routes.draw do
+  # The priority is based upon order of creation:
+  # first created -> highest priority.
 
-ActionController::Routing::Routes.draw do |map|
+  # Sample of regular route:
+  #   match 'products/:id' => 'catalog#view'
+  # Keep in mind you can assign values other than :controller and :action
 
-	# Resources
-	map.resources :users
-	map.resources(:courses,
-		:member => {
-			:enroll => :get,
-			:unenroll => :get
-		}
-	) do |course|
+  # Sample of named route:
+  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
+  # This route can be invoked with purchase_url(:id => product.id)
 
-		course.resources :events,
-			:member => {
-				:undelete => :post
-			}
+  # Sample resource route (maps HTTP verbs to controller actions automatically):
+  #   resources :products
 
-		course.resources :news,
-            :singular => "news_instance",
-			:member => {
-				:undelete => :post
-			}
-		
-		course.resources :wiki,
-            :singular => "wiki_instance",
-			:member => {
-				:diff => :get,
-				:versions => :get,
-				:move_up => :get,
-				:move_down => :get,
-				:undelete => :post
-			}
+  # Sample resource route with options:
+  #   resources :products do
+  #     member do
+  #       get 'short'
+  #       post 'toggle'
+  #     end
+  #
+  #     collection do
+  #       get 'sold'
+  #     end
+  #   end
 
-		course.resources :attachments,
-			:member => {
-				:download => :get,
-				:undelete => :post
-			}
-	end
+  # Sample resource route with sub-resources:
+  #   resources :products do
+  #     resources :comments, :sales
+  #     resource :seller
+  #   end
 
-	# Log
-	map.with_options :controller => 'log' do |log|
-		log.course_log 'courses/:course_id/log', :action => 'index', :format => 'html'
-		log.undo_course_log 'courses/:course_id/log/:id/undo', :action => 'undo', :format => 'html'
-		log.formatted_course_log 'courses/:course_id/log.:format', :action => 'index'
-	end
+  # Sample resource route with more complex sub-resources
+  #   resources :products do
+  #     resources :comments
+  #     resources :sales do
+  #       get 'recent', :on => :collection
+  #     end
+  #   end
 
-	# Wiki pages
-	map.preview 'services/preview', :controller => 'wiki', :action => 'preview'
+  # Sample resource route within a namespace:
+  #   namespace :admin do
+  #     # Directs /admin/products/* to Admin::ProductsController
+  #     # (app/controllers/admin/products_controller.rb)
+  #     resources :products
+  #   end
 
-	# Widgets
-	map.connect 'widgets/calendar/:id/:year/:month', :controller => 'events', :action => 'mini_calendar'
+  # You can have the root of your site routed with "root"
+  # just remember to delete public/index.html.
+  # root :to => 'welcome#index'
 
-	# Login, logout, signup, etc
-	map.with_options :controller => 'users' do |user|
-		user.login    'login',    :action => 'login'
-		user.logout   'logout',   :action => 'logout'
-		user.signup   'signup',   :action => 'signup'
-		user.settings 'settings', :action => 'settings'
-		user.recover_password 'recover_password', :action => 'recover_password'
-		user.recover_password_with_key 'recover_password/:key', :action => 'recover_password'
-   end
-	
-	# Pagina pessoal
-	map.dashboard '/dashboard', :controller => 'users', :action => 'dashboard'
-    map.formatted_dashboard '/dashboard/:secret.:format', :controller => 'users', :action => 'dashboard'
+  # See how all your routes lay out with "rake routes"
 
-	# Stylesheets
-	map.connect 'stylesheets/cache/:action.:format', :controller => 'stylesheets'
-	map.connect 'stylesheets/cache/:action.:color.:format', :controller => 'stylesheets'
-
-	# Mudancas recentes global
-	map.log 'log', :controller => 'log', :action => 'index', :format => 'html'
-	map.formatted_log 'log.:format', :controller => 'log', :action => 'index'
-	
-	# Front page
-	map.index '', :controller => 'courses', :action => 'index'
+  # This is a legacy wild controller route that's not recommended for RESTful applications.
+  # Note: This route will make all actions in every controller accessible via GET requests.
+  # match ':controller(/:action(/:id))(.:format)'
 end

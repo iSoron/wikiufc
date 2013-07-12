@@ -18,15 +18,14 @@
 require 'yaml'
 
 class ApplicationController < ActionController::Base
+	helper :all
+	protect_from_forgery
+	filter_parameter_logging :password
 
 	include AuthenticationSystem
-	helper :all
 
-	helper :all
 	before_filter :startup
 	#before_filter :set_timezone
-	
-	# Força o login para algumas áreas do sistema
 	before_filter :require_login, :only => [ :edit, :new, :create, :update, :delete, :destroy ]
 
 	protected
