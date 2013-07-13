@@ -16,11 +16,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 require 'yaml'
+require 'authentication.rb'
 
 class ApplicationController < ActionController::Base
 	helper :all
 	protect_from_forgery
-	filter_parameter_logging :password
 
 	include AuthenticationSystem
 

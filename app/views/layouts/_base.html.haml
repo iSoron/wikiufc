@@ -19,7 +19,7 @@
     
     %script{:type => 'text/javascript'}
       == BASE_PATH = "#{App.base_path}";
-    = javascript_include_merged :base
+    /= javascript_include_merged :base
 
   %body{'onload' => 'javascript: startup()'}
     #wrapper

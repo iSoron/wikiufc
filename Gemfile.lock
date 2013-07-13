@@ -3,6 +3,11 @@ PATH
   specs:
     bluecloth (1.0.0)
 
+PATH
+  remote: ./vendor/gems/brazilian-rails/brI18n/
+  specs:
+    brazilian-rails (3.3.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -123,6 +128,7 @@ DEPENDENCIES
   acts_as_list (~> 0.2)
   acts_as_paranoid (~> 0.4)
   bluecloth (= 1.0.0)!
+  brazilian-rails (= 3.3.0)!
   calendar_helper (~> 0.2)
   coffee-rails (~> 3.2.1)
   haml (~> 3.1)

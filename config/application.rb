@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'lib/nasty_hacks.rb'
 require 'active_support/core_ext/numeric/bytes'
 
 if defined?(Bundler)
