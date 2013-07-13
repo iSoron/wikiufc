@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Wikiufc::Application.load_tasks
+WikiUFC::Application.load_tasks
