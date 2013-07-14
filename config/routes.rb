@@ -86,8 +86,7 @@ WikiUFC::Application.routes.draw do
     match '/dashboard' => 'users#dashboard', :as => :dashboard
     match '/dashboard/:secret.:format' => 'users#dashboard', :as => :formatted_dashboard
 
-	# Stylesheets
-    match 'stylesheets/cache/:action.:format' => 'stylesheets#index'
+	## Stylesheets
     match 'stylesheets/cache/:action.:color.:format' => 'stylesheets#index'
 
 	# Mudancas recentes global

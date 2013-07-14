@@ -7,7 +7,7 @@
     %meta{'name' => 'robots', :content => 'noindex,nofollow'}
     %meta{'http-equiv' => 'Content-Type', 'content' => 'text/html; charset=UTF-8'}
 
-    %link{'href' => "#{App.base_path}/stylesheets/cache/wiki.css", 'rel' => 'Stylesheet', 'type' => 'text/css'}
+    = stylesheet_link_tag :wiki
     %link{'href' => "#{App.base_path}/favicon.ico", 'rel' => 'icon', 'type' => 'image/vnd.microsoft.icon'}
     %link#css_color{'href' => "#{App.base_path}/stylesheets/cache/color.#{@color}.css", 'rel' => 'Stylesheet', 'type' => %'text/css'}
 
@@ -19,7 +19,7 @@
     
     %script{:type => 'text/javascript'}
       == BASE_PATH = "#{App.base_path}";
-    /= javascript_include_merged :base
+    = javascript_include_tag :base
 
   %body{'onload' => 'javascript: startup()'}
     #wrapper
