@@ -73,7 +73,7 @@ module ApplicationHelper
 
     def markup_help
         return "<div id='markup_help' style='display: none'>" +
-                File.read("#{RAILS_ROOT}/public/static/markup_help.mkd").format_wiki +
+                File.read("#{Rails.root}/public/static/markup_help.mkd").format_wiki +
                 "</div>"
     end
 

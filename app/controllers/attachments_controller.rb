@@ -98,7 +98,7 @@ class AttachmentsController < ApplicationController
 
 	def download
 
-		send_file("#{RAILS_ROOT}/public/upload/#{@course.id}/#{@attachment.id}",
+		send_file("#{Rails.root}/public/upload/#{@course.id}/#{@attachment.id}",
 				:filename    =>  @attachment.file_name,
 				:type        =>  @attachment.content_type,
 				:disposition =>  'inline',

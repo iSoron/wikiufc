@@ -62,7 +62,7 @@ class Attachment < ActiveRecord::Base
 
 	# Salva o arquivo fisicamente no HD
 	def after_save
-		@file_path = "#{RAILS_ROOT}/public/upload/#{course.id}/#{self.id}"
+		@file_path = "#{Rails.root}/public/upload/#{course.id}/#{self.id}"
 		FileUtils.mkdir_p(File.dirname(@file_path))
 
 		if @tmp_file
@@ -75,7 +75,7 @@ class Attachment < ActiveRecord::Base
 
 	# Deleta o arquivo
 	#def after_destroy
-	#	@file_path = "#{RAILS_ROOT}/public/upload/#{course.id}/#{self.id}"
+	#	@file_path = "#{Rails.root}/public/upload/#{course.id}/#{self.id}"
 	#	File.delete(@file_path) if File.exists?(@file_path)
 	#end
 

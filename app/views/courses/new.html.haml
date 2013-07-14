@@ -1,6 +1,6 @@
 %h4.title= App.title
 %h1.title Adicionar disciplina
 
-- form_tag courses_url, :method => :post do
+= form_tag courses_url, :method => :post do
   = render :partial => 'form'
   = submit_tag "Cadastrar", :accesskey => 'e'

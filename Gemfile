@@ -10,17 +10,18 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
+gem 'acts_as_list', '~>0.2'
+gem 'acts_as_paranoid', '~>0.4'
+gem 'acts_as_versioned', :git => 'https://github.com/jwhitehorn/acts_as_versioned.git'
 gem 'bluecloth', '1.0.0', :path => './vendor/gems/bluecloth'
+gem 'calendar_helper', "~>0.2"
+gem 'dynamic_form'
 gem 'haml', '~>3.1'
 gem 'hpricot', '~>0.8'
 gem 'icalendar', '~>1.0'
-gem 'will_paginate', "~>3.0"
-gem 'calendar_helper', "~>0.2"
+gem 'jquery-rails'
 gem 'shoulda', "~>2.11"
-gem 'acts_as_paranoid', '~>0.4'
-gem 'acts_as_versioned', :git => 'https://github.com/jwhitehorn/acts_as_versioned.git'
-gem 'acts_as_list', '~>0.2'
+gem 'will_paginate', "~>3.0"
 
 group :development, :production do
     gem 'brazilian-rails', '3.3.0', :path => './vendor/gems/brazilian-rails/brI18n/'

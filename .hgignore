@@ -6,3 +6,7 @@ public/upload/*
 *.orig
 config/database.yml
 config/application.rb
+tmp/cache/*
+*.rails2
+*.sqlite3
+*.pid

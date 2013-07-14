@@ -2,6 +2,6 @@
 %h1.title Adicionar evento
 
 %p
-  - form_tag course_events_url(@course), :method => :post do
+  = form_tag course_events_url(@course), :method => :post do
     = render :partial => 'form'
     = submit_tag "Adicionar", :accesskey => 'e'

@@ -21,6 +21,8 @@ require 'tempfile'
 
 class WikiPage < ActiveRecord::Base
 
+    attr_accessible :title, :front_page, :content, :description
+
 	# Plugins
 	acts_as_paranoid
 	acts_as_list :scope => 'course_id = #{course_id}'

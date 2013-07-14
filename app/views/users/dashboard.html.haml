@@ -19,7 +19,7 @@
           %td.top.aright
             = n.timestamp.strftime("%d&nbsp;de&nbsp;%B")
           %td
-            = link_to(h(n.course.full_name), course_url(n.course)) + " &rsaquo;"
+            = link_to(h(n.course.full_name), course_url(n.course)) + " ›"
             = link_to(h(n.title), course_news_instance_url(n.course, n))
             - unless n.body.empty?
               %p= truncate(h(n.body), :length => 300)
@@ -42,7 +42,7 @@
           %td.top
             = n.time.strftime("%H:%M")
           %td.top
-            = link_to(h(n.course.full_name), course_url(n.course)) + " &rsaquo;"
+            = link_to(h(n.course.full_name), course_url(n.course)) + " ›"
             = link_to(h(n.title), course_event_url(n.course, n))
 
   .box

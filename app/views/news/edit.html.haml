@@ -2,6 +2,6 @@
 %h1.title Editar noticia
 
 %p
-  - form_tag course_news_instance_url(@course, @news), :method => :put do
+  = form_tag course_news_instance_url(@course, @news), :method => :put do
     = render :partial => 'form'
     = submit_tag 'Editar', :accesskey => 'e'

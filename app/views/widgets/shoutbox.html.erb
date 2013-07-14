@@ -7,7 +7,7 @@
 				<li>Carregando...</li>
 			</ul>
 			<% if session[:user] %>
-			<% form_tag(
+			<%= form_tag(
 				{:controller => 'message', :action => 'create'}, {:id => 'shoutbox_form' }) do %>
 				<div>
 					<%= text_area :message, :body %>

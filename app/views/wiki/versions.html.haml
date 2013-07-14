@@ -8,7 +8,7 @@
   == radios_to = #{h(@history_to)};
   == radios_from = #{h(@history_from)};
 
-- form_tag diff_course_wiki_instance_url(@course, @wiki_page), :method => :get do
+= form_tag diff_course_wiki_instance_url(@course, @wiki_page), :method => :get do
   %button{:type => "submit"}= "Comparar as versões selecionadas"
   .box
     %table

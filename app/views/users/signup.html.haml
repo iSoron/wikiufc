@@ -2,6 +2,6 @@
 %h1.title Nova conta
 
 %p
-  - form_tag signup_path do
+  = form_tag signup_path do
     = render :partial => 'form_settings', :locals => { :signup => true }
     = submit_tag 'Criar'

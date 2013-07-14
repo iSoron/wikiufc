@@ -4,7 +4,7 @@
 <p>
 <%= error_messages_for 'user' %><br/>
 
-<% form_tag :action=> "login" do %>
+<%= form_tag :action=> "login" do %>
 
 <label for="user_login">Login:</label><br/>
 <%= text_field "user", "login", :size => 20 %><br/>

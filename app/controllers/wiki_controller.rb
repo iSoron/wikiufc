@@ -18,8 +18,8 @@
 
 class WikiController < ApplicationController
 
-	verify :params => :text, :only => :preview, :redirect_to => { :action => :show }
-	verify :params => [:from, :to], :only => :diff, :redirect_to => { :action => :versions }
+	#verify :params => :text, :only => :preview, :redirect_to => { :action => :show }
+	#verify :params => [:from, :to], :only => :diff, :redirect_to => { :action => :versions }
 
 	#after_filter :cache_sweep, :only => [ :create, :update, :destroy, :move_up,
 	#		:move_down, :undelete ]

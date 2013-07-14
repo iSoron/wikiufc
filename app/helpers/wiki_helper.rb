@@ -16,10 +16,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class String
+	include ActionView::Helpers::SanitizeHelper
 	def format_wiki
 		text = BlueCloth.new(self).to_html
 		text = Hpricot(text, :xhtml_strict => true).to_s
-		return text.sanitize unless text.blank?
+		return sanitize text
 	end
 end
 

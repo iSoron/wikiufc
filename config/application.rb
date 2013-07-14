@@ -10,6 +10,9 @@ end
 
 module WikiUFC
   class Application < Rails::Application
+
+  #set :haml, { :escape_html => false }
+
     config.encoding = "utf-8"
     config.filter_parameters += [:password]
     config.active_support.escape_html_entities_in_json = true
@@ -76,3 +79,9 @@ module WikiUFC
 end
 
 App = WikiUFC::Application.config
+
+require "haml"
+require "haml/template"
+Haml::Template.options[:escape_attrs] = false
+Haml::Template.options[:escape_html] = false
+
