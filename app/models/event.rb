@@ -20,7 +20,12 @@ class Event < ActiveRecord::Base
 	# Plugins
 	acts_as_paranoid
 	acts_as_versioned :if_changed => [ :title, :description, :time ]
-	acts_as_paranoid_versioned
+	
+	#acts_as_paranoid_versioned
+	self.versioned_class.class_eval do
+	  def self.delete_all(conditions = nil); return; end
+	end
+
 	self.non_versioned_columns << 'deleted_at'
 
 	# Associacoes

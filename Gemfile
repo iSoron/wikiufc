@@ -19,9 +19,13 @@ gem 'will_paginate', "~>3.0"
 gem 'calendar_helper', "~>0.2"
 gem 'shoulda', "~>2.11"
 gem 'acts_as_paranoid', '~>0.4'
-#gem 'acts_as_versioned', '~>0.6', :ignore_dependencies => true
+gem 'acts_as_versioned', :git => 'https://github.com/jwhitehorn/acts_as_versioned.git'
 gem 'acts_as_list', '~>0.2'
 
 group :development, :production do
     gem 'brazilian-rails', '3.3.0', :path => './vendor/gems/brazilian-rails/brI18n/'
+end
+
+group :development do
+    gem 'mongrel'
 end

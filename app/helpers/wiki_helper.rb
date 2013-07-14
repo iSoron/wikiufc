@@ -19,7 +19,7 @@ class String
 	def format_wiki
 		text = BlueCloth.new(self).to_html
 		text = Hpricot(text, :xhtml_strict => true).to_s
-		return text.sanitize
+		return text.sanitize unless text.blank?
 	end
 end
 

@@ -21,7 +21,11 @@ class Message < ActiveRecord::Base
 	acts_as_paranoid
 	acts_as_versioned :if_changed => [ :title, :body ]
 	self.non_versioned_columns << 'deleted_at'
-	acts_as_paranoid_versioned
+
+	#acts_as_paranoid_versioned
+	self.versioned_class.class_eval do
+	  def self.delete_all(conditions = nil); return; end
+	end
 	
 	# Associacoes
 	belongs_to :user,

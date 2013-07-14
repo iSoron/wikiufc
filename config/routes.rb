@@ -14,6 +14,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+ActiveSupport::Inflector.inflections do |inflect|
+	inflect.irregular 'wiki_instance', 'wiki'
+	inflect.irregular 'news_instance', 'news'
+end
+
 WikiUFC::Application.routes.draw do
 
     resources :users
@@ -55,7 +60,11 @@ WikiUFC::Application.routes.draw do
     end
 
 	# Log
-    #match 'controllerlog' => '#index', :as => :with_options
+	with_options :controller => 'log' do |log|
+		log.match 'courses/:course_id/log', :action => 'index', :format => 'html', :as => 'course_log'
+		log.match 'courses/:course_id/log/:id/undo', :action => 'undo', :format => 'html', :as => 'undo_course_log'
+		log.match 'courses/:course_id/log.:format', :action => 'index', :as => 'formatted_course_log'
+	end
 
     # Services
     match 'services/preview' => 'wiki#preview', :as => :preview

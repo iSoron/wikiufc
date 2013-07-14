@@ -25,7 +25,6 @@ class WikiPage < ActiveRecord::Base
 	acts_as_paranoid
 	acts_as_list :scope => 'course_id = #{course_id}'
 	acts_as_versioned :if_changed => [ :content, :description, :title ]
-	acts_as_paranoid_versioned
 	self.non_versioned_columns << 'front_page'
 	self.non_versioned_columns << 'position'
 	self.non_versioned_columns << 'deleted_at'
@@ -42,6 +41,11 @@ class WikiPage < ActiveRecord::Base
 	validates_uniqueness_of :title, :scope => :course_id
 	validates_uniqueness_of :canonical_title, :scope => :course_id
 	validates_format_of :title, :with => /^[^0-9]/
+
+	# acts_as_paranoid_versioned
+	self.versioned_class.class_eval do
+	  def self.delete_all(conditions = nil); return; end
+	end
 
 	def before_validation
 		self.canonical_title = self.title.pretty_url
