@@ -10,6 +10,7 @@ events['#show_preview:click'] = function(element, e)
 			spinner_stop("preview");
 			Element.show('wiki_preview');
 			new Effect.ScrollTo('wiki_preview');
+            MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 		}
 	});
 

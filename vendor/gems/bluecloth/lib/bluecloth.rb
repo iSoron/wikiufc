@@ -396,7 +396,7 @@ class BlueCloth < String
 		return rval
 	end
 
-	MimeTexURL = "http://isoron.org/tex/math.cgi"
+	MimeTexURL = "http://lupus.isoron.org/tex/math.cgi"
 	LatexBlockRegexp = %r{
 		\{\$\$(.*?)\$\$\}
 	  }xm
@@ -419,17 +419,19 @@ class BlueCloth < String
 
 		# Block Latex
 		rval = rval.gsub(LatexBlockRegexp) {|block|
-			codeblock = $1.strip.gsub("\n", '%0A').gsub(/[ \t]+/, " ")
-			codeblock = %{<div class="tex_block"><img src="#{MimeTexURL}?%s"/></div>} %
-				[ encode_code( codeblock, rs ) ]
-			tokenize(codeblock, rs)
+			tokenize("{$$#{$1.strip}$$}", rs)
+			#codeblock = $1.strip.gsub("\n", '%0A').gsub(/[ \t]+/, " ")
+			#codeblock = %{<div class="tex_block"><img src="#{MimeTexURL}?%s"/></div>} %
+			#	[ encode_code( codeblock, rs ) ]
+			#tokenize(codeblock, rs)
 		}
 
 		# Inline math
 		rval = rval.gsub( LatexInlineRegexp ) {|block|
-			codeblock = $1.strip
-			codeblock = %{<img class="tex_inline" src="#{MimeTexURL}?\\small %s"/>} % [ encode_code( codeblock, rs ) ]
-			tokenize(codeblock, rs)
+			tokenize("{$#{$1.strip}$}", rs)
+			#codeblock = $1.strip
+			#codeblock = %{<img class="tex_inline" src="#{MimeTexURL}?\\small %s"/>} % [ encode_code( codeblock, rs ) ]
+			#tokenize(codeblock, rs)
 		}
 
 	end
