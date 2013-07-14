@@ -1,0 +1,10 @@
+**/doc
+**/pkg
+*swo
+*swp
+*~
+.bundle
+.DS_Store
+.rvmrc
+doc
+pkg

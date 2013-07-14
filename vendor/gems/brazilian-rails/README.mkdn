@@ -1,0 +1,131 @@
+# Brazilian Rails
+
+[![Build Status](https://secure.travis-ci.org/tapajos/brazilian-rails.png?branch=master)](http://travis-ci.org/tapajos/brazilian-rails)
+
+Estamos testando, via Travis-CI, nas versões de Ruby ree, 1.8.7, 1.9.2 e 1.9.3, nas versões de Rails 2.3.x, 3.0.x, 3.1.x e 3.2.x
+
+## O que foi?
+
+O Brazilian Rails foi o plugin de internacionalização mais conhecido do Brasil e tinha como objetivo unir vários recursos de regras e traduções para o desenvolvedor brasileiro.
+
+## O que é?
+
+Brazilian Rails é um conjunto de gems para serem usadas com Ruby e com o Ruby on Rails e tem como objetivo unir alguns recursos úteis para os desenvolvedores brasileiros.
+
+## Quais as gems que compõe o Brazilian Rails?
+
+* brcep
+* brdata
+* brdinheiro
+* brhelper
+* brnumeros
+* brstring
+* brcpfcnpj
+* brI18n
+
+**OBS**: A gem brtraducao foi removida do Brazilian Rails devido a adição do suporte i18n do Rails. Ele continua podendo ser usada, porém não faz mais parte desse projeto. Para maiores detalhes, leia o post [O Brazilian Rails e o suporte i18n][brtraducoes]
+
+**OBS**: A gem brI18n foi criada para acomodar as traduções usando suporte i18n das versões mais recentes do Rails.
+
+## Como faço para instalar?
+
+É muito difícil...
+
+### com Bundler
+
+Adicionar ao seu Gemfile:
+
+	gem 'brazilian-rails'
+
+### sem Bundler
+
+require "brazilian-rails"
+
+Por padrão, a pluralização vem desabilitada, isso para não atrapalhar os projetos que já existem.
+
+### I18n
+
+Por padrão a gem não carrega o suporte de traduções do Rails, para usa-la você deve fazer o require abaixo:
+
+	require 'brI18n'
+
+## Como funciona?
+
+Está tudo explicado na nossa [api][].
+
+## Achei um BUG, o que eu faço?
+
+No melhor seria fazer um fork, adicionar os testes para reproduzir o erro, implementar a devida correção e fazer um pull request. Se acha que não tem capacidade para isso (tá com preguiça), por favor, nos avise! Isso é fácil e rápido. Isso pode ser feito em <http://github.com/tapajos/brazilian-rails/issues>
+
+## Como contribuir?
+
+1. Fazer um fork do projeto
+1. Instalar as dependências: bundle install (Se não tiver o bundler instalado, faça antes: gem install bundler)
+1. Fazer os devidos ajustes com os respectivos testes (TestUnit se possível e tente fazer commits atômicos)
+1. Fazer pull request
+
+## Quem está por traz disso tudo?
+
+O [Marcos Tapajós][mt] tomou coragem para publicar todas as funcionalidades em um plugin, com testes unitários para garantir que tudo funcione conforme manda o figurino. Além do Tápa, outros loucos mantém tudo organizado, são: [Celestino Gomes][tino], [André Luiz Kupkovski][andre], [A galera da Improve It][ii] e mais alguns que ficam escondidos para não pagar esse mico...
+
+Muitos já contribuíram com o projeto.
+
+    git log --format='%an' | sort -u
+
+[Andre Bernardes](https://github.com/albertobraschi),
+[Cássio Marques](https://github.com/cassiomarques),
+[Danilo Jeremias da Silva](https://github.com/dannnylo),
+[Eduardo Fiorezi](https://github.com/eduardofiorezi),
+[Eduardo Hertz](https://github.com/eduardohertz),
+[Elomar Nascimento dos Santos](https://github.com/elomarns),
+[Everton Ribeiro](https://github.com/nuxlli),
+[Fabio Akita](https://github.com/akitaonrails),
+[Fernando Gomes](https://github.com/fernandogomes),
+[Fernando Migliorini Luizão](https://github.com/fernandoluizao),
+[Frederico Macedo](https://github.com/frederico),
+[Gun.io Whitespace Robot](https://github.com/GunioRobot),
+[Jhimy Fernandes Villar](https://github.com/stjhimy),
+[João Vitor](https://github.com/joaovitor),
+[Julio Santos Monteiro](https://github.com/jmonteiro),
+[Kivanio Barbosa](https://github.com/kivanio),
+[Marcus Derencius](https://github.com/derencius),
+[Marcus Sá](http://about.me/marcus_sa),
+[Mauricio Zaffari](https://github.com/mauriciozaffari),
+[Rafael Felix](https://github/com/fellix),
+[Rafael Uchoa](https://github.com/uchoaaa),
+[Rafeal Carvalho](https://github.com/rafaeldx7),
+[Ricardo Shiota Yasuda](https://github.com/shadow11),
+[Rodrigo Manhães](https://github.com/rodrigomanhaes) e
+[Sergio Brant](https://github.com/smbrant)
+
+## Algumas funcionalidades:
+
+* Date e Time no formato brasileiro
+* Números por Extenso
+* Dinheiro
+* Cpf e Cnpj
+* Feriado
+* Mensagens de erro traduzidas
+* etc
+
+## Duvidas?
+
+As duvidas podem ser enviadas diretamente a um dos desenvolvedores ou através da página do projeto no [RubyForge][rf]
+
+## Quem apoia nesta gem?
+
+[Improve It][ii]
+
+[![Improve It][logo]][ii]
+
+[rf]: http://rubyforge.org/projects/brazilian-rails/
+[api]: http://brazilian-rails.improveit.com.br/software_livre/brazilian_rails
+[ii]: http://www.improveit.com.br
+[logo]: http://www.improveit.com.br/images/logo/logo_improve_it_screen.gif "Improve It"
+[tino]: http://tinogomes.wordpress.com
+[andre]: http://www.workingwithrails.com/person/9227-andr-luiz-kupkovski
+[rf]: http://rubyforge.org/projects/brazilian-rails
+[mt]: http://www.improveit.com.br/tapajos
+[vt]: http://www.improveit.com.br/vinicius
+[gg]: http://ggarnier.wordpress.com/
+[brtraducoes]: http://blog.improveit.com.br/articles/2009/02/13/o-brazilian-rails-e-o-suporte-i18n
