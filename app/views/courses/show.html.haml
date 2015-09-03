@@ -38,11 +38,11 @@
     - @course.wiki_pages.find_front_page.each do |wiki|
       %li{highlight(wiki.id)}
         .cmd{:style => 'margin-bottom: -27px; margin-top: -9px;'}
-          =action_icon 'arrow2_n', 'Mover para cima', move_up_course_wiki_instance_url(@course, wiki) unless wiki.first?
-          =action_icon 'arrow2_s', 'Mover para baixo', move_down_course_wiki_instance_url(@course, wiki) unless wiki.last?
+          =action_icon 'arrow2_n', 'Mover para cima', move_up_course_wiki_instance_url(@course.to_param, wiki.id) unless wiki.first?
+          =action_icon 'arrow2_s', 'Mover para baixo', move_down_course_wiki_instance_url(@course.to_param, wiki.id) unless wiki.last?
           - if wiki.last?
             %span{:style => 'margin-right: 14px'} &nbsp;
-        =link_to h(wiki.title), course_wiki_instance_url(@course, wiki)
+        =link_to h(wiki.title), course_wiki_instance_url(@course.to_param, wiki.id)
     - if @course.wiki_pages.empty?
       %li.no_itens Nenhuma página wiki
     - else

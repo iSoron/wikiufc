@@ -8,7 +8,7 @@
   - if !@course.wiki_pages.empty?
     %ul
       - @course.wiki_pages.find(:all, :order => 'title').each do |w|
-        %li= link_to(w.title, course_wiki_instance_url(@course, w))
+        %li= link_to(w.title, course_wiki_instance_url(@course.to_param, w.id))
 
   - else
     .box
