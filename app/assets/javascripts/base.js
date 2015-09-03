@@ -4,3 +4,4 @@
 //= require lib/dragdrop
 //= require lib/event-selectors
 //= require application
+//= require latex

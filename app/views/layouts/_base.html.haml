@@ -19,10 +19,8 @@
     
     %script{:type => 'text/javascript'}
       == BASE_PATH = "#{App.base_path}";
-    = javascript_include_tag :base
     = javascript_include_tag 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML'
-    %script{:type => 'text/x-mathjax-config'}
-      == MathJax.Hub.Config({tex2jax: {inlineMath: [['{$','$}']], displayMath: [['{$$','$$}']]}});
+    = javascript_include_tag :base
 
   %body{'onload' => 'javascript: startup()'}
     #wrapper

@@ -14,23 +14,24 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require File.dirname(__FILE__) + '/../test_helper'
-
-class MessageTest < ActiveSupport::TestCase
-	fixtures :messages
-
-    def test_should_create_new_version
-       news = News.find(1)
-	   news.title = "another title"
-       assert news.save_version?
-    end
-
-    def test_should_not_create_new_version
-       news = News.find(1)
-       news.destroy
-
-       news = News.find_with_deleted(1)
-       news.recover!
-       assert !news.save_version?
-    end
-end
+#require File.dirname(__FILE__) + '/../test_helper'
+#
+#class MessageTest < ActiveSupport::TestCase
+#	fixtures :messages
+#
+#    def test_should_create_new_version
+#       news = News.find(1)
+#	   news.title = "another title"
+#       assert news.save_version?
+#    end
+#
+#    def test_should_not_create_new_version
+#       news = News.find(1)
+#       news.destroy
+#
+#       news = News.find_with_deleted(1)
+#       news.recover!
+#       assert !news.save_version?
+#    end
+#end
+#

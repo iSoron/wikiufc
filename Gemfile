@@ -23,9 +23,9 @@ gem 'jquery-rails'
 gem 'shoulda', "~>2.11"
 gem 'will_paginate', "~>3.0"
 
-group :development, :production do
-    gem 'brazilian-rails', '3.3.0', :path => './vendor/gems/brazilian-rails/brI18n/'
-end
+#group :development, :production do
+#    gem 'brazilian-rails', '3.3.0', :path => './vendor/gems/brazilian-rails/brI18n/'
+#end
 
 group :development do
     gem 'mongrel'

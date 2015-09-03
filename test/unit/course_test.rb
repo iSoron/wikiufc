@@ -14,14 +14,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require File.dirname(__FILE__) + '/../test_helper'
-
-class CourseTest < ActiveSupport::TestCase
-
-	fixtures :courses
-
-	def test_truth
-		assert true
-	end
-
-end
+#require File.dirname(__FILE__) + '/../test_helper'
+#
+#class CourseTest < ActiveSupport::TestCase
+#
+#	fixtures :courses
+#
+#	def test_truth
+#		assert true
+#	end
+#
+#end
+#
