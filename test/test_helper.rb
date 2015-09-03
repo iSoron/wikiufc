@@ -19,6 +19,24 @@ class ActiveSupport::TestCase
     @request.session[:user_id] = nil
     @request.env["HTTP_AUTHORIZATION"] = nil
   end
+
+  def assert_formatted_response(type, element=nil)
+    assert_response :success
+    snippet = "Body: #{@response.body.first(100).chomp}..."
+    case type
+      when :rss
+        assert_equal Mime::RSS, @response.content_type, snippet
+        assert_select "channel", 1, snippet
+      when :ics
+        assert_equal Mime::ICS, @response.content_type, snippet
+      when :text
+        assert_equal Mime::TEXT, @response.content_type, snippet
+      when :xml
+        assert_select element.to_s.dasherize, 1, snippet
+      else
+        raise ArgumentError
+    end
+  end
 end
 
 class Test::Unit::TestCase
