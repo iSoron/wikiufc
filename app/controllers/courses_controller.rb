@@ -17,106 +17,110 @@
 
 class CoursesController < ApplicationController
 
-	before_filter :require_admin, :only => [ :new, :create, :edit, :update, :destroy ]
-	before_filter :require_login, :only => [ :enroll, :unenroll ]
-	before_filter :find_course, :except => [ :index ]
-	#after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
+  before_filter :require_admin, :only => [:new, :create, :edit, :update, :destroy]
+  before_filter :require_login, :only => [:enroll, :unenroll]
+  before_filter :find_course, :except => [:index]
+  #after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
 
-	def index
-		params[:period] = nil if params[:period] == App.current_period 
-		@period = params[:period] || App.current_period
+  def index
+    params[:period] = nil if params[:period] == App.current_period
+    @period = params[:period] || App.current_period
 
-		if logged_in? and !@current_user.courses.empty?
-			@courses = Course.find(:all, :order => 'grade asc, full_name asc', :conditions => ['period = ? and hidden = ? and id not in (?)', @period, false, @current_user.courses])
-		else
-			@courses = Course.find(:all, :order => 'grade asc, full_name asc', :conditions => ['period = ? and hidden = ?', @period, false])
-		end
+    if logged_in? and !@current_user.courses.empty?
+      @courses = Course.all(:order => 'grade asc, full_name asc',
+          :conditions => ['period = ? and hidden = ? and id not in (?)',
+              @period, false, @current_user.courses])
+    else
+      @courses = Course.all(:order => 'grade asc, full_name asc',
+          :conditions => ['period = ? and hidden = ?', @period, false])
+    end
 
-		respond_to do |format|
-			format.html
-			format.xml { render :xml => @courses }
-		end
-	end
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @courses }
+    end
+  end
 
-	def show
-		respond_to do |format|
-			format.html
-			format.xml { render :xml => @course }
-		end
-	end
-	
-	def new
-	end
+  def show
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @course }
+    end
+  end
 
-	def create
-		@course.save!
-		flash[:notice] = t(:course_created)
+  def new
+  end
 
-		respond_to do |format|
-			format.html { redirect_to course_path(@course) }
-			format.xml { head :created, :location => course_url(@course, :format => :xml) }
-		end
-	end
+  def create
+    @course.save!
+    flash[:notice] = t(:course_created)
 
-	def edit
-	end
+    respond_to do |format|
+      format.html { redirect_to course_path(@course) }
+      format.xml { head :created, :location => course_url(@course,
+              :format => :xml) }
+    end
+  end
 
-	def update
-		@course.attributes = params[:course]
-		@course.save!
+  def edit
+  end
 
-		flash[:notice] = t(:course_updated)
-		respond_to do |format|
-			format.html { redirect_to course_path(@course) }
-			format.xml { head :ok }
-		end
-	end
+  def update
+    @course.attributes = params[:course]
+    @course.save!
 
-	def destroy
-		@course.destroy
-		flash[:notice] = t(:course_removed)
+    flash[:notice] = t(:course_updated)
+    respond_to do |format|
+      format.html { redirect_to course_path(@course) }
+      format.xml { head :ok }
+    end
+  end
 
-		respond_to do |format|
-			format.html { redirect_to courses_path }
-			format.xml { head :ok }
-		end
-	end
+  def destroy
+    @course.destroy
+    flash[:notice] = t(:course_removed)
 
-	def enroll
-		@current_user.courses << @course
-		flash[:highlight] = @course.id
+    respond_to do |format|
+      format.html { redirect_to courses_path }
+      format.xml { head :ok }
+    end
+  end
 
-		respond_to do |format|
-			format.html { redirect_to courses_path }
-			format.xml { head :ok }
-		end
-	end
+  def enroll
+    @current_user.courses << @course
+    flash[:highlight] = @course.id
 
-	def unenroll
-		@current_user.courses.delete(@course)
-		flash[:highlight] = @course.id
+    respond_to do |format|
+      format.html { redirect_to courses_path }
+      format.xml { head :ok }
+    end
+  end
 
-		respond_to do |format|
-			format.html { redirect_to courses_path }
-			format.xml { head :ok }
-		end
-	end
+  def unenroll
+    @current_user.courses.delete(@course)
+    flash[:highlight] = @course.id
 
-	protected
-	def find_course
-		if params[:id]
-			params[:id] = Course.find(:first, :conditions => ['short_name = ?', params[:id]], :order => 'period desc').id if !params[:id].is_numeric? and !Course.find_by_short_name(params[:id]).nil?
-		end
-		@course = params[:id] ? Course.find(params[:id]) : Course.new(params[:course])
-	end
+    respond_to do |format|
+      format.html { redirect_to courses_path }
+      format.xml { head :ok }
+    end
+  end
 
-	def require_admin
-		raise AccessDenied.new unless admin?
-	end
+  protected
+  def find_course
+    if params[:id]
+      params[:id] = Course.first(:conditions => ['short_name = ?', params[:id]], :order => 'period desc').id if !params[:id].is_numeric? and !Course.find_by_short_name(params[:id]).nil?
+    end
+    @course = params[:id] ? Course.find(params[:id]) : Course.new(params[:course])
+  end
 
-	def cache_sweep
-		expire_fragment(course_path(@course.id, :part => 'right'))
-		expire_fragment(course_path(@course.id))
-		expire_fragment(courses_path)
-	end
+  def require_admin
+    raise AccessDenied.new unless admin?
+  end
+
+  def cache_sweep
+    expire_fragment(course_path(@course.id, :part => 'right'))
+    expire_fragment(course_path(@course.id))
+    expire_fragment(courses_path)
+  end
 end

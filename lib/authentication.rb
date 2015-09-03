@@ -15,7 +15,7 @@ module AuthenticationSystem
 	# apenas verifica se o usuário já está logado ou não. Caso não esteja, ele é redirecionado.
 	def login_by_html
 		if !logged_in?
-			flash[:warning] = 'You must be logged in to access this section of the site'[:login_required]
+			flash[:warning] = 'You must be logged in to access this section of the site'
 			session[:return_to] = request.fullpath
 			redirect_to login_url
 		end

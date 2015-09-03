@@ -20,7 +20,7 @@ gem 'haml', '~>3.1'
 gem 'hpricot', '~>0.8'
 gem 'icalendar', '~>1.0'
 gem 'jquery-rails'
-gem 'shoulda', "~>2.11"
+gem 'shoulda', "~>3.5"
 gem 'will_paginate', "~>3.0"
 gem 'simplecov'
 
