@@ -22,6 +22,7 @@ require 'tempfile'
 class WikiPage < ActiveRecord::Base
 
   attr_accessible :title, :front_page, :content, :description
+  attr_writer :type
 
   # Plugins
   acts_as_paranoid

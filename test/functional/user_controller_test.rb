@@ -14,36 +14,35 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#require File.dirname(__FILE__) + '/../test_helper'
-#require 'users_controller'
-#
-## Re-raise errors caught by the controller.
-#class UsersController; def rescue_action(e) raise e end; end
-#
-#class UsersControllerTest < ActionController::TestCase
-#
-#    context "An authenticated user" do
-#        setup { login_as :bob }
-#
-#        context "on get to :dashboard" do
-#            setup { get :dashboard }
-#
-#            should respond_with :success
-#            should render_template "dashboard"
-#        end
-#
-#        context "on post to :logout" do
-#            setup { get :logout }
-#
-#            should respond_with :redirect
-#			should redirect_to('the main page') { index_url }
-#
-#            should "log out" do
-#                assert_nil session[:user_id]
-#                assert_nil cookies[:login_token]
-#            end
-#        end
-#
-#    end
-#end
-#
+require File.dirname(__FILE__) + '/../test_helper'
+require 'users_controller'
+
+# Re-raise errors caught by the controller.
+class UsersController; def rescue_action(e) raise e end; end
+
+class UsersControllerTest < ActionController::TestCase
+
+    context "An authenticated user" do
+        setup { login_as :bob }
+
+        context "on get to :dashboard" do
+            setup { get :dashboard }
+
+            should respond_with :success
+            should render_template "dashboard"
+        end
+
+        context "on post to :logout" do
+            setup { get :logout }
+
+            should respond_with :redirect
+			should redirect_to('the main page') { index_url }
+
+            should "log out" do
+                assert_nil session[:user_id]
+                assert_nil cookies[:login_token]
+            end
+        end
+
+    end
+end

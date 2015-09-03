@@ -26,12 +26,6 @@ gem 'simplecov'
 
 group :test do
   gem 'turn'
+  #gem 'silencer'
 end
 
-#group :development, :production do
-#    gem 'brazilian-rails', '3.3.0', :path => './vendor/gems/brazilian-rails/brI18n/'
-#end
-
-#group :development do
-#    gem 'mongrel'
-#end

@@ -32,7 +32,7 @@ module WikiHelper
 		text << "\n"
 		style = { '+' => 'add', '-' => 'del', ' ' => 'line' }
 
-		text.each do |line|
+		text.each_line do |line|
 			# Ignora o cabecalho
 			next if line.match(/^---/)
 			next if line.match(/^\+\+\+/)

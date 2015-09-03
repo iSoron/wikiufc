@@ -25,7 +25,7 @@
           %td.narrow
             %input{:type => "radio", :name => "to", :value => entry.version, :onclick => %"history_to(#{entry.version})"}
           %td= link_to(tz(entry.updated_at).strftime("%d/%m/%y&nbsp;%H:%M:%S"), course_wiki_instance_url(@course, @wiki_page, :version => entry.version))
-          %td= link_to truncate(h(User.find_with_deleted(entry.user_id).display_name), :length => 20), user_path(User.find_with_deleted(entry.user_id))
+          %td= link_to truncate(h(User.with_deleted.find(entry.user_id).display_name), :length => 20), user_path(User.with_deleted.find(entry.user_id))
           %td
             = entry.description
             - if (entry.version > @wiki_page.versions.minimum(:version))
