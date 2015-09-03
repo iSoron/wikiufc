@@ -10,6 +10,15 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  def login_as(user)
+    @request.session[:user_id] = users(user).id
+    @request.env["HTTP_AUTHORIZATION"] = user ? "Basic #{Base64.encode64("#{users(user).login}:test")}" : nil
+  end
+
+  def logout
+    @request.session[:user_id] = nil
+    @request.env["HTTP_AUTHORIZATION"] = nil
+  end
 end
 
 class Test::Unit::TestCase
@@ -31,7 +40,7 @@ class Test::Unit::TestCase
   def self.should_create_log_entry(&block)
     should "create log entry" do
       log_entry_class, target_id, user_id = instance_eval(&block)
-      assert log_entry_class.find(:first, :conditions => { :user_id => user_id, :target_id => target_id })
+      assert log_entry_class.find(:first, :conditions => {:user_id => user_id, :target_id => target_id})
     end
   end
 end
