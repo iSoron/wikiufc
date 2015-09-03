@@ -27,6 +27,6 @@ gem 'will_paginate', "~>3.0"
 #    gem 'brazilian-rails', '3.3.0', :path => './vendor/gems/brazilian-rails/brI18n/'
 #end
 
-group :development do
-    gem 'mongrel'
-end
+#group :development do
+#    gem 'mongrel'
+#end
