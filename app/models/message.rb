@@ -17,25 +17,25 @@
 
 class Message < ActiveRecord::Base
 
-	# Plugins
-	acts_as_paranoid
-	acts_as_versioned :if_changed => [ :title, :body ]
-	self.non_versioned_columns << 'deleted_at'
+  acts_as_paranoid
+  acts_as_versioned :if_changed => [:title, :body]
+  self.non_versioned_columns << 'deleted_at'
 
-	#acts_as_paranoid_versioned
-	self.versioned_class.class_eval do
-	  def self.delete_all(conditions = nil); return; end
-	end
-	
-	# Associacoes
-	belongs_to :user,
-	           :foreign_key => "sender_id",
-	           :with_deleted => true
+  #acts_as_paranoid_versioned
+  self.versioned_class.class_eval do
+    def self.delete_all(conditions = nil)
+      return
+    end
+  end
+
+  belongs_to :user,
+      :foreign_key => "sender_id",
+      :with_deleted => true
 
 end
 
 class News < Message
-	validates_presence_of :title
-	belongs_to :course,
-	           :foreign_key => "receiver_id"
+  validates_presence_of :title
+  belongs_to :course,
+      :foreign_key => "receiver_id"
 end

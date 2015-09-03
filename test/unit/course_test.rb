@@ -14,15 +14,47 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#require File.dirname(__FILE__) + '/../test_helper'
-#
-#class CourseTest < ActiveSupport::TestCase
-#
-#	fixtures :courses
-#
-#	def test_truth
-#		assert true
-#	end
-#
-#end
-#
+require File.dirname(__FILE__) + '/../test_helper'
+
+class CourseTest < ActiveSupport::TestCase
+
+  fixtures :courses
+
+  def test_related_courses
+    course = courses(:course_1)
+    related = courses(:related_course)
+    assert course.related_courses.include?(related)
+  end
+
+  def test_initial_wiki_pages
+    Course.create!(:short_name => 'course999',
+        :full_name => 'Course 999', :code => 123, :grade => 1)
+    course = Course.find_by_short_name('course999')
+    assert course.wiki_pages.length == App.initial_wiki_pages.length
+  end
+
+  def test_to_param
+    current_course = courses(:course_1)
+    old_course = courses(:related_course)
+    assert current_course.to_param == current_course.short_name
+    assert old_course.to_param == old_course.id.to_s
+  end
+
+  def test_recent_news
+    course = courses(:related_course)
+    user = User.first
+
+    assert course.news.length == 0
+
+    news = course.news.create!(:title => 'hello', :body => 'hello',
+        :timestamp => 1.hour.ago, :sender_id => user.id,
+        :receiver_id => course.id, :version => 1)
+    assert course.recent_news.include?(news)
+
+    news = course.news.create!(:title => 'hello', :body => 'hello',
+        :timestamp => 1.month.ago, :sender_id => user.id,
+        :receiver_id => course.id, :version => 1)
+    assert !course.recent_news.include?(news)
+  end
+
+end

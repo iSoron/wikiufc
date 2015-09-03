@@ -22,6 +22,11 @@ gem 'icalendar', '~>1.0'
 gem 'jquery-rails'
 gem 'shoulda', "~>2.11"
 gem 'will_paginate', "~>3.0"
+gem 'simplecov'
+
+group :test do
+  gem 'turn'
+end
 
 #group :development, :production do
 #    gem 'brazilian-rails', '3.3.0', :path => './vendor/gems/brazilian-rails/brI18n/'

@@ -29,3 +29,11 @@ old_course:
   description: Description goes here
   period: 1970.1
   hidden: false
+
+related_course:
+  id: 3
+  short_name: course1
+  full_name: Third course
+  description: Hello world
+  period: 1970.2
+  hidden: false

@@ -17,59 +17,63 @@
 
 class Course < ActiveRecord::Base
 
-	# Plugins
-	acts_as_paranoid
-	
-	# Associacoes
-	has_many :attachments,
-	         :order => "path is not null, path, file_name",
-	         :dependent => :destroy
+  acts_as_paranoid
 
-	has_many :events,
-	         :order => "time asc",
-	         :dependent => :destroy
+  has_many :attachments,
+      :order => 'path is not null, path, file_name',
+      :dependent => :destroy
 
-	has_many :news,
-	         :foreign_key => "receiver_id",
-	         :order => "id desc",
-	         :dependent => :destroy
+  has_many :events,
+      :order => 'time asc',
+      :dependent => :destroy
 
-	has_many :log_entries,
-	         :order => "created_at desc",
-	         :dependent => :destroy
+  has_many :news,
+      :foreign_key => 'receiver_id',
+      :order => 'id desc',
+      :class_name => 'News',
+      :dependent => :destroy
 
-	has_many :wiki_pages,
-	         :order => "position",
-	         :dependent => :destroy
+  has_many :log_entries,
+      :order => 'created_at desc',
+      :dependent => :destroy
 
-	has_and_belongs_to_many :users,
-	         :order => "last_seen desc"
-	
-	# Validacao
-	validates_presence_of :short_name
-	validates_presence_of :full_name
-	validates_presence_of :code
-	validates_numericality_of :grade, :only_integer => true
-	validates_inclusion_of :hidden, :in => [true, false], :allow_nil => false
-	validates_format_of :short_name, :with => /^[^0-9]/
+  has_many :wiki_pages,
+      :order => 'position',
+      :dependent => :destroy
 
-	def related_courses
-		Course.find(:all, :conditions => [ 'short_name = ?', self.short_name], :limit => 4, :order => 'period desc')
-	end
+  has_and_belongs_to_many :users,
+      :order => 'last_seen desc'
 
-	def recent_news
-		self.news.find(:all, :conditions => [ 'timestamp > ?', 7.days.ago ])
-	end
-	
-	def after_create
-		App.inital_wiki_pages.each do |page_title|
-			wiki_page = WikiPage.new(:title => page_title, :version => 1, :content => App.initial_wiki_page_content)
-			self.wiki_pages << wiki_page
-		end
-	end
+  validates_presence_of :short_name
+  validates_presence_of :full_name
+  validates_presence_of :code
+  validates_numericality_of :grade, :only_integer => true
+  validates_inclusion_of :hidden, :in => [true, false], :allow_nil => false
+  validates_format_of :short_name, :with => /^[^0-9]/
 
-	def to_param
-		return self.short_name if self.period == App.current_period
-		return self.id.to_s
-	end
+  after_create :add_initial_wiki_pages
+
+  def related_courses
+    Course.all(:conditions => ['short_name = ?', self.short_name], :limit => 4,
+        :order => 'period desc')
+  end
+
+  def recent_news
+    self.news.all(:conditions => ['timestamp > ?', 7.days.ago])
+  end
+
+  def add_initial_wiki_pages
+    App.initial_wiki_pages.each do |page_title|
+      wiki_page = WikiPage.new(:title => page_title, :description => 'New course',
+          :content => App.initial_wiki_page_content)
+      wiki_page.user = User.first
+      self.wiki_pages << wiki_page
+      wiki_page.save!
+    end
+  end
+
+  def to_param
+    return self.short_name if self.period == App.current_period
+    return self.id.to_s
+  end
 end
