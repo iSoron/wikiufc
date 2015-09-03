@@ -12,7 +12,7 @@ end
 module WikiUFC
   class Application < Rails::Application
 
-  #set :haml, { :escape_html => false }
+    #set :haml, { :escape_html => false }
 
     config.encoding = "utf-8"
     config.filter_parameters += [:password]
@@ -41,41 +41,41 @@ module WikiUFC
     config.default_avatar = "http://isoron.org/avatar"
     config.color_schemes = [
         # Default
-        [ "#037", "#069", "#455", "#778" ],
+        ["#037", "#069", "#455", "#778"],
 
         # Legado
-        [ "#000", "#069", "#455", "#455" ],
-        [ "#000", "#690", "#444", "#666" ],
+        ["#000", "#069", "#455", "#455"],
+        ["#000", "#690", "#444", "#666"],
 
         # Mono
 
-        [ "#900", "#c00", "#444", "#888" ],
-        
+        ["#900", "#c00", "#444", "#888"],
+
         # Aqua 
-        [ "#7b7", "#455", "#899", "#abb" ],
-        [ "#005B9A", "#455", "#899", "#abb" ],
-        [ "#8D009A", "#455", "#899", "#abb" ],
-        [ "#9A000D", "#455", "#899", "#abb" ],
-        [ "#5A9A00", "#455", "#899", "#abb" ],
+        ["#7b7", "#455", "#899", "#abb"],
+        ["#005B9A", "#455", "#899", "#abb"],
+        ["#8D009A", "#455", "#899", "#abb"],
+        ["#9A000D", "#455", "#899", "#abb"],
+        ["#5A9A00", "#455", "#899", "#abb"],
 
         # Complementar
         #[ "#037", "#c60", "#457", "#568" ],
         #[ "#070", "#c00", "#474", "#585" ],
 
         # Pink
-        [ "#d18", "#d18", "#457", "#668" ],
+        ["#d18", "#d18", "#457", "#668"],
         #[ "#609", "#455", "#547", "#658" ],
 
         # Sand
-        [ "#900", "#663", "#888", "#cc9" ],
-        [ "#036", "#663", "#888", "#cc9" ],
-        [ "#680", "#663", "#888", "#cc9" ]
+        ["#900", "#663", "#888", "#cc9"],
+        ["#036", "#663", "#888", "#cc9"],
+        ["#680", "#663", "#888", "#cc9"]
     ]
 
 
     # Templates
-    config.inital_wiki_pages = ['Ementa', 'Notas de Aula']
-    config.initial_wiki_page_content = "Página em branco."
+    config.initial_wiki_pages = ['Ementa', 'Notas de Aula']
+    config.initial_wiki_page_content = 'Página em branco.'
   end
 end
 
