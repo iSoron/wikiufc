@@ -22,7 +22,7 @@ require File.dirname(__FILE__) + '/../test_helper.rb'
 require 'courses_controller'
 
 # Re-raise errors caught by the controller.
-#class CoursesController; def rescue_action(e) raise e end; end
+# class CoursesController; def rescue_action(e) raise e end; end
 
 class CoursesControllerTest < ActionController::TestCase
 
@@ -34,13 +34,13 @@ class CoursesControllerTest < ActionController::TestCase
 
   context "An anonymous user" do
 
-    should_have_access_denied_on_post_to(:new, {})
-    should_have_access_denied_on_post_to(:create, {})
-    should_have_access_denied_on_post_to(:edit, {:id => 1})
-    should_have_access_denied_on_post_to(:update, {:id => 1})
-    should_have_access_denied_on_post_to(:destroy, {:id => 1})
-    should_request_login_on_post_to(:enroll, {:id => 1})
-    should_request_login_on_post_to(:unenroll, {:id => 1})
+    should_request_login_on_post_to(:new, {})
+    should_request_login_on_post_to(:create, {})
+    should_request_login_on_post_to(:edit, id: 1)
+    should_request_login_on_post_to(:update, id: 1)
+    should_request_login_on_post_to(:destroy, id: 1)
+    should_request_login_on_post_to(:enroll, id: 1)
+    should_request_login_on_post_to(:unenroll, id: 1)
 
     context "on get to :index" do
       setup { get :index }
@@ -54,13 +54,13 @@ class CoursesControllerTest < ActionController::TestCase
       end
 
       should "display the selected period" do
-        get :index, :period => "1970.1"
+        get :index, period: "1970.1"
         assert_select 'h1', "Disciplinas 1970.1"
       end
     end
 
     context "on get to :show" do
-      setup { get :show, :id => @course.id }
+      setup { get :show, id: @course.id }
 
       should respond_with :success
       should render_template 'show'
@@ -83,8 +83,8 @@ class CoursesControllerTest < ActionController::TestCase
   #context "A user" do
   #	setup { login_as :bob }
   #	should_be_restful do |resource|
-  #		resource.create.params = { :short_name => 'test', :full_name => 'test', :description => 'test' }
-  #		resource.update.params = { :short_name => 'test', :full_name => 'test', :description => 'test' }
+  #		resource.create.params = { short_name: 'test', full_name: 'test', description: 'test' }
+  #		resource.update.params = { short_name: 'test', full_name: 'test', description: 'test' }
   #	end
   #end
 
@@ -92,8 +92,8 @@ class CoursesControllerTest < ActionController::TestCase
   #context "A stranger" do
   #	setup { logout }
   #	should_be_restful do |resource|
-  #		resource.create.params = { :short_name => 'test', :full_name => 'test', :description => 'test' }
-  #		resource.update.params = { :short_name => 'test', :full_name => 'test', :description => 'test' }
+  #		resource.create.params = { short_name: 'test', full_name: 'test', description: 'test' }
+  #		resource.update.params = { short_name: 'test', full_name: 'test', description: 'test' }
   #		resource.denied.actions = [ :new, :edit, :create, :update, :destroy ]
   #		resource.denied.redirect = "'/login'"
   #		resource.denied.flash = /must be logged in/i

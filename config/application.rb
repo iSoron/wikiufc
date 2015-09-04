@@ -51,7 +51,7 @@ module WikiUFC
 
         ["#900", "#c00", "#444", "#888"],
 
-        # Aqua 
+        # Aqua
         ["#7b7", "#455", "#899", "#abb"],
         ["#005B9A", "#455", "#899", "#abb"],
         ["#8D009A", "#455", "#899", "#abb"],
@@ -76,6 +76,8 @@ module WikiUFC
     # Templates
     config.initial_wiki_pages = ['Ementa', 'Notas de Aula']
     config.initial_wiki_page_content = 'Página em branco.'
+
+    config.i18n.default_locale = 'pt-BR'
   end
 end
 
@@ -85,4 +87,3 @@ require "haml"
 require "haml/template"
 Haml::Template.options[:escape_attrs] = false
 Haml::Template.options[:escape_html] = false
-

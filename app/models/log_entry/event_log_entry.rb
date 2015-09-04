@@ -20,21 +20,27 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class EventLogEntry < LogEntry
-	belongs_to :event,
-               :foreign_key => "target_id",
-               :with_deleted => true
+  belongs_to :event,
+      :foreign_key => "target_id",
+      :with_deleted => true
 end
 
 class EventDeleteLogEntry < EventLogEntry
-	def reversible?()
-        event.deleted?
-	end
-	def undo!(current_user)
-		event.recover!
-		EventRestoreLogEntry.create!(:target_id => event.id, :user_id => current_user.id, :course => event.course, :version => event.version)
-	end
+  def reversible?()
+    event.deleted?
+  end
+
+  def undo!(current_user)
+    event.recover!
+    EventRestoreLogEntry.create!(:target_id => event.id, :user_id => current_user.id, :course => event.course, :version => event.version)
+  end
 end
 
-class EventEditLogEntry < EventLogEntry; end
-class EventCreateLogEntry < EventLogEntry; end
-class EventRestoreLogEntry < EventLogEntry; end
+class EventEditLogEntry < EventLogEntry
+end
+
+class EventCreateLogEntry < EventLogEntry
+end
+
+class EventRestoreLogEntry < EventLogEntry
+end

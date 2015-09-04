@@ -4,6 +4,8 @@ pt-BR:
   course_created: Disciplina cadastrada
   course_updated: Disciplina editada
   course_removed: Disciplina excluída
+  edit_course: Editar disciplina
+  new_course: Cadastrar disciplina
 
   event: evento
   events: eventos
@@ -29,21 +31,31 @@ pt-BR:
   attachment_updated: Arquivo editado
   attachment_removed: Arquivo excluído
   attachment_restored: Arquivo restaurado
+  create_attachment: Adicionar arquivo
+  see_all_attachments: Ver todos os arquivos
+  no_attachments: Nenhum arquivo
+  repository: Repositório de Arquivos
 
   wiki_page: Página wiki
+  wiki_pages: Páginas wiki
   wiki_page_created: Página wiki criada
   wiki_page_removed: Página wiki removida
   wiki_page_updated: Página wiki atualizada
   wiki_page_restored: Página wiki restaurada
+  create_wiki_page: Adicionar página wiki
+  see_all_wiki_pages: Ver todas as páginas wiki
+  no_wiki_pages: Nenhuma página wiki
 
   recent_changes: Mudanças recentes
   log_about: Mudanças recentes em {disciplina}
 
-  undo: Desfazer
   login_failed: Não foi possível fazer login
   login_required: É necessário fazer login para acessar esta área do site
   login_success: Olá, {u}!
   logout_success: Você fez logout
+
+  move_up: Mover para cima
+  move_down: Mover para baixo
 
   navigation: navegação
   forums: fórums
@@ -54,6 +66,9 @@ pt-BR:
 
   is_too_large: é grande demais
   is_needed: é requerido
+
+  undo: Desfazer
+  create: Cadastrar
 
   body: conteúdo
   code: código
@@ -70,22 +85,21 @@ pt-BR:
   short_name: nome abreviado
   time: horário
   title: título
+  edit: Editar
 
-  logged_in_as: Identificado como %{u}
+  logged_in_as: Bem vindo %{u}
   member_since: Membro desde %{c}
   last_seen: Última visita há %{c}
   welcome_back: Bem vindo %{u}
   dashboard: Dashboard
 
-  number:
-    human:
-      storage_units:
-        format: "%n %u"
-        units:
-          byte:
-            one: "Byte"
-            other: "Bytes"
-          kb: "KB"
-          mb: "MB"
-          gb: "GB"
-          tb: "TB"
+  activerecord:
+    attributes:
+      course:
+        short_name: Nome abreviado
+        full_name: Nome completo
+        description: Descrição
+        code: Código
+        grade: Semestre
+        period: Data
+        hidden: Oculto

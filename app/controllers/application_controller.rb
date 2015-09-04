@@ -23,64 +23,67 @@ require 'yaml'
 require 'authentication.rb'
 
 class ApplicationController < ActionController::Base
-	helper :all
-	protect_from_forgery
+  helper :all
+  protect_from_forgery
 
-	include AuthenticationSystem
+  include AuthenticationSystem
 
-	before_filter :startup
-	#before_filter :set_timezone
-	before_filter :require_login, :only => [ :edit, :new, :create, :update, :delete, :destroy ]
+  before_filter :startup
+  # before_filter :set_timezone
+  before_filter :require_login, only: [:edit, :new, :create, :update, :delete,
+                                       :destroy]
 
-	protected
-	def rescue_action(exception)
-		# Acesso negado
-		if exception.is_a?(AccessDenied)
-			respond_to do |format|
-				format.html {
-					if logged_in?
-						render :file => "#{Rails.root}/public/401.html", :status => 401
-					else
-						login_by_html
-					end
-				}
-				format.xml { head 401 }
-			end
+  rescue_from AccessDenied, with: :deny_access
+  rescue_from ActiveRecord::RecordInvalid, with: :reshow_form
+  rescue_from ActiveRecord::RecordNotFound, with: :show_not_found
 
-		# Erro de validacao
-		elsif exception.is_a?(ActiveRecord::RecordInvalid)
-			respond_to do |format|
-				format.html { render :action => (params[:from].nil? ? (exception.record.new_record? ? 'new' : 'edit') : params[:from]) }
-				format.xml { render :xml => exception.record.errors, :status => :unprocessable_entity }
-			end
+  protected
 
-		# Registro nao encontrado
-		elsif (RAILS_ENV == 'production') and exception.is_a?(ActiveRecord::RecordNotFound)
-			respond_to do |format|
-				format.html { render :file => "#{Rails.root}/public/404.html", :status => 404 }
-				format.xml { head 404 }
-			end
+  def deny_access
+    respond_to do |format|
+      format.html do
+        if logged_in?
+          render file: "#{Rails.root}/public/401.html", status: 401
+        else
+          login_by_html
+        end
+      end
+      format.xml { head 401 }
+    end
+  end
 
-		# Outras excecoes
-		else
-			super
-		end
-	end
+  def reshow_form(exception)
+    respond_to do |format|
+      format.html { render action: (params[:from].nil? ? (exception.record.new_record? ? 'new' : 'edit') : params[:from]) }
+      format.xml { render xml: exception.record.errors, status: :unprocessable_entity }
+    end
+  end
 
-	#def set_timezone
-	#	#Time.zone = session[:user].tz
-	#	Time.zone = "America/Fortaleza"
-	#end
+  def show_not_found
+    if (RAILS_ENV == 'production')
+      respond_to do |format|
+        format.html { render file: "#{Rails.root}/public/404.html", status: 404 }
+        format.xml { head 404 }
+      end
+    else
+      fail ActiveRecord::RecordNotFound
+    end
+  end
 
-	def startup
-		if session[:user_id]
-			@current_user = User.find(session[:user_id])
-		else
-			login_by_token
-		end
+  # def set_timezone
+  #  #Time.zone = session[:user].tz
+  #  Time.zone = "America/Fortaleza"
+  # end
 
-		@color = App.default_color
-		@color = @current_user.pref_color if @current_user
-		@color = params[:color].to_i if params[:color]
-	end
+  def startup
+    if session[:user_id]
+      @current_user = User.find(session[:user_id])
+    else
+      login_by_token
+    end
+
+    @color = App.default_color
+    @color = @current_user.pref_color if @current_user
+    @color = params[:color].to_i if params[:color]
+  end
 end

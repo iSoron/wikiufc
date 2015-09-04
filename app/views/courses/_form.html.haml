@@ -2,29 +2,29 @@
 
 %dl
   %dt
-    %label{:for => "course_full_name"} Nome completo
-  %dd= text_field 'course', 'full_name' 
+    %label{:for => "course_full_name"}= Course.human_attribute_name(:full_name)
+  %dd= text_field 'course', 'full_name'
 
   %dt
-    %label{:for => "course_short_name"} Nome abreviado
+    %label{:for => "course_short_name"}= Course.human_attribute_name(:short_name)
   %dd= text_field 'course', 'short_name'
 
   %dt
-    %label{:for => "course_code"} Código
+    %label{:for => "course_code"}= Course.human_attribute_name(:code)
   %dd= text_field 'course', 'code'
 
   %dt
-    %label{:for => "course_grade"} Semestre
+    %label{:for => "course_grade"}= Course.human_attribute_name(:grade)
   %dd= text_field 'course', 'grade'
 
   %dt
-    %label{:for => "course_period"} Data
+    %label{:for => "course_period"}= Course.human_attribute_name(:period)
   %dd= text_field 'course', 'period'
 
   %dt
-    %label{:for => "course_hidden"} Ocultar
+    %label{:for => "course_hidden"}= Course.human_attribute_name(:hidden)
   %dd= check_box 'course', 'hidden'
 
   %dt
-    %label{:for => "course_description"} Descrição
+    %label{:for => "course_description"}= Course.human_attribute_name(:description)
   %dd= preserve(text_area('course', 'description', :cols => 60, :rows => 10))

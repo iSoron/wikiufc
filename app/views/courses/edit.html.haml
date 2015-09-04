@@ -1,7 +1,7 @@
 %h4.title= App.title
-%h1.title Editar disciplina
+%h1.title= t(:edit_course)
 
 %p
   = form_tag course_path(@course.id), :method => :put do
     = render :partial => 'form'
-    = submit_tag 'Editar', :accesskey => 'e'
+    = submit_tag t(:edit), :accesskey => 'e'

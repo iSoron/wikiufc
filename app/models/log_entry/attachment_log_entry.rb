@@ -20,21 +20,28 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class AttachmentLogEntry < LogEntry
-	belongs_to :attachment,
-               :foreign_key => "target_id",
-               :with_deleted => true
+  belongs_to :attachment,
+      :foreign_key => "target_id",
+      :with_deleted => true
 end
 
 class AttachmentDeleteLogEntry < AttachmentLogEntry
-	def reversible?()
-        attachment.deleted?
-	end
-	def undo!(current_user)
-		attachment.update_attribute(:deleted_at, nil)
-		AttachmentRestoreLogEntry.create!(:target_id => attachment.id, :user_id => current_user.id, :course => attachment.course)
-	end
+  def reversible?()
+    attachment.deleted?
+  end
+
+  def undo!(current_user)
+    attachment.update_attribute(:deleted_at, nil)
+    AttachmentRestoreLogEntry.create!(:target_id => attachment.id,
+        :user_id => current_user.id, :course => attachment.course)
+  end
 end
 
-class AttachmentEditLogEntry < AttachmentLogEntry; end
-class AttachmentCreateLogEntry < AttachmentLogEntry; end
-class AttachmentRestoreLogEntry < AttachmentLogEntry; end
+class AttachmentEditLogEntry < AttachmentLogEntry
+end
+
+class AttachmentCreateLogEntry < AttachmentLogEntry
+end
+
+class AttachmentRestoreLogEntry < AttachmentLogEntry
+end

@@ -27,7 +27,7 @@ module AttachmentsHelper
 	end
 
 	def nest_path(items, paths, from, to, level)
-		result = {}
+		result = { }
 
 		base = from - 1
 		base = base + 1 while base+1 <= to and paths[base+1][level].nil?

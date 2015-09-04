@@ -1,11 +1,9 @@
 .cmd
   - if admin?
-    = action_icon 'edit', 'Editar disciplina', edit_course_url, :accesskey => 'e'
+    = action_icon 'edit', t(:edit_course), edit_course_url, :accesskey => 'e'
     =# action_icon 'trash', 'Excluir disciplina', course_url, :confirm => 'Tem certeza que deseja excluir?', :method => :delete
 
--# cache(course_path(@course.id)) do
-
-%h4.title Disciplina
+%h4.title= t(:course).capitalize
 %h1.title= h(@course.full_name)
 
 %p= @course.description.format_wiki
@@ -31,32 +29,31 @@
 
 .box
   .cmd
-    = action_icon 'add', 'Adicionar página wiki', new_course_wiki_instance_url(@course)
+    = action_icon 'add', t(:create_wiki_page), new_course_wiki_instance_url(@course)
 
-  %h3 Páginas Wiki
+  %h3= t(:wiki_pages)
   %ul.wiki
     - @course.wiki_pages.find_front_page.each do |wiki|
       %li{highlight(wiki.id)}
         .cmd{:style => 'margin-bottom: -27px; margin-top: -9px;'}
-          =action_icon 'arrow2_n', 'Mover para cima', move_up_course_wiki_instance_url(@course.to_param, wiki.id) unless wiki.first?
-          =action_icon 'arrow2_s', 'Mover para baixo', move_down_course_wiki_instance_url(@course.to_param, wiki.id) unless wiki.last?
+          =action_icon 'arrow2_n', t(:move_up), move_up_course_wiki_instance_url(@course.to_param, wiki.id) unless wiki.first?
+          =action_icon 'arrow2_s', t(:move_down), move_down_course_wiki_instance_url(@course.to_param, wiki.id) unless wiki.last?
           - if wiki.last?
             %span{:style => 'margin-right: 14px'} &nbsp;
         =link_to h(wiki.title), course_wiki_instance_url(@course.to_param, wiki.id)
     - if @course.wiki_pages.empty?
-      %li.no_itens Nenhuma página wiki
+      %li.no_itens= t(:no_wiki_pages)
     - else
-      %li.show_all= link_to "Ver todas as páginas wiki", course_wiki_url(@course)
+      %li.show_all= link_to t(:see_all_wiki_pages), course_wiki_url(@course)
 
   .box
-    .cmd= action_icon 'add', 'Adicionar anexo', new_course_attachment_url(@course)
+    .cmd= action_icon 'add', t(:create_attachment), new_course_attachment_url(@course)
 
-    %h3 Repositório de Arquivos
+    %h3= t(:repository)
     .repositorio
       = nested_attachments_to_html(attachments_to_nested_hash(@course.attachments.find_front_page))
       - if @course.attachments.empty?
         %ul.wiki
-          %li.no_itens Nenhum arquivo
+          %li.no_itens= t(:no_attachments)
       - else
-        %li.show_all= link_to "Ver todos os arquivos", course_attachments_url(@course)
-
+        %li.show_all= link_to t(:see_all_attachments), course_attachments_url(@course)

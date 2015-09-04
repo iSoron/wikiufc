@@ -1,5 +1,5 @@
 .cmd
-  = action_icon('add', 'Cadastrar nova disciplina', new_course_url, :accesskey => '+') if admin?
+  = action_icon('add', 'Cadastrar nova disciplina', new_course_url, accesskey: '+') if admin?
 
 %h4.title= App.title
 %h1.title= "Disciplinas #{@period}"
@@ -8,6 +8,7 @@
   %ul
     - if logged_in?
       - if params[:period].nil?
+        - @courses = @current_user.courses_not_enrolled(@period)
         %h3 Disciplinas Matriculadas
         - if @current_user.courses.empty?
           %li.no_itens Nenhuma disciplina matriculada
@@ -17,7 +18,7 @@
               = action_icon('subtract', 'Desmatricular-se', unenroll_course_url(course))
             = link_to h(course.full_name), course_url(course)
 
-    -# cache(courses_path) do 
+    -# cache(courses_path) do
     - old_grade = 0
     - for course in @courses
       - if course.grade != old_grade
@@ -32,5 +33,5 @@
 
     %h3
       Outros Semestres
-    %li= link_to "2008.2", :period => '2008.2'
-    %li= link_to "2008.1", :period => '2008.1'
+    %li= link_to "2008.2", period: '2008.2'
+    %li= link_to "2008.1", period: '2008.1'

@@ -20,35 +20,26 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class CoursesController < ApplicationController
-
-  before_filter :require_admin, :only => [:new, :create, :edit, :update, :destroy]
-  before_filter :require_login, :only => [:enroll, :unenroll]
-  before_filter :find_course, :except => [:index]
-  #after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
+  before_filter :require_admin, only: [:new, :create, :edit, :update,
+                                       :destroy]
+  before_filter :require_login, only: [:enroll, :unenroll]
+  before_filter :find_course, except: [:index]
+  # after_filter :cache_sweep, only: [ :create, :update, :destroy ]
 
   def index
-    params[:period] = nil if params[:period] == App.current_period
     @period = params[:period] || App.current_period
-
-    if logged_in? and !@current_user.courses.empty?
-      @courses = Course.all(:order => 'grade asc, full_name asc',
-          :conditions => ['period = ? and hidden = ? and id not in (?)',
-              @period, false, @current_user.courses])
-    else
-      @courses = Course.all(:order => 'grade asc, full_name asc',
-          :conditions => ['period = ? and hidden = ?', @period, false])
-    end
+    @courses = Course.visible.where(period: @period)
 
     respond_to do |format|
       format.html
-      format.xml { render :xml => @courses }
+      format.xml { render xml: @courses }
     end
   end
 
   def show
     respond_to do |format|
       format.html
-      format.xml { render :xml => @course }
+      format.xml { render xml: @course }
     end
   end
 
@@ -61,8 +52,9 @@ class CoursesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to course_path(@course) }
-      format.xml { head :created, :location => course_url(@course,
-              :format => :xml) }
+      format.xml do
+        head :created, location: course_url(@course, format: :xml)
+      end
     end
   end
 
@@ -111,19 +103,21 @@ class CoursesController < ApplicationController
   end
 
   protected
+
   def find_course
     if params[:id]
-      params[:id] = Course.first(:conditions => ['short_name = ?', params[:id]], :order => 'period desc').id if !params[:id].is_numeric? and !Course.find_by_short_name(params[:id]).nil?
+      @course = Course.from_param(params[:id])
+    else
+      @course = Course.new(params[:course])
     end
-    @course = params[:id] ? Course.find(params[:id]) : Course.new(params[:course])
   end
 
   def require_admin
-    raise AccessDenied.new unless admin?
+    fail AccessDenied, 'only admins can modify courses' unless admin?
   end
 
   def cache_sweep
-    expire_fragment(course_path(@course.id, :part => 'right'))
+    expire_fragment(course_path(@course.id, part: 'right'))
     expire_fragment(course_path(@course.id))
     expire_fragment(courses_path)
   end
