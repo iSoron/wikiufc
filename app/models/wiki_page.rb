@@ -58,7 +58,7 @@ class WikiPage < ActiveRecord::Base
   end
 
   def set_canonical_title
-    canonical_title = title.pretty_url
+    self.canonical_title = title.pretty_url
   end
 
   def set_position
