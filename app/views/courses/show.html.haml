@@ -40,10 +40,10 @@
           =action_icon 'arrow2_s', t(:move_down), move_down_course_wiki_instance_url(@course.to_param, wiki.id) unless wiki.last?
           - if wiki.last?
             %span{:style => 'margin-right: 14px'} &nbsp;
-        =link_to h(wiki.title), course_wiki_instance_url(@course.to_param, wiki.id)
+        =link_to h(wiki.title), course_wiki_instance_url(@course.to_param, wiki.to_param)
     - if @course.wiki_pages.empty?
       %li.no_itens= t(:no_wiki_pages)
-    - else
+    - if @course.hidden_wiki_pages?
       %li.show_all= link_to t(:see_all_wiki_pages), course_wiki_url(@course)
 
   .box

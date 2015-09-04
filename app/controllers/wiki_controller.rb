@@ -19,23 +19,23 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 class WikiController < ApplicationController
+  # verify params: :text, only: :preview, redirect_to: { action: :show }
+  # verify params: [:from, :to], only: :diff, redirect_to: { action: :versions }
 
-  #verify :params => :text, :only => :preview, :redirect_to => { :action => :show }
-  #verify :params => [:from, :to], :only => :diff, :redirect_to => { :action => :versions }
-
-  #after_filter :cache_sweep, :only => [ :create, :update, :destroy, :move_up,
+  # after_filter :cache_sweep, only: [ :create, :update, :destroy, :move_up,
   #		:move_down, :undelete ]
-
-  before_filter :find_wiki, :except => [:preview]
-  before_filter :require_login, :only => [:new, :create, :edit, :update, :destroy,
-          :move_up, :move_down]
+  
+  before_filter :find_wiki, except: [:preview]
+  before_filter :require_login, only: [:new, :create, :edit, :update, :destroy,
+                                       :move_up, :move_down]
 
   def index
+    @wiki_pages = @course.wiki_pages
+
     respond_to do |format|
       format.html
-      format.xml { render :xml => @wiki_pages }
+      format.xml { render xml: @wiki_pages }
     end
   end
 
@@ -46,15 +46,21 @@ class WikiController < ApplicationController
     @wiki_page.version = 1
     @wiki_page.user_id = session[:user_id]
     @wiki_page.course_id = @course.id
-    @wiki_page.description = "Nova página"
+    @wiki_page.description = t(:new_wiki_page)
     @wiki_page.save!
     flash[:notice] = t(:wiki_page_created)
 
-    WikiCreateLogEntry.create!(:target_id => @wiki_page.id, :user => @current_user, :course => @course)
+    WikiCreateLogEntry.create!(target_id: @wiki_page.id, user: @current_user,
+                               course: @course)
 
     respond_to do |format|
-      format.html { redirect_to course_wiki_instance_url(@course, @wiki_page) }
-      format.xml { head :created, :location => course_wiki_instance_url(@course, @wiki_page, :format => :xml) }
+      format.html do
+        redirect_to course_wiki_instance_url(@course, @wiki_page)
+      end
+      format.xml do
+        head :created, location: course_wiki_instance_url(@course, @wiki_page,
+                                                          format: :xml)
+      end
     end
   end
 
@@ -63,8 +69,8 @@ class WikiController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xml { render :xml => @wiki_page }
-      format.text { render :text => "# #{@wiki_page.title}\n\n#{@wiki_page.content}" }
+      format.xml { render xml: @wiki_page }
+      format.text { render text: "# #{@wiki_page.title}\n\n#{@wiki_page.content}" }
     end
   end
 
@@ -81,13 +87,13 @@ class WikiController < ApplicationController
 
     if changed
       @wiki_page.save!
-      WikiEditLogEntry.create!(:target_id => @wiki_page.id, :user => @current_user, :course => @course, :version => @wiki_page.version)
+      WikiEditLogEntry.create!(target_id: @wiki_page.id, user: @current_user, course: @course, version: @wiki_page.version)
       flash[:notice] = t(:wiki_page_updated)
     end
 
     respond_to do |format|
       format.html { redirect_to course_wiki_instance_url(@course, @wiki_page) }
-      format.xml { head :created, :location => course_wiki_instance_url(@course, @wiki_page, :format => :xml) }
+      format.xml { head :created, location: course_wiki_instance_url(@course, @wiki_page, format: :xml) }
     end
   end
 
@@ -96,7 +102,7 @@ class WikiController < ApplicationController
     @wiki_page.destroy
     flash[:notice] = t(:wiki_page_removed)
 
-    log = WikiDeleteLogEntry.create!(:target_id => @wiki_page.id, :user => @current_user, :course => @course)
+    log = WikiDeleteLogEntry.create!(target_id: @wiki_page.id, user: @current_user, course: @course)
     flash[:undo] = undo_course_log_url(@course, log)
 
     respond_to do |format|
@@ -119,14 +125,14 @@ class WikiController < ApplicationController
   def preview
     @text = params[:text]
     begin
-      render :text => @text.format_wiki
+      render text: @text.format_wiki
     rescue RuntimeError
-      render :text => $!.to_s.gsub(">", "&gt;").gsub("<", "&lt;"), :status => :bad_request
+      render text: $ERROR_INFO.to_s.gsub(">", "&gt;").gsub("<", "&lt;"),
+             status: :bad_request
     end
   end
 
   def diff
-    @wiki_page = WikiPage.find(params[:id])
     @to = @wiki_page.versions.find_by_version(params[:to])
     @from = @wiki_page.versions.find_by_version(params[:from])
     @diff = WikiPage.diff(@from, @to)
@@ -153,12 +159,15 @@ class WikiController < ApplicationController
   end
 
   protected
-  def find_wiki
-    params[:course_id] = Course.find(:first, :conditions => ['short_name = ?', params[:course_id]], :order => 'period desc').id if !params[:course_id].is_numeric? and !Course.find_by_short_name(params[:course_id]).nil?
-    @course = Course.find(params[:course_id])
 
-    params[:id] = @course.wiki_pages.find_by_canonical_title(params[:id].pretty_url).id if params[:id] and !params[:id].is_numeric? and !@course.wiki_pages.find_by_canonical_title(params[:id].pretty_url).nil?
-    @wiki_page = params[:id] ? @course.wiki_pages.find(params[:id]) : WikiPage.new(params[:wiki_page])
+  def find_wiki
+    @course = Course.from_param(params[:course_id])
+
+    if params[:id]
+      @wiki_page = WikiPage.from_param(params[:id])
+    else
+      @wiki_page = WikiPage.new(params[:wiki_page])
+    end
   end
 
   def cache_sweep

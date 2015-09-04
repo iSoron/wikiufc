@@ -21,10 +21,11 @@ gem 'dynamic_form'
 gem 'haml', '3.1.8'
 gem 'hpricot', '0.8.6'
 gem 'icalendar', '1.4.1'
-gem 'jquery-rails', '3.0.4'
 gem 'shoulda', "3.5.0"
 gem 'will_paginate', "3.0.4"
 gem 'rails-i18n', '3.0.0'
+gem 'debugger'
+gem 'prototype-rails', '3.2.1'
 
 group :test do
   gem 'simplecov'

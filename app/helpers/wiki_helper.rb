@@ -20,46 +20,41 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class String
-	include ActionView::Helpers::SanitizeHelper
-	def format_wiki
-		text = BlueCloth.new(self).to_html
-		text = Hpricot(text, :xhtml_strict => true).to_s
-		return sanitize text
-	end
+  include ActionView::Helpers::SanitizeHelper
+  def format_wiki
+    text = BlueCloth.new(self).to_html
+    text = Hpricot(text, xhtml_strict: true).to_s
+    sanitize text
+  end
 end
 
 module WikiHelper
+  def format_diff(text)
+    last = 0
+    result = ""
+    text << "\n"
+    style = { '+' => 'add', '-' => 'del', ' ' => 'line' }
 
-	def format_diff(text)
-		last = 0
-		result = ""
-		text << "\n"
-		style = { '+' => 'add', '-' => 'del', ' ' => 'line' }
+    text.each_line do |line|
+      next if line.match(/^---/)
+      next if line.match(/^\+\+\+/)
 
-		text.each_line do |line|
-			# Ignora o cabecalho
-			next if line.match(/^---/)
-			next if line.match(/^\+\+\+/)
+      if line[0].chr == '@'
+        result << "<tr><td class='diff_space diff_border_#{style[last.chr]}' ></td></tr>"
+        last = 0
+      else
+        if line[0] != last
+          last = line[0] if last == 0 || line[0].chr == '+' || line[0].chr == '-'
+          result << "<tr><td class='diff_border_#{style[last.chr]} "
+          last = line[0]
+        else
+          result << "<tr><td class='"
+        end
+        result << "diff_#{style[line[0].chr]}'>" \
+            " #{line[1..-1]}&nbsp;</td></td>"
+      end
+    end
 
-			# Divisao entre pedacos
-			if line[0].chr == '@'
-				result << "<tr><td class='diff_space diff_border_#{style[last.chr]}' ></td></tr>"
-				last = 0
-			else
-				# Verifica se mudou de contexto (add para del, linha normal para add, etc)
-				if line[0] != last
-					last = line[0] if last == 0 or line[0].chr == '+' or line[0].chr == '-'
-					result << "<tr><td class='diff_border_#{style[last.chr]} "
-					last = line[0]
-
-				else
-					result << "<tr><td class='"
-				end
-				result << "diff_#{style[line[0].chr]}'>" +
-						" #{line[1..-1]}&nbsp;</td></td>"
-			end
-		end
-
-		return "<table class='diff'>#{result}</table>"
-	end
+    "<table class='diff'>#{result}</table>"
+  end
 end

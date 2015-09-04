@@ -45,6 +45,7 @@ pt-BR:
   create_wiki_page: Adicionar página wiki
   see_all_wiki_pages: Ver todas as páginas wiki
   no_wiki_pages: Nenhuma página wiki
+  new_wiki_page: Nova página wiki.
 
   recent_changes: Mudanças recentes
   log_about: Mudanças recentes em {disciplina}
@@ -103,3 +104,12 @@ pt-BR:
         grade: Semestre
         period: Data
         hidden: Oculto
+
+      wiki_page:
+        version: Versão
+        description: Descrição
+        title: Título
+        content: Conteúdo
+        position: Posição
+        canonical_title: Título canônico
+        front_page: Exibir na página inicial

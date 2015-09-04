@@ -24,7 +24,7 @@ require 'authentication.rb'
 
 class ApplicationController < ActionController::Base
   helper :all
-  protect_from_forgery
+  # protect_from_forgery
 
   include AuthenticationSystem
 
@@ -60,13 +60,9 @@ class ApplicationController < ActionController::Base
   end
 
   def show_not_found
-    if (RAILS_ENV == 'production')
-      respond_to do |format|
-        format.html { render file: "#{Rails.root}/public/404.html", status: 404 }
-        format.xml { head 404 }
-      end
-    else
-      fail ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { render file: "#{Rails.root}/public/404.html", status: 404, layout: false }
+      format.xml { head 404 }
     end
   end
 

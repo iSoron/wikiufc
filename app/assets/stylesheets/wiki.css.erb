@@ -183,7 +183,7 @@ body {
 #header_menu a:hover {
   color: #fff;
   text-decoration: none;
-  border-bottom: 0px; 
+  border-bottom: 0px;
 }
 
 #header_menu ul li.last {
@@ -428,7 +428,7 @@ h4.title, h1.title {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                     Repositorio                             *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 .repositorio h1, .repositorio p {
   padding: 0px;
@@ -471,17 +471,28 @@ select {
   font-size: 11px;
 }
 
-.message, .notice{ color: #690 }
-.warning { color: #c00 }
+.message, .notice, .warning {
+  color: #fff;
+  padding: 0px 10px;
+  border-radius: 3px;
+}
+
+.message, .notice {
+  background-color: #690
+}
+
+.warning {
+  background-color: #c00
+}
 
 .warning a {
-	color: #c00 !important;
-	border-bottom: 1px dotted #c00 !important
+	color: #fff !important;
+	border-bottom: 1px dotted #fff !important
 }
 
 .message a, .notice a {
-	color: #690 !important;
-	border-bottom: 1px dotted #690 !important
+	color: #fff !important;
+	border-bottom: 1px dotted #fff !important
 }
 
 

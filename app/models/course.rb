@@ -79,6 +79,10 @@ class Course < ActiveRecord::Base
     end
   end
 
+  def hidden_wiki_pages?
+    wiki_pages.hidden.count > 0
+  end
+
   def to_param
     period == App.current_period ? short_name : id.to_s
   end

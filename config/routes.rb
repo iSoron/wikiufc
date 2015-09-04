@@ -19,84 +19,83 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ActiveSupport::Inflector.inflections do |inflect|
-	inflect.irregular 'wiki_instance', 'wiki'
-	inflect.irregular 'news_instance', 'news'
+  inflect.irregular 'wiki_instance', 'wiki'
+  inflect.irregular 'news_instance', 'news'
 end
 
 WikiUFC::Application.routes.draw do
+  resources :users
 
-    resources :users
-
-    resources :courses do
-        member do
-            get :enroll
-            get :unenroll
-        end
-
-        resources :events do
-            member do
-                post :undelete
-            end
-        end
-
-        resources :news do
-            member do
-                post :undelete
-            end
-        end
-
-        resources :wiki do
-            member do
-                get :move_down
-                post :undelete
-                get :diff
-                get :versions
-                get :move_up
-            end
-        end
-
-        resources :attachments do
-            member do
-                post :undelete
-                get :download
-            end
-        end
+  resources :courses do
+    member do
+      get :enroll
+      get :unenroll
     end
 
-	# Log
-	with_options :controller => 'log' do |log|
-		log.match 'courses/:course_id/log', :action => 'index', :format => 'html', :as => 'course_log'
-		log.match 'courses/:course_id/log/:id/undo', :action => 'undo', :format => 'html', :as => 'undo_course_log'
-		log.match 'courses/:course_id/log.:format', :action => 'index', :as => 'formatted_course_log'
-	end
-
-    # Services
-    match 'services/preview' => 'wiki#preview', :as => :preview
-
-    # Widgets
-    match 'widgets/calendar/:id/:year/:month' => 'events#mini_calendar'
-
-    # Authentication
-	with_options :controller => 'users' do |user|
-		user.match 'login',    :action => 'login'
-		user.match 'logout',   :action => 'logout'
-		user.match 'signup',   :action => 'signup'
-		user.match 'settings', :action => 'settings'
-		user.match 'recover_password', :action => 'recover_password'
-		user.match 'recover_password/:key', :action => 'recover_password'
+    resources :events do
+      member do
+        post :undelete
+      end
     end
 
-	# Pagina pessoal
-    match '/dashboard' => 'users#dashboard', :as => :dashboard
-    match '/dashboard/:secret.:format' => 'users#dashboard', :as => :formatted_dashboard
+    resources :news do
+      member do
+        post :undelete
+      end
+    end
 
-	## Stylesheets
-    match 'stylesheets/cache/:action.:color.:format' => 'stylesheets#index'
+    resources :wiki do
+      member do
+        get :move_down
+        post :undelete
+        get :diff
+        get :versions
+        get :move_up
+      end
+    end
 
-	# Mudancas recentes global
-    match 'log' => 'log#index', :as => :log, :format => 'html'
-    match 'log.:format' => 'log#index', :as => :formatted_log
+    resources :attachments do
+      member do
+        post :undelete
+        get :download
+      end
+    end
+  end
 
-	# Front page
-    match '' => 'courses#index', :as => :index
+  # Log
+  with_options controller: 'log' do |log|
+    log.match 'courses/:course_id/log', action: 'index', format: 'html', as: 'course_log'
+    log.match 'courses/:course_id/log/:id/undo', action: 'undo', format: 'html', as: 'undo_course_log'
+    log.match 'courses/:course_id/log.:format', action: 'index', as: 'formatted_course_log'
+  end
+
+  # Services
+  match 'services/preview' => 'wiki#preview', :as => :preview
+
+  # Widgets
+  match 'widgets/calendar/:id/:year/:month' => 'events#mini_calendar'
+
+  # Authentication
+  with_options controller: 'users' do |user|
+    user.match 'login', action: 'login'
+    user.match 'logout', action: 'logout'
+    user.match 'signup', action: 'signup'
+    user.match 'settings', action: 'settings'
+    user.match 'recover_password', action: 'recover_password'
+    user.match 'recover_password/:key', action: 'recover_password'
+  end
+
+  # Pagina pessoal
+  match '/dashboard' => 'users#dashboard', :as => :dashboard
+  match '/dashboard/:secret.:format' => 'users#dashboard', :as => :formatted_dashboard
+
+  ## Stylesheets
+  match 'stylesheets/cache/:action.:color.:format' => 'stylesheets#index'
+
+  # Mudancas recentes global
+  match 'log' => 'log#index', :as => :log, :format => 'html'
+  match 'log.:format' => 'log#index', :as => :formatted_log
+
+  # Front page
+  match '' => 'courses#index', :as => :index
 end

@@ -7,8 +7,11 @@
 .box.div_news
   - if !@course.wiki_pages.empty?
     %ul
-      - @course.wiki_pages.find(:all, :order => 'title').each do |w|
-        %li= link_to(w.title, course_wiki_instance_url(@course.to_param, w.id))
+      - @course.wiki_pages.reorder('UPPER(title)').each do |w|
+        %li
+          = link_to(w.title, course_wiki_instance_url(@course.to_param, w.to_param))
+          - if w.front_page
+            %i{:class => 'fa fa-home'}
 
   - else
     .box

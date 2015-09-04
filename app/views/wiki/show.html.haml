@@ -2,9 +2,15 @@
 
 = javascript_include_tag 'wiki'
 .cmd
-  = action_icon 'edit', 'Editar', edit_course_wiki_instance_url, :accesskey => 'e'
-  = action_icon 'undo', 'Historico', versions_course_wiki_instance_url, :accesskey => 'h'
-  = action_icon 'trash', 'Excluir página wiki', course_wiki_instance_url, :confirm => 'Tem certeza que deseja excluir?', :method => :delete, :accesskey => '-'
+  = action_icon 'edit', 'Editar', edit_course_wiki_instance_url,
+      :accesskey => 'e'
+
+  = action_icon 'undo', 'Historico', versions_course_wiki_instance_url,
+      :accesskey => 'h'
+
+  = action_icon 'trash', 'Excluir página wiki', course_wiki_instance_url,
+      {:confirm => 'Tem certeza que deseja excluir?', :method => :delete,
+       :accesskey => '-'}
 
 %h4.title= h(@course.full_name)
 %h1.title= h(@wiki_page.title)
@@ -15,4 +21,3 @@
 
 %script
   = "enumerate_headers();"
-

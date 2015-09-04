@@ -25,7 +25,8 @@ require 'tempfile'
 class WikiPage < ActiveRecord::Base
   attr_accessible :title, :front_page, :content, :description
 
-  # Plugins
+  scope :hidden, where(front_page: false)
+
   acts_as_paranoid
   acts_as_list scope: 'course_id = #{course_id}'
   acts_as_versioned if_changed: [:content, :description, :title]
@@ -34,12 +35,9 @@ class WikiPage < ActiveRecord::Base
   non_versioned_columns << 'deleted_at'
   non_versioned_columns << 'canonical_title'
 
-  # Associacoes
   belongs_to :course
   belongs_to :user, with_deleted: true
 
-  # Valicacao
-  validates_presence_of :front_page
   validates_presence_of :description
   validates_presence_of :title
   validates_presence_of :content
@@ -65,18 +63,28 @@ class WikiPage < ActiveRecord::Base
     if !front_page
       remove_from_list
     elsif position.nil?
-      update_attribute(:position, (course.wiki_pages.maximum(:position) || 0) + 1)
+      max_position = (course.wiki_pages.maximum(:position) || 0)
+      update_attribute(:position, max_position + 1)
     end
   end
 
   def validate
     content.format_wiki
   rescue
-    errors.add("content", "possui erro de sintaxe: " + $ERROR_INFO.to_s.html_escape)
+    errors.add("content", "possui erro de sintaxe: " +
+               $ERROR_INFO.to_s.html_escape)
   end
 
   def to_param
-    canonical_title
+    canonical_title || id
+  end
+
+  def self.from_param(param)
+    if param.is_numeric?
+      WikiPage.find!(param)
+    else
+      WikiPage.find_by_canonical_title!(param)
+    end
   end
 
   def self.find_front_page
@@ -84,20 +92,16 @@ class WikiPage < ActiveRecord::Base
   end
 
   def self.diff(from, to)
-    # Cria um arquivo com o conteudo da versao antiga
     original_content_file = Tempfile.new("old")
     original_content_file << from.content << "\n"
     original_content_file.flush
 
-    # Cria um arquivo com o conteudo da versao nova
     new_content_file = Tempfile.new("new")
     new_content_file << to.content << "\n"
     new_content_file.flush
 
-    # Calcula as diferencas
     diff = `diff -u #{original_content_file.path} #{new_content_file.path}`
 
-    # Fecha os arquivos temporarios
     new_content_file.close!
     original_content_file.close!
 

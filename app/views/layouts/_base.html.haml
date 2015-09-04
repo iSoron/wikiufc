@@ -16,11 +16,14 @@
 
     /[if lte IE 6]
       %link{:href => "#{App.base_path}/stylesheets/ie/ie6.css", :rel => "stylesheet", :type => "text/css"}
-    
+
     %script{:type => 'text/javascript'}
       == BASE_PATH = "#{App.base_path}";
     = javascript_include_tag 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML'
     = javascript_include_tag :base
+    %link{:rel => 'stylesheet', :href => 'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'}
+
+    = csrf_meta_tag
 
   %body{'onload' => 'javascript: startup()'}
     #wrapper
@@ -54,6 +57,5 @@
             #innerwrapper_3column
               .content= @content
         %br{'style' => 'clear:both'}
-      
-    #footer
 
+    #footer

@@ -1,6 +1,8 @@
-//= require lib/prototype
-//= require lib/effects
-//= require lib/controls
+//= require prototype
+//= require prototype_ujs
+//= require effects
+//= require dragdrop
+//= require controls
 //= require lib/dragdrop
 //= require lib/event-selectors
 //= require application
