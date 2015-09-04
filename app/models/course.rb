@@ -88,6 +88,6 @@ class Course < ActiveRecord::Base
   end
 
   def self.from_param(param)
-    param.is_numeric? ? Course.find(param) : Course.find_by_short_name(param)
+    param.is_numeric? ? Course.find(param) : Course.find_by_short_name!(param)
   end
 end

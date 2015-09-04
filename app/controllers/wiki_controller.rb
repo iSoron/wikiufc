@@ -25,7 +25,7 @@ class WikiController < ApplicationController
 
   # after_filter :cache_sweep, only: [ :create, :update, :destroy, :move_up,
   #		:move_down, :undelete ]
-  
+
   before_filter :find_wiki, except: [:preview]
   before_filter :require_login, only: [:new, :create, :edit, :update, :destroy,
                                        :move_up, :move_down]
@@ -164,7 +164,7 @@ class WikiController < ApplicationController
     @course = Course.from_param(params[:course_id])
 
     if params[:id]
-      @wiki_page = WikiPage.from_param(params[:id])
+      @wiki_page = WikiPage.from_param(@course, params[:id])
     else
       @wiki_page = WikiPage.new(params[:wiki_page])
     end

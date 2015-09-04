@@ -79,11 +79,11 @@ class WikiPage < ActiveRecord::Base
     canonical_title || id
   end
 
-  def self.from_param(param)
+  def self.from_param(course, param)
     if param.is_numeric?
-      WikiPage.find!(param)
+      course.wiki_pages.find(param)
     else
-      WikiPage.find_by_canonical_title!(param)
+      course.wiki_pages.find_by_canonical_title!(param)
     end
   end
 
