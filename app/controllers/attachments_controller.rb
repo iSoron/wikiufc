@@ -1,7 +1,11 @@
 # -*- encoding : utf-8 -*-
-# Wiki UFC
-# Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
-# 
+# This file is part of Wiki UFC.
+# Copyright (C) 2007-2015 by Álinson Xavier <isoron@gmail.com>
+# Copyright (C) 2007-2008 by Adriano Freitas <adrianoblue@gmail.com>
+# Copyright (C) 2007-2008 by André Castro <aisushin@gmail.com>
+# Copyright (C) 2007-2008 by Rafael Barbosa <86.rafael@gmail.com>
+# Copyright (C) 2007-2008 by Henrique Bustamante <bustamante.rique@gmail.com>
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the
@@ -23,7 +27,7 @@ class AttachmentsController < ApplicationController
 	#after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
 
 	before_filter :find_attachment
-	
+
 	def show
 		respond_to do |format|
 			format.html
@@ -89,7 +93,7 @@ class AttachmentsController < ApplicationController
 
 		log = AttachmentDeleteLogEntry.create!(:target_id => @attachment.id, :user => @current_user, :course => @course)
 		flash[:undo] = undo_course_log_url(@course, log)
-		
+
 		respond_to do |format|
 			format.html { redirect_to course_url(@course) }
 			format.xml { head :ok }

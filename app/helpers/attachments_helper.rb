@@ -1,7 +1,11 @@
 # -*- encoding : utf-8 -*-
-# Wiki UFC
-# Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
-# 
+# This file is part of Wiki UFC.
+# Copyright (C) 2007-2015 by Álinson Xavier <isoron@gmail.com>
+# Copyright (C) 2007-2008 by Adriano Freitas <adrianoblue@gmail.com>
+# Copyright (C) 2007-2008 by André Castro <aisushin@gmail.com>
+# Copyright (C) 2007-2008 by Rafael Barbosa <86.rafael@gmail.com>
+# Copyright (C) 2007-2008 by Henrique Bustamante <bustamante.rique@gmail.com>
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the
@@ -21,7 +25,7 @@ module AttachmentsHelper
 		paths = atts.collect { |item| item.path.nil? ? [] : item.path.split("/") }
 		return nest_path(atts, paths, 0, paths.size-1, 0)
 	end
-		
+
 	def nest_path(items, paths, from, to, level)
 		result = {}
 
@@ -54,7 +58,7 @@ module AttachmentsHelper
 	def nested_attachments_to_html(atts, level=0)
 		out = (level > 0 ? "<ul class='nested' style='display: none'>" : "<ul>")
 		keys = atts.keys.sort
-		
+
 		for att in atts['/'] do
 			out = out + "<li class='#{mime_class(att.content_type)}'>#{link_to h(att.file_name), course_attachment_url(@course, att)}</li>"
 		end if atts['/']

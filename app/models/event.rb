@@ -1,7 +1,11 @@
 # -*- encoding : utf-8 -*-
-# Wiki UFC
-# Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
-# 
+# This file is part of Wiki UFC.
+# Copyright (C) 2007-2015 by Álinson Xavier <isoron@gmail.com>
+# Copyright (C) 2007-2008 by Adriano Freitas <adrianoblue@gmail.com>
+# Copyright (C) 2007-2008 by André Castro <aisushin@gmail.com>
+# Copyright (C) 2007-2008 by Rafael Barbosa <86.rafael@gmail.com>
+# Copyright (C) 2007-2008 by Henrique Bustamante <bustamante.rique@gmail.com>
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the
@@ -16,11 +20,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Event < ActiveRecord::Base
-	
+
 	# Plugins
 	acts_as_paranoid
 	acts_as_versioned :if_changed => [ :title, :description, :time ]
-	
+
 	#acts_as_paranoid_versioned
 	self.versioned_class.class_eval do
 	  def self.delete_all(conditions = nil); return; end

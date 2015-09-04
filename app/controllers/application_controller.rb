@@ -1,7 +1,11 @@
 # -*- encoding : utf-8 -*-
-# Wiki UFC
-# Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
-# 
+# This file is part of Wiki UFC.
+# Copyright (C) 2007-2015 by Álinson Xavier <isoron@gmail.com>
+# Copyright (C) 2007-2008 by Adriano Freitas <adrianoblue@gmail.com>
+# Copyright (C) 2007-2008 by André Castro <aisushin@gmail.com>
+# Copyright (C) 2007-2008 by Rafael Barbosa <86.rafael@gmail.com>
+# Copyright (C) 2007-2008 by Henrique Bustamante <bustamante.rique@gmail.com>
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the
@@ -33,7 +37,7 @@ class ApplicationController < ActionController::Base
 		# Acesso negado
 		if exception.is_a?(AccessDenied)
 			respond_to do |format|
-				format.html { 
+				format.html {
 					if logged_in?
 						render :file => "#{Rails.root}/public/401.html", :status => 401
 					else
@@ -66,7 +70,7 @@ class ApplicationController < ActionController::Base
 	#def set_timezone
 	#	#Time.zone = session[:user].tz
 	#	Time.zone = "America/Fortaleza"
-	#end	
+	#end
 
 	def startup
 		if session[:user_id]

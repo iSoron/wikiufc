@@ -1,5 +1,11 @@
 # Engenharia de Software 2007.1
-# Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
+# Copyright (C) 2007, # This file is part of Wiki UFC.
+# Copyright (C) 2007-2015 by Álinson Xavier <isoron@gmail.com>
+# Copyright (C) 2007-2008 by Adriano Freitas <adrianoblue@gmail.com>
+# Copyright (C) 2007-2008 by André Castro <aisushin@gmail.com>
+# Copyright (C) 2007-2008 by Rafael Barbosa <86.rafael@gmail.com>
+# Copyright (C) 2007-2008 by Henrique Bustamante <bustamante.rique@gmail.com>
+#
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

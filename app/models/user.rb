@@ -1,7 +1,11 @@
 # -*- encoding : utf-8 -*-
-# Wiki UFC
-# Copyright (C) 2007, Adriano, Alinson, Andre, Rafael e Bustamante
-# 
+# This file is part of Wiki UFC.
+# Copyright (C) 2007-2015 by Álinson Xavier <isoron@gmail.com>
+# Copyright (C) 2007-2008 by Adriano Freitas <adrianoblue@gmail.com>
+# Copyright (C) 2007-2008 by André Castro <aisushin@gmail.com>
+# Copyright (C) 2007-2008 by Rafael Barbosa <86.rafael@gmail.com>
+# Copyright (C) 2007-2008 by Henrique Bustamante <bustamante.rique@gmail.com>
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the
@@ -46,7 +50,7 @@ class User < ActiveRecord::Base
 	def User.find_by_login_and_pass(login, pass)
 		user = find(:first, :conditions => [ "login = ?", login ])
 		return (!user.nil? and User.encrypt(pass, user.salt) == user.hashed_password) ? user : nil
-	end	
+	end
 
 	def to_xml(options = {})
 		options[:indent] ||= 2
@@ -73,7 +77,7 @@ class User < ActiveRecord::Base
 	def reset_login_key
 		self.login_key = Digest::SHA1.hexdigest(Time.now.to_s + password.to_s + rand(123456789).to_s).to_s
 	end
-  
+
 	def reset_login_key!
 		reset_login_key
 		save!
@@ -92,11 +96,11 @@ class User < ActiveRecord::Base
 		end
 
 		if !@password.blank?
-			errors.add(:password_confirmation) if @password_confirmation.blank? or @password != @password_confirmation 
+			errors.add(:password_confirmation) if @password_confirmation.blank? or @password != @password_confirmation
 			errors.add(:password, 'é muito curta') if !(5..40).include?(@password.length)
 		end
 	end
-	
+
 	def before_save
 		self.salt = User.random_string(10) if !self.salt?
 		self.secret = User.random_string(32) if !self.secret?
@@ -106,7 +110,7 @@ class User < ActiveRecord::Base
 	def self.encrypt(pass, salt)
 		Digest::SHA1.hexdigest(pass + salt)
 	end
-	
+
 	def self.random_string(len)
 		chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
 		newpass = ""
