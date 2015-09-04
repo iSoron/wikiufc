@@ -1,31 +1,32 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~>3.2'
+gem 'rails', '3.2.13'
 gem 'sqlite3'
 gem 'json'
 
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
+  gem 'sass-rails',   '3.2.6'
+  gem 'coffee-rails', '3.2.2'
+  gem 'uglifier', '2.7.2'
 end
 
-gem 'acts_as_list', '~>0.2'
-gem 'acts_as_paranoid', '~>0.4'
-gem 'acts_as_versioned', :git => 'https://github.com/jwhitehorn/acts_as_versioned.git'
-gem 'bluecloth', '1.0.0', :path => './vendor/gems/bluecloth'
-gem 'calendar_helper', "~>0.2"
+gem 'acts_as_list', '0.2.0'
+gem 'acts_as_paranoid', '0.4.2'
+gem 'acts_as_versioned',
+    git: 'https://github.com/isoron/acts_as_versioned.git',
+    ref: 'df85fc1e438c18dddf610414b5c8a1ee8a7cefc9'
+gem 'bluecloth', '1.0.0', path: './vendor/gems/bluecloth'
+gem 'calendar_helper', '0.2.5'
 gem 'dynamic_form'
-gem 'haml', '~>3.1'
-gem 'hpricot', '~>0.8'
-gem 'icalendar', '~>1.0'
-gem 'jquery-rails'
-gem 'shoulda', "~>3.5"
-gem 'will_paginate', "~>3.0"
-gem 'simplecov'
+gem 'haml', '3.1.8'
+gem 'hpricot', '0.8.6'
+gem 'icalendar', '1.4.1'
+gem 'jquery-rails', '3.0.4'
+gem 'shoulda', "3.5.0"
+gem 'will_paginate', "3.0.4"
+gem 'rails-i18n', '3.0.0'
 
 group :test do
+  gem 'simplecov'
   gem 'turn'
-  #gem 'silencer'
 end
-
