@@ -1,11 +1,11 @@
-%h4.title= h(@course.full_name)
-%h1.title= h(@wiki_page.title)
+%h4.title= @course.full_name
+%h1.title= @wiki_page.title
 
 %p
   Comparando versões:
   %ul
-    %li= render :partial => 'wiki/history', :locals => { :page => @to } 
+    %li= render :partial => 'wiki/history', :locals => { :page => @to }
     %li= render :partial => 'wiki/history', :locals => { :page => @from }
 
   = link_to "Comparar outras versões", versions_course_wiki_instance_url(@course, @wiki_page, :from => @from.version, :to => @to.version)
-  = format_diff h(@diff)
+  = raw format_diff h(@diff)

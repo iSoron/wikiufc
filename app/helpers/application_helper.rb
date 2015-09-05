@@ -42,7 +42,7 @@ module ApplicationHelper
         output << "</div>"
       end
     end
-    output
+    output.html_safe
   end
 
   def logged_in?
@@ -71,18 +71,19 @@ module ApplicationHelper
   end
 
   def markup_enabled_field
-    "<p class='grey'>Este campo aceita as linguagens Markdown, Latex e HTML. " +
-      link_to('Saiba mais.', '#', id: 'show_markup_help') + spinner('help') + "</p>"
+    ("<p class='grey'>Este campo aceita as linguagens Markdown, Latex e HTML. " +
+      link_to('Saiba mais.', '#', id: 'show_markup_help') + spinner('help') +
+      "</p>").html_safe
   end
 
   def markup_help
-    "<div id='markup_help' style='display: none'>" +
+    ("<div id='markup_help' style='display: none'>" +
       File.read("#{Rails.root}/public/static/markup_help.mkd").format_wiki +
-      "</div>"
+      "</div>").html_safe
   end
 
   def gravatar_url_for(email, size = 80)
-    "http://www.gravatar.com/avatar.php?gravatar_id=#{Digest::MD5.hexdigest(email)}&size=#{size}&default=#{u(App.default_avatar)}_#{size}.png"
+    "http://www.gravatar.com/avatar.php?gravatar_id=#{Digest::MD5.hexdigest(email)}&size=#{size}&d=retro"
   end
 
   def action_icon(action_name, description, options = {}, html_options = {})

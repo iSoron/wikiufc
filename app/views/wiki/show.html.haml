@@ -12,12 +12,12 @@
       {:confirm => 'Tem certeza que deseja excluir?', :method => :delete,
        :accesskey => '-'}
 
-%h4.title= h(@course.full_name)
-%h1.title= h(@wiki_page.title)
+%h4.title= @course.full_name
+%h1.title= html_escape(@wiki_page.title)
 #contents{:style => "display: none"}
   %h1 Índice
 #wiki_text
-  = @wiki_page.content.format_wiki
+  = @wiki_page.content.format_wiki rescue "<p class='wiki-error'>Invalid wiki syntax</p>".html_safe
 
 %script
   = "enumerate_headers();"

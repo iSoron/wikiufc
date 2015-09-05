@@ -1,15 +1,16 @@
 - @title = "#{App.title} - #{h(@course.full_name)}"
-- @location = capture do 
+- @location = capture do
   = link_to(App.title, index_url, :accesskey => 'z') + "›"
   = link_to("Disciplinas", courses_url) + "›"
   = link_to(h(@course.full_name), course_url(@course)) + "›"
   = link_to("Arquivos", course_attachments_url(@course))
   - if @attachment.id
-    = "›" + link_to(truncate(h(@attachment.file_name)), course_attachment_url)
+    = "›"
+    =link_to(truncate(h(@attachment.file_name)), course_attachment_url)
     - @title = @title + " - #{truncate(h(@attachment.file_name))}"
 
 - @left_panel = render 'courses/left_panel'
 - @right_panel = render 'courses/right_panel'
 - @content = yield
 
-= render 'layouts/base' 
+= render 'layouts/base'

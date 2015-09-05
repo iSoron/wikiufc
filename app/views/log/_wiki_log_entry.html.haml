@@ -4,9 +4,11 @@
 = "restaurou " if entry.kind_of?(WikiRestoreLogEntry)
 
 - if entry.version
-  = "a página " + link_to(h(entry.wiki_page.title), course_wiki_instance_url(entry.course, entry.wiki_page.id, :version => entry.version))
+  a página
+  =link_to(h(entry.wiki_page.title), course_wiki_instance_url(entry.course, entry.wiki_page.id, :version => entry.version))
 - else
-  = "a página " + link_to(h(entry.wiki_page.title), course_wiki_instance_url(entry.course, entry.wiki_page.id))
+  a página
+  =link_to(h(entry.wiki_page.title), course_wiki_instance_url(entry.course, entry.wiki_page.id))
 
 
 - current_version = entry.wiki_page.versions.find_by_version(entry.version)
@@ -15,12 +17,12 @@
 - if entry.kind_of?(WikiEditLogEntry)
   - unless current_version.nil?
     - if current_version.description and !current_version.description.empty?
-      = "(<i>#{h(current_version.description)}</i>)"
+      = raw "(<i>#{h(current_version.description)}</i>)"
 
   - unless previous_version.nil?
-    = "(" + link_to("diff", diff_course_wiki_instance_url(entry.course, entry.wiki_page.id, :from => previous_version.version, :to => entry.version)) + ")" 
-  
-  = "(" + link_to("edit", edit_course_wiki_instance_url(entry.course, entry.wiki_page.id, :description => "Revertendo para versão #{entry.version}", :version => entry.version)) + ")"
-  
+    = raw "(" + link_to("diff", diff_course_wiki_instance_url(entry.course, entry.wiki_page.id, :from => previous_version.version, :to => entry.version)) + ")"
+
+  = raw "(" + link_to("edit", edit_course_wiki_instance_url(entry.course, entry.wiki_page.id, :description => "Revertendo para versão #{entry.version}", :version => entry.version)) + ")"
+
   - unless previous_version.nil?
-    = "(" + link_to("undo", edit_course_wiki_instance_url(entry.course, entry.wiki_page.id, :description => "Revertendo para versão #{previous_version.version}", :version => previous_version.version)) + ")"
+    = raw "(" + link_to("undo", edit_course_wiki_instance_url(entry.course, entry.wiki_page.id, :description => "Revertendo para versão #{previous_version.version}", :version => previous_version.version)) + ")"

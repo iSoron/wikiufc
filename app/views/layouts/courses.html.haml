@@ -3,7 +3,8 @@
   = link_to(App.title, index_url, :accesskey => 'z') + "›";
   = link_to("Disciplinas", courses_url)
   - if @course and @course.id
-    = "› " + link_to(h(@course.full_name), course_url)
+    = "› "
+    =link_to(h(@course.full_name), course_url)
     - @title = @title + " - #{h(@course.full_name)}"
   - else
     - @title = @title + " - Disciplinas"

@@ -3,9 +3,9 @@
 #
 # Bluecloth is a Ruby implementation of Markdown, a text-to-HTML conversion
 # tool.
-# 
+#
 # == Synopsis
-# 
+#
 #   doc = BlueCloth::new "
 #     ## Test document ##
 #
@@ -13,11 +13,11 @@
 #   "
 #
 #   puts doc.to_html
-# 
+#
 # == Authors
-# 
+#
 # * Michael Granger <ged@FaerieMUD.org>
-# 
+#
 # == Contributors
 #
 # * Martin Chase <stillflame@FaerieMUD.org> - Peer review, helpful suggestions
@@ -27,21 +27,21 @@
 #
 # Original version:
 #   Copyright (c) 2003-2004 John Gruber
-#   <http://daringfireball.net/>  
+#   <http://daringfireball.net/>
 #   All rights reserved.
 #
 # Ruby port:
 #   Copyright (c) 2004 The FaerieMUD Consortium.
-# 
+#
 # BlueCloth is free software; you can redistribute it and/or modify it under the
 # terms of the GNU General Public License as published by the Free Software
 # Foundation; either version 2 of the License, or (at your option) any later
 # version.
-# 
+#
 # BlueCloth is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
 # A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-# 
+#
 # == To-do
 #
 # * Refactor some of the larger uglier methods that have to do their own
@@ -54,7 +54,7 @@
 # == Version
 #
 #  $Id: bluecloth.rb 69 2004-08-25 05:27:15Z ged $
-# 
+#
 
 require 'digest/md5'
 require 'logger'
@@ -124,7 +124,7 @@ class BlueCloth < String
     span strike strong sub sup table tbody td tfoot th thead tr tt u ul }
 
 	HTMLAttrs = {
-		'a' => %w{href title},  
+		'a' => %w{href title},
 		'img' => %w{src width height alt title class},
 		'div' => %w{class},
 		'table' => %w{border}
@@ -132,7 +132,7 @@ class BlueCloth < String
 
 	HTMLBlackList = %w{
 		script object applet embed
-	} 
+	}
 
 	HTMLValueBlackList = %w{
 		javascript: vbscript: mocha: livescript:
@@ -236,7 +236,7 @@ class BlueCloth < String
 
 		return text
 	end
-	
+
 
 	### Convert tabs in +str+ to spaces.
 	def detab( tabwidth=TabWidth )
@@ -374,7 +374,7 @@ class BlueCloth < String
 	### tokens.
 	def hide_html_blocks( str, rs )
 		@log.debug "Hiding HTML blocks in %p" % str
-		
+
 		# Tokenizer proc to pass to gsub
 		tokenize = lambda {|match|
 			key = Digest::MD5::hexdigest( match )
@@ -408,7 +408,7 @@ class BlueCloth < String
 
 	def hide_latex_blocks( str, rs )
 		@log.debug "Hiding Latex blocks in %p" % str
-		
+
 		def tokenize(match, rs)
 			key = Digest::MD5::hexdigest( match )
 			rs.literal_blocks[ key ] = match
@@ -520,7 +520,7 @@ class BlueCloth < String
 	def encode_backslash_escapes( str )
 		# Make a copy with any double-escaped backslashes encoded
 		text = str.gsub( /\\\\/, EscapeTable['\\'][:md5] )
-		
+
 		EscapeTable.each_pair {|char, esc|
 			next if char == '\\'
 			text.gsub!( esc[:re], esc[:md5] )
@@ -668,7 +668,7 @@ class BlueCloth < String
 		str.gsub( BlockQuoteRegexp ) {|quote|
 			@log.debug "Making blockquote from %p" % quote
 
-			quote.gsub!( /^ *> ?/, '' ) # Trim one level of quoting 
+			quote.gsub!( /^ *> ?/, '' ) # Trim one level of quoting
 			quote.gsub!( /^ +$/, '' )	# Trim whitespace-only lines
 
 			indent = " " * TabWidth
@@ -763,7 +763,7 @@ class BlueCloth < String
 		# Setext-style headers:
 		#	  Header 1
 		#	  ========
-		#  
+		#
 		#	  Header 2
 		#	  --------
 		#
@@ -835,7 +835,7 @@ class BlueCloth < String
 			[ ]*				# Zero or more spaces
 			<?(.+?)>?			# URI = $1
 			[ ]*				# Zero or more spaces
-			(?:					# 
+			(?:					#
 				([\"\'])		# Opening quote char = $2
 				(.*?)			# Title = $3
 				\2				# Matching quote char
@@ -852,7 +852,7 @@ class BlueCloth < String
 
 		# Scan the whole string
 		until @scanner.empty?
-		
+
 			if @scanner.scan( /\[/ )
 				link = ''; linkid = ''
 				depth = 1
@@ -960,7 +960,7 @@ class BlueCloth < String
 			gsub( ItalicRegexp, %{<em>\\2</em>} )
 	end
 
-	
+
 	### Transform backticked spans into <code> spans.
 	def transform_code_spans( str, rs )
 		@log.debug " Transforming code spans"
@@ -1025,7 +1025,7 @@ class BlueCloth < String
 		  \([ ]*
 			<?(\S+?)>?		# source url = $3
 		    [ ]*
-			(?:				# 
+			(?:				#
 			  (["'])		# quote char = $4
 			  (.*?)			# title = $5
 			  \4			# matching quote
@@ -1113,7 +1113,7 @@ class BlueCloth < String
 			gsub( "\n", '&#10;').
 			gsub( CodeEscapeRegexp ) {|match| EscapeTable[match][:md5]}
 	end
-				
+
 
 
 	#################################################################
@@ -1172,9 +1172,9 @@ class BlueCloth < String
 
 					# Scan either an opener or a closer
 					chunk = @scanner.scan( HTMLTagPart ) or
-						raise "Malformed tag at character %d: %p" % 
+						raise "Malformed tag at character %d: %p" %
 							[ tagstart, token + @scanner.rest ]
-						
+
 					@log.debug "  Found another part of the tag at depth %d: %p" % [ depth, chunk ]
 
 					token += chunk
@@ -1216,12 +1216,11 @@ class BlueCloth < String
 			gsub( %r{<(?![a-z/?\$!])}i, "&lt;" )
 	end
 
-	
+
 	### Return one level of line-leading tabs or spaces from a copy of +str+ and
 	### return it.
 	def outdent( str )
 		str.gsub( /^(\t|[ ]{1,#{TabWidth}})/, '')
 	end
-	
-end # class BlueCloth
 
+end # class BlueCloth

@@ -8,14 +8,11 @@
     </div>
 		<h1>Participantes</h1>
 		<ul class="widget_users">
-		<% @course.users[0..7].each do |user| %>
-			<li>
-        <img class="avatar" src="<%=gravatar_url_for(user.email, 27)%>"/>
-        <%= link_to h(user.display_name), user_url(user) %>
-			</li>
+		<% @course.users.each do |user| %>
+        <%= link_to(image_tag(gravatar_url_for(user.email, 26), class: 'avatar'), user_url(user), title: user.display_name)%>
 		<% end %>
     <% if @course.users.size > 0 %>
-    <li><%= link_to("Ver todos os participantes", course_news_url(@course)) %></li>
+		<br style='clear: both' />
     <% end %>
 		<% if @course.users.empty? %>
 			<li class="no_itens">Nenhum participante</li>

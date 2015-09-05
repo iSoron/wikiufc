@@ -27,7 +27,7 @@
     %dt
       %label{:for => 'user_password'} Senha
     %dd
-      = password_field('user', 'password', {:value => '', :id => 'password'}) 
+      = password_field('user', 'password', {:value => '', :id => 'password'})
       %span#passmeter &nbsp;
 
     %dt
@@ -40,6 +40,6 @@
   %dl
     %dt
       %label{:for => 'user_color_pref'} Esquema de cores
+      %br
       = render :partial => 'widgets/color', :collection => App.color_schemes
   %br.clear
-

@@ -9,15 +9,15 @@
   %ul.log_entries
     - @log_entries_by_day.each do |day, entries|
       %h3
-        =tz(day).strftime("%d&nbsp;de&nbsp;%B&nbsp;de&nbsp;%Y")
+        =tz(day).strftime("%d de %B de %Y")
       - entries.each do |entry|
         %li
           .date
             = tz(entry.created_at).strftime("%H:%M")
           %img.avatar{:src => gravatar_url_for(entry.user.email, 27)}
-          =link_to truncate(h(entry.user.display_name), :length => 20), user_url(entry.user.id)
-          = render(:partial => 'log/log_entry', :locals => { :entry => entry }) 
+          = link_to truncate(h(entry.user.display_name), :length => 20), user_url(entry.user.id)
+          = render(:partial => 'log/log_entry', :locals => { :entry => entry })
           %br
-          = "Disciplina " + link_to(h(entry.course.full_name), course_url(entry.course))
+          = raw "Disciplina " + link_to(h(entry.course.full_name), course_url(entry.course))
 
 = will_paginate @log_entries

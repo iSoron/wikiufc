@@ -85,5 +85,5 @@ App = WikiUFC::Application.config
 
 require "haml"
 require "haml/template"
-Haml::Template.options[:escape_attrs] = false
-Haml::Template.options[:escape_html] = false
+Haml::Template.options[:escape_attrs] = true
+Haml::Template.options[:escape_html] = true

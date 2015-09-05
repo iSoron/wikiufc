@@ -44,6 +44,8 @@ class WikiPage < ActiveRecord::Base
   validates_uniqueness_of :title, scope: :course_id
   validates_uniqueness_of :canonical_title, scope: :course_id
   validates_format_of :title, with: /^[^0-9]/
+  validate :check_wiki_syntax
+
 
   before_validation :set_canonical_title
   before_save :set_position
@@ -68,11 +70,10 @@ class WikiPage < ActiveRecord::Base
     end
   end
 
-  def validate
+  def check_wiki_syntax
     content.format_wiki
   rescue
-    errors.add("content", "possui erro de sintaxe: " +
-               $ERROR_INFO.to_s.html_escape)
+    errors.add("content", "possui erro de sintaxe")
   end
 
   def to_param

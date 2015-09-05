@@ -33,5 +33,5 @@
 
     %h3
       Outros Semestres
-    %li= link_to "2008.2", period: '2008.2'
-    %li= link_to "2008.1", period: '2008.1'
+      - for period in Course.pluck_periods
+        %li= link_to period.to_s, period: period

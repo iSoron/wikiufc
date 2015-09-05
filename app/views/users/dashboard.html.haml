@@ -17,7 +17,7 @@
       - @news.each do |n|
         %tr
           %td.top.aright
-            = n.timestamp.strftime("%d&nbsp;de&nbsp;%B")
+            = n.timestamp.strftime("%d de %B")
           %td
             = link_to(h(n.course.full_name), course_url(n.course)) + " ›"
             = link_to(h(n.title), course_news_instance_url(n.course, n))
@@ -37,7 +37,7 @@
       - @events.each do |n|
         %tr
           %td.aright.top
-            = n.time.strftime("%d&nbsp;de&nbsp;%B") #unless n.time == last_time
+            = n.time.strftime("%d de %B") #unless n.time == last_time
             - last_time = n.time
           %td.top
             = n.time.strftime("%H:%M")
@@ -53,4 +53,3 @@
 
       - @current_user.courses.each do |course|
         %li= link_to(h(course.full_name), course_url(course))
-

@@ -51,7 +51,7 @@
 
     %h3= t(:repository)
     .repositorio
-      = nested_attachments_to_html(attachments_to_nested_hash(@course.attachments.find_front_page))
+      = raw nested_attachments_to_html(attachments_to_nested_hash(@course.attachments.find_front_page))
       - if @course.attachments.empty?
         %ul.wiki
           %li.no_itens= t(:no_attachments)

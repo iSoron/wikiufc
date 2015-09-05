@@ -3,7 +3,8 @@
   = link_to(App.title, index_url, :accesskey => 'z') + "›";
   = link_to("Usuários", users_path)
   - if @user and @user.id
-    = "› " + link_to(h(@user.name), user_url(@user))
+    = "› "
+    =link_to(h(@user.name), user_url(@user))
     - @title = @title + " - #{h(@user.display_name)}"
 
 - @left_panel = render('widgets/menu_navigation') + render('widgets/menu_user')

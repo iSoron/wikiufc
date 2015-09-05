@@ -3,4 +3,4 @@
 = "excluiu "   if entry.kind_of?(AttachmentDeleteLogEntry)
 = "restaurou " if entry.kind_of?(AttachmentRestoreLogEntry)
 
-= "o anexo " + link_to(h(entry.attachment.file_name), course_attachment_url(entry.course, entry.attachment))
+= raw "o anexo " + link_to(h(entry.attachment.file_name), course_attachment_url(entry.course, entry.attachment))

@@ -87,6 +87,10 @@ class Course < ActiveRecord::Base
     period == App.current_period ? short_name : id.to_s
   end
 
+  def self.pluck_periods
+    Course.uniq.pluck(:period).reject!(&:blank?).sort.reverse
+  end
+
   def self.from_param(param)
     param.is_numeric? ? Course.find(param) : Course.find_by_short_name!(param)
   end

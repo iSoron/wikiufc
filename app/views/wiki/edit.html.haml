@@ -1,7 +1,7 @@
 = javascript_include_tag 'wiki'
 
-%h4.title= h(@course.full_name)
-%h1.title= "Editar #{h(@wiki_page.title)}"
+%h4.title= @course.full_name
+%h1.title= "Editar #{(@wiki_page.title)}"
 
 %p
   = form_tag course_wiki_instance_url(@course, @wiki_page.id), :method => :put do
