@@ -27,6 +27,11 @@ gem 'rails-i18n', '3.0.0'
 gem 'debugger'
 gem 'prototype-rails', '3.2.1'
 
+gem 'activerecord-postgresql-adapter'
+
+gem 'ZenTest'
+gem 'autotest-rails-pure'
+gem 'minitest'
 group :test do
   gem 'simplecov'
   gem 'turn'
