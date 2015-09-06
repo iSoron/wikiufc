@@ -21,7 +21,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class CourseTest < ActiveSupport::TestCase
-
   fixtures :courses
 
   def test_related_courses
@@ -31,8 +30,9 @@ class CourseTest < ActiveSupport::TestCase
   end
 
   def test_initial_wiki_pages
-    Course.create!(:short_name => 'course999',
-        :full_name => 'Course 999', :code => 123, :grade => 1)
+    Course.create!(short_name: 'course999', description: '', code: 123,
+                   full_name: 'Course 999', grade: 1, hidden: false,
+                   period: '2000.1')
     course = Course.find_by_short_name('course999')
     assert course.wiki_pages.length == App.initial_wiki_pages.length
   end
@@ -50,15 +50,14 @@ class CourseTest < ActiveSupport::TestCase
 
     assert course.news.length == 0
 
-    news = course.news.create!(:title => 'hello', :body => 'hello',
-        :timestamp => 1.hour.ago, :sender_id => user.id,
-        :receiver_id => course.id, :version => 1)
+    news = course.news.create!(title: 'hello', body: 'hello',
+                               timestamp: 1.hour.ago, sender_id: user.id,
+                               receiver_id: course.id, version: 1)
     assert course.recent_news.include?(news)
 
-    news = course.news.create!(:title => 'hello', :body => 'hello',
-        :timestamp => 1.month.ago, :sender_id => user.id,
-        :receiver_id => course.id, :version => 1)
+    news = course.news.create!(title: 'hello', body: 'hello',
+                               timestamp: 1.month.ago, sender_id: user.id,
+                               receiver_id: course.id, version: 1)
     assert !course.recent_news.include?(news)
   end
-
 end
