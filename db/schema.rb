@@ -1,15 +1,17 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file,
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
+# encoding: UTF-8
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090908200528) do
+ActiveRecord::Schema.define(:version => 20150906014206) do
 
   create_table "attachments", :force => true do |t|
     t.string   "file_name",                       :null => false
@@ -28,9 +30,9 @@ ActiveRecord::Schema.define(:version => 20090908200528) do
     t.string   "full_name",                        :null => false
     t.text     "description"
     t.string   "code",        :default => "CK000", :null => false
+    t.integer  "grade",       :default => 1,       :null => false
     t.datetime "deleted_at"
-    t.integer  "grade",       :default => 1
-    t.string   "period"
+    t.string   "period",                           :null => false
     t.boolean  "hidden",      :default => false,   :null => false
   end
 
@@ -45,22 +47,23 @@ ActiveRecord::Schema.define(:version => 20090908200528) do
     t.integer  "event_id"
     t.integer  "version"
     t.string   "title"
+    t.date     "date"
+    t.datetime "time"
     t.integer  "created_by"
     t.integer  "course_id",   :default => 0
     t.text     "description"
     t.datetime "deleted_at"
-    t.datetime "time",        :default => '2008-03-05 04:25:27'
-    t.datetime "updated_at"
   end
 
   create_table "events", :force => true do |t|
-    t.string   "title",                                          :null => false
-    t.integer  "created_by",                                     :null => false
-    t.integer  "course_id",   :default => 0,                     :null => false
+    t.string   "title",                      :null => false
+    t.date     "date"
+    t.datetime "time",                       :null => false
+    t.integer  "created_by",                 :null => false
+    t.integer  "course_id",   :default => 0, :null => false
     t.text     "description"
     t.datetime "deleted_at"
-    t.datetime "time",        :default => '2008-03-05 04:25:27', :null => false
-    t.integer  "version",     :default => 1,                     :null => false
+    t.integer  "version",     :default => 1, :null => false
   end
 
   create_table "log_entries", :force => true do |t|
@@ -97,6 +100,10 @@ ActiveRecord::Schema.define(:version => 20090908200528) do
     t.integer  "version",     :default => 1, :null => false
   end
 
+  create_table "schema_info", :id => false, :force => true do |t|
+    t.integer "version"
+  end
+
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
@@ -126,16 +133,15 @@ ActiveRecord::Schema.define(:version => 20090908200528) do
   end
 
   create_table "wiki_page_versions", :force => true do |t|
-    t.integer  "wiki_page_id"
-    t.integer  "version"
-    t.integer  "course_id"
-    t.integer  "user_id"
-    t.string   "description"
-    t.string   "title"
-    t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "position"
+    t.integer  "wiki_page_id", :null => false
+    t.integer  "version",      :null => false
+    t.integer  "course_id",    :null => false
+    t.integer  "user_id",      :null => false
+    t.string   "description",  :null => false
+    t.string   "title",        :null => false
+    t.text     "content",      :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "wiki_pages", :force => true do |t|
@@ -145,11 +151,11 @@ ActiveRecord::Schema.define(:version => 20090908200528) do
     t.string   "description",                       :null => false
     t.string   "title",                             :null => false
     t.text     "content",                           :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "position"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.integer  "position",                          :null => false
     t.datetime "deleted_at"
-    t.string   "canonical_title"
+    t.string   "canonical_title",                   :null => false
     t.boolean  "front_page",      :default => true, :null => false
   end
 
