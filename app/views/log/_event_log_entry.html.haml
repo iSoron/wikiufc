@@ -3,4 +3,4 @@
 = "excluiu "   if entry.kind_of?(EventDeleteLogEntry)
 = "restaurou " if entry.kind_of?(EventRestoreLogEntry)
 
-= "o evento " + link_to(h(entry.event.title), course_event_url(entry.course, entry.event, :version => entry.version))
+= raw "o evento " + link_to(h(entry.event.title), course_event_url(entry.course, entry.event, :version => entry.version))
