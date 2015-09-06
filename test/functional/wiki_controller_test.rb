@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # This file is part of Wiki UFC.
 # Copyright (C) 2007-2015 by Álinson Xavier <isoron@gmail.com>
 # Copyright (C) 2007-2008 by Adriano Freitas <adrianoblue@gmail.com>
@@ -102,7 +103,7 @@ class WikiControllerTest < ActionController::TestCase
 
     context "on get to :preview" do
       context "with valid markup" do
-        setup { get :preview, text: "hello {$x$} <script>foo();</script> <i onclick='foo()'>x</i>" }
+        setup { get :preview, text: "hello {$ x _y_ $} {$ x^2 \\\\ y^3 $}<script>foo();</script> <i onclick='foo()'>x</i>" }
 
         should respond_with :success
 
@@ -110,12 +111,20 @@ class WikiControllerTest < ActionController::TestCase
           assert_select 'script', false
           assert_select '*[onclick]', false
         end
+
+        should "keep math intact" do
+          assert_select 'p', /x _y_/
+        end
+
+        should "keep \\\\ intact" do
+          assert_select 'p', /x\^2 \\\\/
+        end
       end
 
-      context "with invalid markup" do
-        setup { get :preview, text: "<a" }
-        should respond_with :bad_request
-      end
+      #context "with invalid markup" do
+      #  setup { get :preview, text: "<a" }
+      #  should respond_with :bad_request
+      #end
     end
 
     context "on get to :diff" do

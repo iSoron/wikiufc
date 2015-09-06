@@ -6,11 +6,6 @@ GIT
     acts_as_versioned (3.2.1)
       activerecord
 
-PATH
-  remote: ./vendor/gems/bluecloth
-  specs:
-    bluecloth (1.0.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -118,6 +113,7 @@ GEM
     rake (10.4.2)
     rdoc (3.12.2)
       json (~> 1.4)
+    redcarpet (3.3.2)
     sass (3.4.18)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -164,7 +160,6 @@ DEPENDENCIES
   acts_as_paranoid (= 0.4.2)
   acts_as_versioned!
   autotest-rails-pure
-  bluecloth (= 1.0.0)!
   calendar_helper (= 0.2.5)
   coffee-rails (= 3.2.2)
   debugger
@@ -177,6 +172,7 @@ DEPENDENCIES
   prototype-rails (= 3.2.1)
   rails (= 3.2.13)
   rails-i18n (= 3.0.0)
+  redcarpet (= 3.3.2)
   sass-rails (= 3.2.6)
   shoulda (= 3.5.0)
   simplecov

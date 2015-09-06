@@ -22,9 +22,36 @@
 class String
   include ActionView::Helpers::SanitizeHelper
   def format_wiki
-    text = BlueCloth.new(self).to_html
-    text = Hpricot(text, xhtml_strict: true).to_s
-    sanitize text
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+
+    out = dup
+    out = out.gsub('\\', '\\\\\\')
+    out, inline_math = out.extract_blocks(/({\$((?!\$}).)*\$})/m, 'INLINEMATH')
+    out, block_math = out.extract_blocks(/({\$\$((?!\$\$}).)*\$\$})/m,
+                                         'BLOCKMATH')
+    out = markdown.render(out)
+
+    out = out.reinsert_blocks(block_math, 'BLOCKMATH')
+    out = out.reinsert_blocks(inline_math, 'INLINEMATH')
+
+    sanitize out
+  end
+
+  def extract_blocks(regexp, prefix)
+    matches = []
+    modified = gsub(regexp) do |m|
+      matches << m
+      "#{prefix}#{matches.length - 1}#{prefix}"
+    end
+    return modified, matches
+  end
+
+  def reinsert_blocks(blocks, prefix)
+    modified = dup
+    blocks.each_with_index do |block, idx|
+      modified.gsub!("#{prefix}#{idx}#{prefix}", block)
+    end
+    modified
   end
 end
 

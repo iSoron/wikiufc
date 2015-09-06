@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # This file is part of Wiki UFC.
 # Copyright (C) 2007-2015 by Álinson Xavier <isoron@gmail.com>
 # Copyright (C) 2007-2008 by Adriano Freitas <adrianoblue@gmail.com>
@@ -18,34 +19,39 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#require File.dirname(__FILE__) + '/../test_helper'
-#
-#class WikiPageTest < ActiveSupport::TestCase
-#
-#	should "not delete versions on destroy" do
-#		wp = WikiPage.new(:course_id => 1, :user_id => 1, :title => "t", :content => "c", :description => "d", :version => 1)
-#		wp.save!
-#		wp.destroy
-#
-#		wp = WikiPage.find_with_deleted(wp.id)
-#		wp.recover!
-#		assert !wp.versions.empty?
-#	end
-#
-#	def test_should_create_new_version_when_editing
-#		wp = WikiPage.new
-#		assert !wp.save_version?
-#
-#		wp.content = 'new content'
-#		assert wp.save_version?
-#	end
-#
-#	def test_should_not_create_new_version_when_reordering
-#		wp = WikiPage.new
-#		assert !wp.save_version?
-#
-#		wp.move_higher
-#		assert !wp.save_version?
-#	end
-#end
-#
+require File.dirname(__FILE__) + '/../test_helper'
+
+class WikiPageTest < ActiveSupport::TestCase
+
+  context "wiki engine" do
+    should "handle non-ASCII characters properly" do
+      assert "áá**aa**".format_wiki =~ %r{<p>áá<strong>aa</strong></p>}
+    end
+  end
+
+	# should "not delete versions on destroy" do
+	# 	wp = WikiPage.new(:course_id => 1, :user_id => 1, :title => "t", :content => "c", :description => "d", :version => 1)
+	# 	wp.save!
+	# 	wp.destroy
+
+	# 	wp = WikiPage.find_with_deleted(wp.id)
+	# 	wp.recover!
+	# 	assert !wp.versions.empty?
+	# end
+
+	# def test_should_create_new_version_when_editing
+	# 	wp = WikiPage.new
+	# 	assert !wp.save_version?
+
+	# 	wp.content = 'new content'
+	# 	assert wp.save_version?
+	# end
+
+	# def test_should_not_create_new_version_when_reordering
+	# 	wp = WikiPage.new
+	# 	assert !wp.save_version?
+
+	# 	wp.move_higher
+	# 	assert !wp.save_version?
+	# end
+end
