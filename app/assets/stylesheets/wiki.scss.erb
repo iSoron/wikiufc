@@ -107,8 +107,10 @@ body {
 
 }
 #wrapper {
-  background-color: #f4f4f4;
   box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
+  // background: linear-gradient(#e4e4e4, #f4f4f4 30%);
+  background-color: #f4f4f4;
+  border-top: 2px solid #ccc;
 }
 .wrapper2 {
   // background-image: url(<%= App.base_path %>/assets/bg_body.png);
@@ -647,8 +649,14 @@ background-position: 0px 12px;
 }
 .pagination {
   margin: 18px 0px;
-  text-align: right;
+  text-align: center;
 }
+.pagination a, .pagination em, .pagination span {
+    border: 1px solid #eee;
+    padding: 2px 9px;
+    border-radius: 3px;
+}
+
 .fieldWithErrors input, .fieldWithErrors textarea {
   border: 2px solid #c00;
 }

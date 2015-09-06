@@ -64,7 +64,9 @@ WikiUFC::Application.routes.draw do
 
   # Log
   with_options controller: 'log' do |log|
-    log.match 'courses/:course_id/log', action: 'index', format: 'html', as: 'course_log'
+    log.match 'courses/:course_id/log', action: 'index',
+                                        format: 'html',
+                                        as: 'course_log'
     log.match 'courses/:course_id/log/:id/undo', action: 'undo', format: 'html', as: 'undo_course_log'
     log.match 'courses/:course_id/log.:format', action: 'index', as: 'formatted_course_log'
   end

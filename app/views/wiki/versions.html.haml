@@ -18,7 +18,7 @@
         %th Data
         %th Usuário
         %th Descrição
-      - @wiki_page.versions.reverse.each do |entry|
+      - @wiki_page.versions.order("version desc").each do |entry|
         %tr
           %td.narrow
             %input{:type => "radio", :name => "to", :value => entry.version, :onclick => "history_to(#{entry.version})"}

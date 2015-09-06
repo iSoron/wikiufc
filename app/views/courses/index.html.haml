@@ -17,8 +17,8 @@
             .right
               = action_icon('subtract', 'Desmatricular-se', unenroll_course_url(course))
             = link_to h(course.full_name), course_url(course)
-      - else
-        - @courses = Course.visible.where(period: @period)
+    - else
+      - @courses = Course.visible.where(period: @period)
 
     -# cache(courses_path) do
     - old_grade = 0

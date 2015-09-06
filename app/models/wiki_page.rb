@@ -46,7 +46,6 @@ class WikiPage < ActiveRecord::Base
   validates_format_of :title, with: /^[^0-9]/
   validate :check_wiki_syntax
 
-
   before_validation :set_canonical_title
   before_save :set_position
 
