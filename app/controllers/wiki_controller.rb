@@ -23,9 +23,6 @@ class WikiController < ApplicationController
   # verify params: :text, only: :preview, redirect_to: { action: :show }
   # verify params: [:from, :to], only: :diff, redirect_to: { action: :versions }
 
-  # after_filter :cache_sweep, only: [ :create, :update, :destroy, :move_up,
-  #		:move_down, :undelete ]
-
   before_filter :find_wiki, except: [:preview]
   before_filter :require_login, only: [:new, :create, :edit, :update, :destroy,
                                        :move_up, :move_down]
@@ -168,10 +165,5 @@ class WikiController < ApplicationController
     else
       @wiki_page = WikiPage.new(params[:wiki_page])
     end
-  end
-
-  def cache_sweep
-    expire_fragment course_url(@course.id)
-    expire_fragment course_wiki_instance_url(@course.id, @wiki_page.id)
   end
 end

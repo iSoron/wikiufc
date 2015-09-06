@@ -20,103 +20,93 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class AttachmentsController < ApplicationController
+  before_filter :find_attachment
+  
+  def show
+    respond_to do |format|
+      format.html
+      format.xml { render xml: @attachment }
+    end
+  end
 
-	#verify :method => :post, :only => [ :destroy, :create, :update ],
-	#	:redirect_to => { :controller => 'courses', :action => :show }
+  def new
+  end
 
-	#after_filter :cache_sweep, :only => [ :create, :update, :destroy ]
+  def create
+    @attachment.course_id = @course.id
+    @attachment.path = params[:attachment][:path]
+    @attachment.front_page = params[:attachment][:front_page]
+    @attachment.description = params[:attachment][:description]
+    @attachment.file_name = "blank"
+    unless params[:attachment][:file].nil?
+      @attachment.file = params[:attachment][:file]
+      @attachment.file_name = params[:attachment][:file].original_filename
+      @attachment.content_type = params[:attachment][:file].content_type
+    end
+    @attachment.save!
 
-	before_filter :find_attachment
+    AttachmentCreateLogEntry.create!(target_id: @attachment.id, user: @current_user, course: @course)
+    flash[:notice] = t(:attachment_created)
 
-	def show
-		respond_to do |format|
-			format.html
-			format.xml { render :xml => @attachment }
-		end
-	end
+    respond_to do |format|
+      format.html { redirect_to course_attachment_url(@course, @attachment) }
+      format.xml { head :created, location: course_attachment_url(@course, @attachment, format: :xml) }
+    end
+  end
 
-	def new
-	end
+  def edit
+  end
 
-	def create
-		@attachment.course_id = @course.id
-		@attachment.path = params[:attachment][:path]
-		@attachment.front_page = params[:attachment][:front_page]
-		@attachment.description = params[:attachment][:description]
-		@attachment.file_name = "blank"
-		unless params[:attachment][:file].nil?
-			@attachment.file = params[:attachment][:file]
-			@attachment.file_name = params[:attachment][:file].original_filename
-			@attachment.content_type = params[:attachment][:file].content_type
-		end
-		@attachment.save!
+  def update
+    @attachment.path = params[:attachment][:path]
+    @attachment.front_page = params[:attachment][:front_page]
+    @attachment.description = params[:attachment][:description]
+    unless params[:attachment][:file].nil?
+      @attachment.file = params[:attachment][:file]
+      @attachment.file_name = params[:attachment][:file].original_filename
+      @attachment.content_type = params[:attachment][:file].content_type
+    end
+    changed = @attachment.changed?
 
-		AttachmentCreateLogEntry.create!(:target_id => @attachment.id, :user => @current_user, :course => @course)
-		flash[:notice] = t(:attachment_created)
+    if changed
+      @attachment.last_modified = Time.now.utc
+      @attachment.save!
+      AttachmentEditLogEntry.create!(target_id: @attachment.id, user: @current_user, course: @course)
+      flash[:notice] = t(:attachment_updated)
+    end
 
-		respond_to do |format|
-			format.html { redirect_to course_attachment_url(@course, @attachment) }
-			format.xml { head :created, :location => course_attachment_url(@course, @attachment, :format => :xml) }
-		end
-	end
+    respond_to do |format|
+      format.html { redirect_to course_attachment_url(@course, @attachment) }
+      format.xml { head :created, location: course_attachment_url(@course, @attachment, format: :xml) }
+    end
+  end
 
-	def edit
-	end
+  def destroy
+    @attachment.destroy
+    flash[:notice] = t(:attachment_removed)
 
-	def update
-		@attachment.path = params[:attachment][:path]
-		@attachment.front_page = params[:attachment][:front_page]
-		@attachment.description = params[:attachment][:description]
-		unless params[:attachment][:file].nil?
-			@attachment.file = params[:attachment][:file]
-			@attachment.file_name = params[:attachment][:file].original_filename
-			@attachment.content_type = params[:attachment][:file].content_type
-		end
-		changed = @attachment.changed?
+    log = AttachmentDeleteLogEntry.create!(target_id: @attachment.id, user: @current_user, course: @course)
+    flash[:undo] = undo_course_log_url(@course, log)
 
-		if changed
-			@attachment.last_modified = Time.now.utc
-			@attachment.save!
-			AttachmentEditLogEntry.create!(:target_id => @attachment.id, :user => @current_user, :course => @course)
-			flash[:notice] = t(:attachment_updated)
-		end
+    respond_to do |format|
+      format.html { redirect_to course_url(@course) }
+      format.xml { head :ok }
+    end
+  end
 
-		respond_to do |format|
-			format.html { redirect_to course_attachment_url(@course, @attachment) }
-			format.xml { head :created, :location => course_attachment_url(@course, @attachment, :format => :xml) }
-		end
-	end
+  def download
+    send_file("#{Rails.root}/public/upload/#{@course.id}/#{@attachment.id}",
+              filename: @attachment.file_name,
+              type: @attachment.content_type,
+              disposition: 'inline',
+              streaming: 'true')
+  end
 
-	def destroy
-		@attachment.destroy
-		flash[:notice] = t(:attachment_removed)
+  protected
 
-		log = AttachmentDeleteLogEntry.create!(:target_id => @attachment.id, :user => @current_user, :course => @course)
-		flash[:undo] = undo_course_log_url(@course, log)
-
-		respond_to do |format|
-			format.html { redirect_to course_url(@course) }
-			format.xml { head :ok }
-		end
-	end
-
-	def download
-
-		send_file("#{Rails.root}/public/upload/#{@course.id}/#{@attachment.id}",
-				:filename    =>  @attachment.file_name,
-				:type        =>  @attachment.content_type,
-				:disposition =>  'inline',
-				:streaming   =>  'true')
-	end
-
-	protected
-	def find_attachment
-		params[:course_id] = Course.find(:first, :conditions => ['short_name = ?', params[:course_id]], :order => 'period desc').id if !params[:course_id].is_numeric? and !Course.find_by_short_name(params[:course_id]).nil?
-		@course = Course.find(params[:course_id])
-		@attachment = params[:id] ? @course.attachments.find(params[:id]) : Attachment.new
-	end
-
-	def cache_sweep
-		expire_fragment(course_path(@course.id))
-	end
+  def find_attachment
+    params[:course_id] = Course.find(:first, conditions: ['short_name = ?', params[:course_id]], order: 'period desc').id if !params[:course_id].is_numeric? && !Course.find_by_short_name(params[:course_id]).nil?
+    @course = Course.find(params[:course_id])
+    @attachment = params[:id] ? @course.attachments.find(params[:id]) : Attachment.new
+  end
 end

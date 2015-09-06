@@ -88,7 +88,8 @@ class Course < ActiveRecord::Base
   end
 
   def self.pluck_periods
-    Course.uniq.pluck(:period).reject!(&:blank?).sort.reverse
+    periods = Course.uniq.reorder('').pluck(:period).reject!(&:blank?) || []
+    periods.sort.reverse
   end
 
   def self.from_param(param)

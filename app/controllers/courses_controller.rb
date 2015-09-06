@@ -24,11 +24,9 @@ class CoursesController < ApplicationController
                                        :destroy]
   before_filter :require_login, only: [:enroll, :unenroll]
   before_filter :find_course, except: [:index]
-  # after_filter :cache_sweep, only: [ :create, :update, :destroy ]
 
   def index
-    @period = params[:period] || App.current_period
-    @courses = Course.visible.where(period: @period)
+    @period = params[:period].blank? ? App.current_period : params[:period]
 
     respond_to do |format|
       format.html
@@ -114,11 +112,5 @@ class CoursesController < ApplicationController
 
   def require_admin
     fail AccessDenied, 'only admins can modify courses' unless admin?
-  end
-
-  def cache_sweep
-    expire_fragment(course_path(@course.id, part: 'right'))
-    expire_fragment(course_path(@course.id))
-    expire_fragment(courses_path)
   end
 end

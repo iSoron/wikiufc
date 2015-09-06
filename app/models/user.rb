@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   acts_as_paranoid
 
   has_and_belongs_to_many :courses, order: 'full_name',
-                                    conditions: "period = #{App.current_period}"
+                                    conditions: "period = '#{App.current_period}'"
 
   validates_length_of :login, within: 3..40
   validates_length_of :name, within: 3..40
@@ -86,8 +86,12 @@ class User < ActiveRecord::Base
   end
 
   def courses_not_enrolled(period)
-    Course.all(conditions: ['period = ? and hidden = ? and id not in (?)',
-                            period, false, courses])
+    if courses.empty?
+      Course.visible.where(period: period)
+    else
+      Course.where('period = ? and hidden = ? and id not in (?)',
+                   period, false, courses)
+    end
   end
 
   protected
