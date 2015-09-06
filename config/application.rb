@@ -28,7 +28,7 @@ module WikiUFC
     config.default_host = "localhost:3000"
     config.base_path = ""
 
-    config.current_period = "2009.2"
+    config.current_period = "2015.1"
 
     # Limites
     config.max_upload_file_size = 5.megabytes

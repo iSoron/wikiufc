@@ -1,6 +1,9 @@
 development:
-  adapter: sqlite3
-  database: db/wiki.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  database: wikiufc
+  username: wikiufc
+  password: wikiufc
 
 test:
   adapter: sqlite3
