@@ -12,8 +12,8 @@ class String
   def pretty_url
     mb_chars.normalize(:kd)
       .gsub(/[^\x00-\x7F]/n, '')
-      .gsub(/[^a-z._0-9 -]/i, "")
-      .gsub(/ +/, "_")
+      .gsub(/[^a-z_0-9 -]/i, '')
+      .gsub(/ +/, '_')
       .downcase.to_s
   end
 end
