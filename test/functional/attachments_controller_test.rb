@@ -85,7 +85,6 @@ class AttachmentsControllerTest < ActionController::TestCase
 
 		context "on get to :edit" do
 			setup { get :edit, :course_id => @course.id, :id => @att.id }
-			#should render_a_form
 			should render_template 'edit'
 		end
 

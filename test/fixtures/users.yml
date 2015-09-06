@@ -18,6 +18,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+admin:
+  id: 1000000
+  login: admin
+  salt: 1000
+  name: admin
+  email: admin@website.com
+  hashed_password: 77a0d943cdbace52716a9ef9fae12e45e2788d39 # test
+  display_name: admin
+  last_seen: <%= Time.now.to_s(:db) %>
+  admin: true
+  secret: admin
+
 bob:
   id: 1000001
   login: bob
@@ -27,7 +39,7 @@ bob:
   hashed_password: 77a0d943cdbace52716a9ef9fae12e45e2788d39 # test
   display_name: bob
   last_seen: <%= Time.now.to_s(:db) %>
-  admin: true
+  admin: false
   secret: bob
 
 existingbob:

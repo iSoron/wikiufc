@@ -22,20 +22,18 @@ require File.dirname(__FILE__) + '/../test_helper'
 require 'wiki_controller'
 
 # Re-raise errors caught by the controller.
-class WikiController;
+class WikiController
   def rescue_action(e)
-    raise e
+    fail e
   end
-
-  ;
 end
 
 class WikiControllerTest < ActionController::TestCase
   def setup
     @course = Course.first
 
-    @wiki_page = @course.wiki_pages.new(:title => 'test1',
-        :content => 'content1', :description => 'test', :front_page => true)
+    @wiki_page = @course.wiki_pages.new(title: 'test1',
+                                        content: 'content1', description: 'test', front_page: true)
     @wiki_page.user = users(:bob)
     @wiki_page.version = 1
     @wiki_page.save!
@@ -43,8 +41,8 @@ class WikiControllerTest < ActionController::TestCase
     @wiki_page.title = 'new title'
     @wiki_page.save!
 
-    @another_wiki_page = @course.wiki_pages.new(:title => 'another',
-        :content => 'another', :description => 'test', :front_page => true)
+    @another_wiki_page = @course.wiki_pages.new(title: 'another',
+                                                content: 'another', description: 'test', front_page: true)
     @another_wiki_page.user = users(:bob)
     @another_wiki_page.version = 1
     @another_wiki_page.save!
@@ -57,22 +55,23 @@ class WikiControllerTest < ActionController::TestCase
   end
 
   context "An anonymous user" do
+    should_request_login_on_post_to(:new, { course_id: 1 })
+    should_request_login_on_post_to(:create, { course_id: 1 })
+    should_request_login_on_post_to(:edit, { course_id: 1, id: 1 })
+    should_request_login_on_post_to(:update, { course_id: 1, id: 1 })
+    should_request_login_on_post_to(:destroy, { course_id: 1, id: 1 })
+    should_request_login_on_post_to(:move_up, { course_id: 1, id: 1 })
+    should_request_login_on_post_to(:move_down, { course_id: 1, id: 1 })
 
-    should_request_login_on_post_to(:new, {:course_id => 1})
-    should_request_login_on_post_to(:create, {:course_id => 1})
-    should_request_login_on_post_to(:edit, {:course_id => 1, :id => 1})
-    should_request_login_on_post_to(:update, {:course_id => 1, :id => 1})
-    should_request_login_on_post_to(:destroy, {:course_id => 1, :id => 1})
-    should_request_login_on_post_to(:move_up, {:course_id => 1, :id => 1})
-    should_request_login_on_post_to(:move_down, {:course_id => 1, :id => 1})
+    context "on get to :index" do
+      setup { get :index, course_id: @course.id }
 
-    #context "on get to :index" do
-    #	setup { get :index, :course_id => @course.id }
-    #	should redirect_to('the course page') { course_url(@course) }
-    #end
+      should respond_with :success
+      should render_template 'index'
+    end
 
     context "on get to :show" do
-      setup { get :show, :course_id => @course.id, :id => @wiki_page.id }
+      setup { get :show, course_id: @course.id, id: @wiki_page.id }
 
       should respond_with :success
       should render_template 'show'
@@ -83,27 +82,27 @@ class WikiControllerTest < ActionController::TestCase
 
       should "show the selected version" do
         @wiki_page.revert_to(1)
-        get :show, :course_id => @course.id, :id => @wiki_page.id, :version => 1
+        get :show, course_id: @course.id, id: @wiki_page.id, version: 1
         assert_select 'h1.title', @wiki_page.title
       end
     end
 
     context "on get to :versions" do
-      setup { get :versions, :course_id => @course.id, :id => @wiki_page.id }
+      setup { get :versions, course_id: @course.id, id: @wiki_page.id }
 
       should respond_with :success
       should render_template 'versions'
 
       should "show the wiki page versions" do
         @wiki_page.versions.each do |v|
-          assert_select 'a[href=?]', course_wiki_instance_url(@course, @wiki_page, :version => v.version)
+          assert_select 'a[href=?]', course_wiki_instance_url(@course, @wiki_page, version: v.version)
         end
       end
     end
 
     context "on get to :preview" do
       context "with valid markup" do
-        setup { get :preview, :text => "hello {$x$} <script>foo();</script> <i onclick='foo()'>x</i>" }
+        setup { get :preview, text: "hello {$x$} <script>foo();</script> <i onclick='foo()'>x</i>" }
 
         should respond_with :success
 
@@ -114,50 +113,53 @@ class WikiControllerTest < ActionController::TestCase
       end
 
       context "with invalid markup" do
-        setup { get :preview, :text => "<a" }
+        setup { get :preview, text: "<a" }
         should respond_with :bad_request
       end
     end
 
     context "on get to :diff" do
-      setup { get :diff, :course_id => @course.id, :id => @wiki_page.id, :from => 1, :to => 2 }
+      setup { get :diff, course_id: @course.id, id: @wiki_page.id, from: 1, to: 2 }
       should respond_with :success
-      #should assign_to :diff
+      # should assign_to :diff
     end
-
   end
 
   context "An authenticated user" do
     setup { login_as :bob }
 
     context "on get to :new" do
-      setup { get :new, :course_id => @course.id }
-      #should render_a_form
+      setup { get :new, course_id: @course.id }
       should respond_with :success
     end
 
     context "on post to :create" do
       setup do
-        assert_nil @course.wiki_pages.find_by_title('test2')
-        post :create, :course_id => @course.id, :wiki_page => {:title => 'test2', :content => 'test2'}
-        @wiki_page = @course.wiki_pages.find_by_title('test2')
+        post :create, course_id: @course.id,
+                      wiki_page: { title: 'New Wiki Page',
+                                   content: 'This is a new wiki page.' }
       end
 
+      should respond_with :redirect
       should set_flash.to(/created/i)
-      should redirect_to('the wiki page') { course_wiki_instance_url(@course, @wiki_page) }
-      should_create_log_entry { [WikiCreateLogEntry, @wiki_page.id, users(:bob).id] }
+      should redirect_to('the wiki page') {
+        course_wiki_instance_url(@course, assigns(:wiki_page))
+      }
+      should_create_log_entry do
+        [WikiCreateLogEntry, assigns(:wiki_page).id, users(:bob).id]
+      end
 
       should "create a new wiki page" do
-        assert @wiki_page
-        assert_equal @wiki_page.version, 1
-        assert_equal users(:bob).id, @wiki_page.user_id
+        assert assigns(:wiki_page)
+        assert_equal assigns(:wiki_page).version, 1
+        assert_equal users(:bob).id, assigns(:wiki_page).user_id
       end
     end
 
     context "on get to :edit" do
-      setup { get :edit, :course_id => @course.id, :id => @wiki_page.id }
+      setup { get :edit, course_id: @course.id, id: @wiki_page.id }
 
-      #should render_a_form
+      # should render_a_form
       should render_template 'edit'
 
       should "render a form with the correct fields" do
@@ -168,7 +170,7 @@ class WikiControllerTest < ActionController::TestCase
 
       should "edit the selected version" do
         @wiki_page.revert_to(1)
-        get :edit, :course_id => @course.id, :id => @wiki_page.id, :version => 1
+        get :edit, course_id: @course.id, id: @wiki_page.id, version: 1
         assert_select "input[name='wiki_page[title]'][value=?]", @wiki_page.title
         assert_select 'textarea', @wiki_page.content
       end
@@ -177,22 +179,22 @@ class WikiControllerTest < ActionController::TestCase
     context "on post to :update" do
       context "with unmodified data" do
         setup do
-          post :update, :course_id => @course.id, :id => @wiki_page.id, :wiki_page => {
-                  :title => @wiki_page.title, :content => @wiki_page.content}
+          post :update, course_id: @course.id, id: @wiki_page.id, wiki_page: {
+            title: @wiki_page.title, content: @wiki_page.content }
         end
 
         should_not set_flash
         should redirect_to('the wiki page') { course_wiki_instance_url(@course, @wiki_page) }
 
         should "not create a new log entry" do
-          assert_nil WikiEditLogEntry.find(:first, :conditions => {:target_id => @wiki_page.id})
+          assert_nil WikiEditLogEntry.find(:first, conditions: { target_id: @wiki_page.id })
         end
       end
 
       context "with new data" do
         setup do
-          post :update, :course_id => @course.id, :id => @wiki_page.id, :wiki_page => {
-                  :title => 'brand new title', :content => 'brand new content'}
+          post :update, course_id: @course.id, id: @wiki_page.id, wiki_page: {
+            title: 'brand new title', content: 'brand new content' }
           @wiki_page.reload
         end
 
@@ -210,7 +212,7 @@ class WikiControllerTest < ActionController::TestCase
     end
 
     context "on post to :destroy" do
-      setup { post :destroy, :course_id => @course.id, :id => @wiki_page.id }
+      setup { post :destroy, course_id: @course.id, id: @wiki_page.id }
 
       should set_flash.to(/removed/i)
       should redirect_to('the course page') { course_url(@course) }
@@ -226,7 +228,7 @@ class WikiControllerTest < ActionController::TestCase
       setup do
         assert_equal 1, @wiki_page.position
         assert_equal 2, @another_wiki_page.position
-        get :move_up, :course_id => @course.id, :id => @another_wiki_page.id
+        get :move_up, course_id: @course.id, id: @another_wiki_page.id
       end
 
       should redirect_to('the course page') { course_url(@course) }
@@ -243,7 +245,7 @@ class WikiControllerTest < ActionController::TestCase
       setup do
         assert_equal 1, @wiki_page.position
         assert_equal 2, @another_wiki_page.position
-        get :move_down, :course_id => @course.id, :id => @wiki_page.id
+        get :move_down, course_id: @course.id, id: @wiki_page.id
       end
 
       should redirect_to('the course page') { course_url(@course) }
@@ -255,21 +257,5 @@ class WikiControllerTest < ActionController::TestCase
         assert_equal 1, @another_wiki_page.position
       end
     end
-
   end
-
-  #def test_should accept_text_on_show
-  #	get :show, :format => 'txt', :course_id => 1, :id => @wiki_page.id
-  #	assert_formatted_response :text
-  #end
-
-  #def test_should accept_html_on_versions
-  #	get :versions, :course_id => 1, :id => @wiki_page.id
-  #	assert_response :success
-  #end
-
-  #def test_should accept_xml_on_versions
-  #	get :versions, :format => 'xml', :course_id => 1, :id => @wiki_page.id
-  #	assert_formatted_response :xml, :versions
-  #end
 end
