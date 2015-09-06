@@ -113,3 +113,8 @@ pt-BR:
         position: Posição
         canonical_title: Título canônico
         front_page: Exibir na página inicial
+
+  will_paginate:
+    previous_label: Anterior
+    next_label: Próxima
+    page_gap: ...
