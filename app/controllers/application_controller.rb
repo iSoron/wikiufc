@@ -36,6 +36,7 @@ class ApplicationController < ActionController::Base
   rescue_from AccessDenied, with: :deny_access
   rescue_from ActiveRecord::RecordInvalid, with: :reshow_form
   rescue_from ActiveRecord::RecordNotFound, with: :show_not_found
+  rescue_from ActionController::MissingFile, with: :show_not_found
 
   protected
 
